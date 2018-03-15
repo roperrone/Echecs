@@ -14,14 +14,14 @@ public class FenetrePlateau extends JFrame {
 
 	this.jeu = j;
 	
-    content = new JPanel(new GridLayout(1,2));
+    content = new JPanel(new GridLayout(1,1));
     plateau = new DessinePlateau(this, jeu); 
-    options = new JPanel();
+   // options = new JPanel();
     
-    options.setBackground(Color.WHITE); 
+ //   options.setBackground(Color.WHITE); 
     
     content.add(plateau);
-    content.add(options);
+    //content.add(options);
     
    // content.addMouseListener(new MoveListener(this));
     

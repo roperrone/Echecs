@@ -11,9 +11,9 @@ public class Case {
   Color couleur;
 
   public Case(int i, int j){
-    couleur = ((x+y)%2 == 0 ? new Color(129,88,75) : new Color(242,197,142));
     x = i;
     y = j;
+    couleur = ((x+y)%2 == 0) ? new Color(242,197,142) : new Color(129,88,75);
   }
   
   public void setPiece(Piece p){

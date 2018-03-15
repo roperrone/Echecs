@@ -20,11 +20,11 @@ public class Plateau {
 	   }
 
        // initialisation des pièces principales
-       for(int j=0; j<8; j++) { 
+       for(int i=0; i<8; i++) { 
 		   Piece p1 = null;
 		   Piece p2 = null;
 		   
-		   switch(j){
+		   switch(i){
 			   case 0:
 			   case 7:
 				    p1 = new Tour("noir");
@@ -50,17 +50,17 @@ public class Plateau {
 				  break;
 		   }
 		   
-		   cases[0][j].setPiece(p1);
-		   cases[7][j].setPiece(p2);
+		   cases[i][0].setPiece(p1);
+		   cases[i][7].setPiece(p2);
 	   }
 	   
        // initialisation des pions
-       for(int j=0; j<8; j++) {
+       for(int i=0; i<8; i++) {
 		   Piece p1 = new Pion("noir");
 		   Piece p2 = new Pion("blancs");
 		   
-		   cases[1][j].setPiece(p1);
-		   cases[6][j].setPiece(p2);
+		   cases[i][1].setPiece(p1);
+		   cases[i][6].setPiece(p2);
 	   }   
 	   
     }
