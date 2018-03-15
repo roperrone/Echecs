@@ -6,14 +6,57 @@ public class Plateau {
     private Case[][] cases;
     LinkedList <Piece> pieceSuppr= new LinkedList<Piece>();;
     String couleurCourante;
-    String[] ordrePiece = {Tour,Cavalier,Fou,Reine,Roi,Fou,Cavalier,Tour};
     Deplacement depCourant; //deplacement courant
     
     //Constructeur
     public Plateau(){
        cases = new Case[8][8]; 
-       couleurCourante= "Blanc";
+       couleurCourante= "blanc";
        
+       // initialisation des pièces principales
+       for(int j=0; j<8; j++) { 
+		   Piece p1;
+		   Piece p2;
+		   
+		   switch(j){
+			   case 0:
+			   case 7:
+					p1 = new Tour("noir");
+					p2 = new Tour("blanc");
+				  break;
+			   case 1:
+			   case 6:
+				  p1 = new Cavalier("noir");
+				  p2 = new Cavalier("blanc");
+				  break;
+			   case 2:
+			   case 5:
+				  p1 = new Fou("noir");
+				  p2 = new Fou("blanc");
+			      break;
+			   case 3:
+				  p1 = new Reine("noir");
+				  p2 = new Reine("blanc");
+				  break;
+			   case 4:
+				  p1 = new Roi("noir");
+				  p2 = new Roi("blanc");
+				  break;
+		   }
+		   
+		   cases[1][j] = new Case(0,j,p1);
+		   cases[7][j] = new Case(7,j,p2);
+	   }
+	   
+       // initialisation des pions
+       for(int j=0; j<8; j++) {
+		   Piece p1 = new Pion("noir");
+		   Piece p2 = new Pion("blancs");
+		   
+		   cases[1][j] = new Case(1,j,p1);
+		   cases[6][j] = new Case(6,j,p2);
+	   }   
+	   
     }
     
     
@@ -28,7 +71,7 @@ public class Plateau {
        if(depCourant.estValide(dx,dy)){
             depCourant.resetCouleur();
             if(this.cases[dx][dy].piece!=null && this.cases[dx][dy].piece.couleur!= this.couleurCourante){
-                supprPiece(dx, dy, (couleurCourante == "Blanc" ? "Blanc" : "Noir"));
+                supprPiece(dx, dy, (couleurCourante == "blanc" ? "blanc" : "noir"));
             }
             this.cases[dx][dy].piece=this.cases[this.depCourant.cI.x][this.depCourant.cI.y];
             this.cases[this.depCourant.cI.x][this.depCourant.cI.y]=null;
