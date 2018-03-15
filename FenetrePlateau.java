@@ -9,19 +9,23 @@ public class FenetrePlateau extends JFrame {
 
   public FenetrePlateau(Jeu j){
     super("Echecs");
-    this.setSize(1000,800);
+    
+    setSize(1200,825);
+    setResizable(false);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	this.jeu = j;
 	
-    content = new JPanel(new GridLayout(1,1));
+    content = new JPanel(new BorderLayout());
     plateau = new DessinePlateau(this, jeu); 
-   // options = new JPanel();
+    options = new JPanel();
     
- //   options.setBackground(Color.WHITE); 
+    options.setBackground(new Color(247,247,247)); 
+    options.setPreferredSize(new Dimension(400, 820));
+
     
-    content.add(plateau);
-    //content.add(options);
+    content.add(plateau, BorderLayout.CENTER);
+    content.add(options, BorderLayout.EAST);
     
    // content.addMouseListener(new MoveListener(this));
     
