@@ -6,7 +6,7 @@ public class Plateau {
     private Case[][] cases;
     LinkedList <Piece> pieceSuppr= new LinkedList<Piece>();;
     String couleurCourante;
-    Deplacement depCourant; //deplacement courant
+  //  Deplacement depCourant; //deplacement courant
     
     //Constructeur
     public Plateau(){
@@ -15,14 +15,14 @@ public class Plateau {
        
        // initialisation des pièces principales
        for(int j=0; j<8; j++) { 
-		   Piece p1;
-		   Piece p2;
+		   Piece p1 = null;
+		   Piece p2 = null;
 		   
 		   switch(j){
 			   case 0:
 			   case 7:
-					p1 = new Tour("noir");
-					p2 = new Tour("blanc");
+				    p1 = new Tour("noir");
+				    p2 = new Tour("blanc");
 				  break;
 			   case 1:
 			   case 6:
@@ -59,6 +59,10 @@ public class Plateau {
 	   
     }
     
+    public Case[][] getCases(){
+		return cases;
+	}
+    
     
     public void supprPiece(int x, int y, String couleur){
       pieceSuppr.add(this.cases[x][y].piece);  
@@ -67,7 +71,7 @@ public class Plateau {
     
     // dx dy coordonnees case de d'arrivée
     
-    public void deplacerPiece(int dx, int dy, String couleur){  
+ /*   public void deplacerPiece(int dx, int dy, String couleur){  
        if(depCourant.estValide(dx,dy)){
             depCourant.resetCouleur();
             if(this.cases[dx][dy].piece!=null && this.cases[dx][dy].piece.couleur!= this.couleurCourante){
@@ -103,6 +107,8 @@ public class Plateau {
         this.cases[x][y].piece=this.cases[x1][y1].piece;
         this.cases[x1][y1].piece=p;
     }
+    * 
+    * */
 }
 
 

@@ -20,7 +20,8 @@ public class Jeu {
           Joueur noir = tabJoueur[Math.abs(currentPlayer-1)];
           
           blanc.definirCouleur("blanc");
-          noir.definirCouleur("noir");	    
+          noir.definirCouleur("noir");
+
 	      
 	      // ajouter listener -> MouseListner position -> méthode pour déduire la case et ses coordonées (x,y)
 	 //     p.selectCase()   
@@ -36,8 +37,8 @@ public class Jeu {
 		boolean b = false;
 		
 		// le joueur courrant est en échec et mat ou la partie est nulle
-		if( p.echecEtMat() || p.estNulle() )
-			b = true;
+//		if( p.echecEtMat() || p.estNulle() )
+	//		b = true;
 		
         return b;
 	}
