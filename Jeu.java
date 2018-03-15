@@ -1,11 +1,11 @@
 public class Jeu {
     private Joueur[] tabJoueur;
     static public int currentPlayer;
-    private Plateau p;
+    public Plateau plateau;
     
     public Jeu( Joueur j1, Joueur j2 ) {
         tabJoueur = new Joueur[2];
-        p = new Plateau();
+        plateau = new Plateau();
         
         tabJoueur[0] = j1;
         tabJoueur[1] = j2;

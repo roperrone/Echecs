@@ -20,8 +20,8 @@ public class FenetrePlateau extends JFrame {
     
     options.setBackground(Color.WHITE); 
     
-    content.add(plateau, BorderLayout.WEST);
-    content.add(options, BorderLayout.EAST);
+    content.add(plateau);
+    content.add(options);
     
    // content.addMouseListener(new MoveListener(this));
     
