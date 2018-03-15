@@ -12,7 +12,13 @@ public class Plateau {
     public Plateau(){
        cases = new Case[8][8]; 
        couleurCourante= "blanc";
-       
+
+	   for(int i=0; i<8; i++) {
+		  for(int j=0; j<8; j++) {   
+				cases[i][j] = new Case(i,j);
+		  }
+	   }
+
        // initialisation des pièces principales
        for(int j=0; j<8; j++) { 
 		   Piece p1 = null;
@@ -44,8 +50,8 @@ public class Plateau {
 				  break;
 		   }
 		   
-		   cases[1][j] = new Case(0,j,p1);
-		   cases[7][j] = new Case(7,j,p2);
+		   cases[0][j].setPiece(p1);
+		   cases[7][j].setPiece(p2);
 	   }
 	   
        // initialisation des pions
@@ -53,8 +59,8 @@ public class Plateau {
 		   Piece p1 = new Pion("noir");
 		   Piece p2 = new Pion("blancs");
 		   
-		   cases[1][j] = new Case(1,j,p1);
-		   cases[6][j] = new Case(6,j,p2);
+		   cases[1][j].setPiece(p1);
+		   cases[6][j].setPiece(p2);
 	   }   
 	   
     }
