@@ -1,14 +1,18 @@
 import java.util.*;
 public class Deplacement {
 	LinkedList<Case>depPoss= new LinkedList<Case>();
+	LinkedList<Case> toutDeplAdv = new LinkedList<Case>();
+	LinkedList<Case> toutDepl = new LinkedList<Case>(); //tous les deplacement du joueur courant
 	Plateau echiquier;
-	boolean echec=false;
+	boolean echecEtMat=false;
+	boolean pat=false;
 	Case cI; // @ param case initiale
 
 public Deplacement(Plateau p, Case c){
     this.echiquier = p;
     this.cI=c;
-	this.remplirListDepl();
+		this.tousDeplacementsAdv();
+		this.remplirListDepl(cI, depPoss);
   }
 
 public void depPion(){
@@ -115,21 +119,45 @@ public void depRoi(){
 	for(int i=0; i<dep.size() ; i++){
 		x=dep.get(i).x;
 		y=dep.get(i).y;
-		if (x<=7 && x>=0 && y>=0 && y<=7 && (echiquier.Case[x][y]==null || echiquier.Case[x][y].couleur!=cI.piece.couleur))
+		if (x<=7 && x>=0 && y>=0 && y<=7  && !toutDeplAdv.contains(dep.get(i)) && (echiquier.Case[x][y]==null || echiquier.Case[x][y].couleur!=cI.piece.couleur))
 			this.list.add(dep.get(i));
 	}
 }
 
-public int enEchec(){
-	LinkedList<Case> toutDepl = new LinkedList<Case>();
-	for(Case c : echiquier.cases){
-		remplirListDepl(c, toutDepl);
-	}
-
-	if(toutDepl.contains(p.trouverPiece("Roi"))) echec = !echec;
+public boolean misEnEchec(){
+	if(toutDeplAdv.contains(p.trouverPiece("Roi"))) return true;
+	else return false;
 }
 
-public void remplirListDepl(Case c, LinkedList<Case> list{
+public void echecEtMat(){
+	if(misEnEchec() && remplir)
+
+	return !echecEtMat;
+}
+
+//Rempli tous les deplacements possibles de l'adversaire
+public void tousDeplacementsAdv(){
+	for(Case c : echiquier.cases){
+		if((c.piece != null) && (c.piece.couleur != cI.piece.couleur)){
+			remplirListDepl(c, toutDepl);
+		}
+}
+public void tousDeplacements(){
+	for(Case c : echiquier.cases){
+		if((c.piece != null) && (c.piece.couleur == cI.piece.couleur)){
+			remplirListDepl(c, toutDepl);
+		}
+}
+
+public void parerEchec(){
+	tousDeplacements();
+	for (Case c :toutDepl){
+		
+	}
+
+}
+
+public void remplirListDepl(Case c, LinkedList<Case> list){
 	if (this.c.piece instanceof Pion)
 		depPion(list);
 	if (this.c.piece instanceof Cavalier)
@@ -145,6 +173,10 @@ public void remplirListDepl(Case c, LinkedList<Case> list{
 	if (this.c.piece instanceof Roi){
 		depRoi(list);
 	}
+}
+
+public boolean deplacementValide(Case cF){
+
 }
 
 
