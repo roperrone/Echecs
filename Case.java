@@ -26,5 +26,5 @@ public class Case {
     
     if( this.piece != null )
 		this.piece.afficher(g,x,y);
-  }
+    }
 }
