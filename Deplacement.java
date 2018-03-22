@@ -24,10 +24,10 @@ public void depPion(){
 		this.list.add(echiquier.Case[cI.x][cI.y-1]);
 		this.list.add(echiquier.Case[cI.x][cI.y-2]);
 	}
-	if (cI.piece.couleur=="blanc" && echiquier.Case[cI.x][cI.y+1]==null)
+	if (cI.piece.couleur=="blanc" && echiquier.Case[cI.x][cI.y+1].piece==null)
 		this.list.add(echiquier.Case[cI.x][cI.y+1]);
 
-	if (cI.piece.couleur=="noir" && echiquier.Case[cI.x][cI.y-1]==null)
+	if (cI.piece.couleur=="noir" && echiquier.Case[cI.x][cI.y-1].piece==null)
 		this.list.add(echiquier.Case[cI.x][cI.y-1]);
 	}
 
@@ -139,9 +139,11 @@ public void echecEtMat(){
 public void tousDeplacementsAdv(){
 	for(Case c : echiquier.cases){
 		if((c.piece != null) && (c.piece.couleur != cI.piece.couleur)){
-			remplirListDepl(c, toutDepl);
+			remplirListDepl(c, toutDeplAdv);
 		}
 }
+
+//Remplir tous les deplacements possibles du joueur
 public void tousDeplacements(){
 	for(Case c : echiquier.cases){
 		if((c.piece != null) && (c.piece.couleur == cI.piece.couleur)){
@@ -152,7 +154,7 @@ public void tousDeplacements(){
 public void parerEchec(){
 	tousDeplacements();
 	for (Case c :toutDepl){
-		
+
 	}
 
 }
