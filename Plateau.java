@@ -1,29 +1,29 @@
 import java.util.*;
 
 public class Plateau {
-    
+
     // Attributs
     private Case[][] cases;
     LinkedList <Piece> pieceSuppr= new LinkedList<Piece>();;
     String couleurCourante;
-  //  Deplacement depCourant; //deplacement courant
-    
+    Deplacement depCourant; //deplacement courant
+
     //Constructeur
     public Plateau(){
-       cases = new Case[8][8]; 
+       cases = new Case[8][8];
        couleurCourante= "blanc";
 
 	   for(int i=0; i<8; i++) {
-		  for(int j=0; j<8; j++) {   
+		  for(int j=0; j<8; j++) {
 				cases[i][j] = new Case(i,j);
 		  }
 	   }
 
        // initialisation des pièces principales
-       for(int i=0; i<8; i++) { 
+       for(int i=0; i<8; i++) {
 		   Piece p1 = null;
 		   Piece p2 = null;
-		   
+
 		   switch(i){
 			   case 0:
 			   case 7:
@@ -49,72 +49,67 @@ public class Plateau {
 				  p2 = new Roi("blanc");
 				  break;
 		   }
-		   
+
 		   cases[i][0].setPiece(p1);
 		   cases[i][7].setPiece(p2);
 	   }
-	   
+
        // initialisation des pions
        for(int i=0; i<8; i++) {
 		   Piece p1 = new Pion("noir");
 		   Piece p2 = new Pion("blancs");
-		   
+
 		   cases[i][1].setPiece(p1);
 		   cases[i][6].setPiece(p2);
-	   }   
-	   
+	   }
+
     }
-    
+
     public Case[][] getCases(){
 		return cases;
 	}
-    
-    
-    public void supprPiece(int x, int y, String couleur){
-      pieceSuppr.add(this.cases[x][y].piece);  
-      cases[x][y].piece=null; 
+
+  public void selectCase(int x, int y){
+    if(cases[x][y].piece!=null){
+      if(cases[x][y].piece.couleur==this.couleurCourante){
+        depCourant=new Deplacement(this,cases[x][y]);
+        remplirCases();
+      }
     }
-    
+  }
+
+  public void supprPiece(int x, int y){
+    pieceSuppr.add(this.cases[x][y].piece);
+    cases[x][y].piece=null;
+  }
+
     // dx dy coordonnees case de d'arrivée
-    
- /*   public void deplacerPiece(int dx, int dy, String couleur){  
-       if(depCourant.estValide(dx,dy)){
-            depCourant.resetCouleur();
-            if(this.cases[dx][dy].piece!=null && this.cases[dx][dy].piece.couleur!= this.couleurCourante){
-                supprPiece(dx, dy, (couleurCourante == "blanc" ? "blanc" : "noir"));
-            }
-            this.cases[dx][dy].piece=this.cases[this.depCourant.cI.x][this.depCourant.cI.y];
-            this.cases[this.depCourant.cI.x][this.depCourant.cI.y]=null;
-        }
-        
+  public void deplacerPiece(int dx, int dy, String couleur){
+    if(depCourant.deplacementValide(cases[dx][dy])){
+      resetCouleur();
+      if(this.cases[dx][dy].piece != null && this.cases[dx][dy].piece.couleur != this.couleurCourante){
+        supprPiece(dx, dy);
+      }
+      this.cases[dx][dy].piece = this.cases[this.depCourant.cI.x][this.depCourant.cI.y];
+      this.cases[this.depCourant.cI.x][this.depCourant.cI.y] = null;
     }
-    
+  }
 
-    
-    public boolean echec(){
-        
+//Quand on arrive au bour du plateau avec un pion on peut l'échanger avec une piece de notre choix
+  public void remplacerPiece(int x, int y,Piece p){
+    this.cases[x][y].piece=p;
+  }
+
+
+  public void remplirCases(){
+    for(Case c : depCourant.getDeplPoss()){
+      c.setActif();
     }
-    
-    public void selectCase(int x, int y){
-        if(cases[x][y].piece!=null){
-            if(cases[x][y].piece.couleur==this.couleurCourante){
-                depCourant=new Deplacement(this,cases[x][y]);
-                depCourant.changerCouleur();
-           }
-       } 
+  }
+
+  public void resetCouleur(){
+    for(Case c : depCourant.getDeplPoss()){
+      c.resetCouleur();
     }
-    
-    public void remplacerPiece(int x, int y,Piece p){
-        this.cases[x][y].piece=p;
-    }
-    
-    public void échangerPiece(int x, int y, int x1, int y1){
-        Piece p=this.cases[x][y].piece;
-        this.cases[x][y].piece=this.cases[x1][y1].piece;
-        this.cases[x1][y1].piece=p;
-    }
-    * 
-    * */
+  }
 }
-
-
