@@ -27,6 +27,10 @@ public class Case {
     this.couleur = actif;
   }
 
+  public void resetCouleur(){
+    this.couleur = ((x+y)%2 == 0) ? blanc : noir;
+  }
+
   public void afficher(Graphics g){
     g.setColor(couleur);
     g.fillRect(x*100,y*100,100,100);

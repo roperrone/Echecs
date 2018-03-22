@@ -178,7 +178,11 @@ public void remplirListDepl(Case c, LinkedList<Case> list){
 }
 
 public boolean deplacementValide(Case cF){
+	return depPoss.contains(cF);
+}
 
+public LinkedList<Case> getDeplPoss(){
+	return dePoss;
 }
 
 
