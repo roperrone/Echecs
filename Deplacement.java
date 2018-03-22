@@ -1,13 +1,20 @@
 import java.util.*;
 public class Deplacement {
 	LinkedList<Case>depPoss= new LinkedList<Case>();
+	LinkedList<Case> toutDeplAdv = new LinkedList<Case>();
+ 	LinkedList<Case> toutDepl = new LinkedList<Case>(); //tous les deplacement du joueur courant
 	Plateau echiquier;
+	boolean echecEtMat=false;
+ 	boolean pat=false;
 	boolean echec=false;
 	Case cI; // @ param case initiale: contient tous les attributs de la case de déplacement
 
 public Deplacement(Plateau p, Case c){
     this.echiquier = p;
     this.cI=c;
+    
+    this.tousDeplacementsAdv();
+	this.remplirListDepl(cI, depPoss);
 	this.remplirListDepl();
   }
 
@@ -156,7 +163,37 @@ public void depRoi(){
 		// si le déplacement est dans le tableau et qu'il n'y a pas de pièce (ou que la pièce n'est pas de la même couleur)
 		if (estDansLeTableau(x,y) && (echiquier.cases[x][y].piece==null || echiquier.cases[x][y].piece.couleur!=cI.piece.couleur))
 			depPoss.add(c);
+	
+}
+
+//Rempli tous les deplacements possibles de l'adversaire
+public void tousDeplacementsAdv(){
+	for(Case c : echiquier.cases){
+		if((c.piece != null) && (c.piece.couleur != cI.piece.couleur)){
+			remplirListDepl(c, toutDeplAdv);
+		}
+}
+
+//Remplir tous les deplacements possibles du joueur
+public void tousDeplacements(){
+	for(Case c : echiquier.cases){
+		if((c.piece != null) && (c.piece.couleur == cI.piece.couleur)){
+			remplirListDepl(c, toutDepl);
+		}
+}
+
+public void parerEchec(){
+	tousDeplacements();
+	for (Case c :toutDepl){
+
 	}
+
+}
+
+  		  
+public boolean misEnEchec(){
+ 	if(toutDeplAdv.contains(p.trouverPiece("Roi"))) return true;
+ 	else return false;
 }
 
 public int enEchec(){
@@ -167,6 +204,12 @@ public int enEchec(){
 	}
 
 	if(toutDepl.contains(p.trouverPiece("Roi"))) echec = !echec;
+}
+
+public void echecEtMat(){
+	if(misEnEchec() && remplir)
+
+	return !echecEtMat;
 }
 
 public void remplirListDepl(Case c, LinkedList<Case> list{
@@ -187,6 +230,14 @@ public void remplirListDepl(Case c, LinkedList<Case> list{
 		depRoi(list);
 	}
 }
+
+public boolean deplacementValide(Case cF){
+	return depPoss.contains(cF);
+}
+  		  
+public LinkedList<Case> getDeplPoss(){
+ 	return dePoss;
+}		  
 
 
 }
