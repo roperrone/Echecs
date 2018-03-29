@@ -107,7 +107,11 @@ public class Plateau {
     }
   }
 
+<<<<<<< HEAD
   public Case trouverPiece(String n){
+=======
+  public Case trouverPiece(Piece p){
+>>>>>>> 64c15305ad5b0273f42b4a30430af9837e709e1d
     for(int i = 0; i<cases.length; i++){
       for (int j=0;j<cases[0].length ;j++ ) {
         if(cases[i][j].piece.nom == n && cases[i][j].piece.couleur == this.couleurCourante){
@@ -115,6 +119,10 @@ public class Plateau {
         }
       }
     }
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 64c15305ad5b0273f42b4a30430af9837e709e1d
     return null;
   }
 
