@@ -199,13 +199,13 @@ public void parerEchec(){
 public void petitRoque() {
 	int x = cI.x;
 	int y = cI.y;
-	Piece tour= echiquier.cases[x+3][y];
+	Piece tour= echiquier.cases[x+3][y].piece;
 	// ajouter la condition Aucune pièce ennemie ne doit contrôler les deux cases que le Roi parcourt pour roquer.
-	if (cI.piece instanceof Roi && x==4 && (y==0 || y==7) && tour instanceof Tour && echiquier.cases[x+1][y]==null && echiquier.cases[x+2][y]==null && enEchec()==false ){
-		echiquier.cases[x+2][y]= cI.piece;
-		echiquier.cases[x][y] = null;
-		echiquier.cases[x+1][y]= tour;
-		echiquier.cases[x+3][y] = null;
+	if (cI.piece instanceof Roi && x==4 && (y==0 || y==7) && tour instanceof Tour && echiquier.cases[x+1][y].piece==null && echiquier.cases[x+2][y].piece==null ){
+		echiquier.cases[x+2][y].piece= cI.piece;
+		echiquier.cases[x][y].piece = null;
+		echiquier.cases[x+1][y].piece= tour;
+		echiquier.cases[x+3][y].piece = null;
 	}
 	else System.out.println ("Vous ne pouvez pas effectuer un petit roque"); // a revoir (i.e fenetre d'erreur)
 }
@@ -213,13 +213,13 @@ public void petitRoque() {
 public void grandRoque() {
 	int x = cI.x;
 	int y = cI.y;
-	Piece tour= echiquier.cases[0][y];
+	Piece tour= echiquier.cases[0][y].piece;
 	// ajouter la condition Aucune pièce ennemie ne doit contrôler les deux cases que le Roi parcourt pour roquer.
-	if (cI.piece instanceof Roi && x==4 && (y==0 || y==7) && tour instanceof Tour && echiquier.cases[x-1][y]==null && echiquier.cases[x-2][y]==null && echiquier.cases[x-3][y]==null && enEchec()==false ){
-		echiquier.cases[x-2][y]= cI.piece;
-		echiquier.cases[x][y] = null;
-		echiquier.cases[x-1][y]= tour;
-		echiquier.cases[0][y] = null;
+	if (cI.piece instanceof Roi && x==4 && (y==0 || y==7) && tour instanceof Tour && echiquier.cases[x-1][y]==null && echiquier.cases[x-2][y]==null && echiquier.cases[x-3][y]==null ){
+		echiquier.cases[x-2][y].piece= cI.piece;
+		echiquier.cases[x][y].piece= null;
+		echiquier.cases[x-1][y].piece= tour;
+		echiquier.cases[0][y].piece = null;
 	}
 	else System.out.println ("Vous ne pourvez pas effectuer un grand roque"); // a revoir (i.e fenetre d'erreur)
 }
