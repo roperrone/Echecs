@@ -10,10 +10,9 @@ public class Deplacement {
 	Case cI; // @ param case initiale: contient tous les attributs de la case de déplacement
 
 public Deplacement(Plateau p, Case c){
-    echiquier = p;
-    cI=c;
-
-    tousDeplacementsAdv();
+  echiquier = p;
+  cI=c;
+  tousDeplacementsAdv();
 	remplirListDepl(cI, depPoss);
   }
 
