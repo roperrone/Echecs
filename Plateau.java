@@ -107,6 +107,17 @@ public class Plateau {
     }
   }
 
+  public Case trouverPiece(Piece p){
+    for(int i = 0; i<cases.length; i){
+      for (int j=0;j<cases[0].length ;j++ ) {
+        if(cases[i][j].piece == p && cases[i][j].piece.couleur == this.couleurCourante){
+          return cases[i][j];
+          break;
+        }
+      }
+    }
+  }
+
   public void resetCouleur(){
     for(Case c : depCourant.getDeplPoss()){
       c.resetCouleur();
