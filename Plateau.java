@@ -3,7 +3,7 @@ import java.util.*;
 public class Plateau {
 
     // Attributs
-    private Case[][] cases;
+    public Case[][] cases;
     LinkedList <Piece> pieceSuppr= new LinkedList<Piece>();;
     String couleurCourante;
     Deplacement depCourant; //deplacement courant
@@ -87,11 +87,11 @@ public class Plateau {
   public void deplacerPiece(int dx, int dy, String couleur){
     if(depCourant.deplacementValide(cases[dx][dy])){
       resetCouleur();
-      if(this.cases[dx][dy].piece != null && this.cases[dx][dy].piece.couleur != this.couleurCourante){
+      if(this.cases[dx][dy].piece != null && cases[dx][dy].piece.couleur != couleurCourante){
         supprPiece(dx, dy);
       }
-      this.cases[dx][dy].piece = this.cases[this.depCourant.cI.x][this.depCourant.cI.y];
-      this.cases[this.depCourant.cI.x][this.depCourant.cI.y] = null;
+      cases[dx][dy].piece = cases[depCourant.cI.x][depCourant.cI.y].piece;
+      cases[depCourant.cI.x][depCourant.cI.y] = null;
     }
   }
 

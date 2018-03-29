@@ -2,38 +2,44 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class MoveListener implements MouseListener {
-    private Fenetre f;
-    private boolean selectione;
+    private FenetrePlateau fenetre;
+    private boolean selectionne;
 
-    public MoveListener(Fenetre f){
+    public MoveListener(FenetrePlateau f){
         fenetre = f;
-        selectione = false;
+        selectionne = false;
     }
 
+	public void mousePressed(MouseEvent e){}
+	public void mouseEntered(MouseEvent e){}
+	public void mouseExited(MouseEvent e){}
+	public void mouseReleased(MouseEvent e){}
+	
     public void mouseClicked(MouseEvent e) {
-       int X = e.getXOnScreen();
-       int Y = e.getYOnScreen();
+       int X = e.getX();
+       int Y = e.getY();
        
        Point caseJeu = positionCase(X,Y);
        
-       if( !selectione ) {
-           p.selectCase(caseJeu.getX(), caseJeu.getY());
-           selectione = true;
+       if( !selectionne ) {
+           //selectCase(caseJeu.getX(), caseJeu.getY());
+           
+           System.out.println(caseJeu.toString());
+           selectionne = true;
        }
        else {
             try {
-                p.deplacerPiece(caseJeu.getX(), caseJeu.getY());
-            } catch( Exception e ){
+              // deplacerPiece(caseJeu.getX(), caseJeu.getY());
+            } catch( Exception MouseEvent ){
                 //
             }
        }
     }
     
+    /** Retourne les coordonées de la case à partir de la position relative retournée
+     * par l'évènement MouseClicked */
     public Point positionCase(int X, int Y){
-        // ...
-            
-        Point caseJeu = new Point(new_x, new_y);
-        return caseJeu;
-    }
+		return new Point( (int)Math.floor(X/100), 7-(int)Math.floor(Y/100) );
+	}
 
 }
