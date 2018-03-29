@@ -12,7 +12,7 @@ public class Deplacement {
 public Deplacement(Plateau p, Case c){
     this.echiquier = p;
     this.cI=c;
-    
+
     this.tousDeplacementsAdv();
 	this.remplirListDepl(cI, depPoss);
 	this.remplirListDepl();
@@ -163,7 +163,7 @@ public void depRoi(){
 		// si le déplacement est dans le tableau et qu'il n'y a pas de pièce (ou que la pièce n'est pas de la même couleur)
 		if (estDansLeTableau(x,y) && (echiquier.cases[x][y].piece==null || echiquier.cases[x][y].piece.couleur!=cI.piece.couleur))
 			depPoss.add(c);
-	
+
 }
 
 //Rempli tous les deplacements possibles de l'adversaire
@@ -190,7 +190,7 @@ public void parerEchec(){
 
 }
 
-  		  
+
 public boolean misEnEchec(){
  	if(toutDeplAdv.contains(p.trouverPiece("Roi"))) return true;
  	else return false;
@@ -210,6 +210,44 @@ public void echecEtMat(){
 	if(misEnEchec() && remplir)
 
 	return !echecEtMat;
+}
+public void petitRoque() {
+	int x = cI.x;
+	int y = cI.y;
+	Piece tour= echiquier.cases[x+3][y];
+	// ajouter la condition Aucune pièce ennemie ne doit contrôler les deux cases que le Roi parcourt pour roquer.
+	if (cI.piece instanceof Roi && x==4 && (y==0 || y==7) && tour instanceof Tour && echiquier.cases[x+1][y]==null && echiquier.cases[x+2][y]==null && enEchec()==false ){
+		echiquier.cases[x+2][y]= cI.piece;
+		echiquier.cases[x][y] = null;
+		echiquier.cases[x+1][y]= tour;
+		echiquier.cases[x+3][y] = null;
+	}
+	else System.out.println ("Vous ne pouvez pas effectuer un petit roque"); // a revoir (i.e fenetre d'erreur)
+}
+
+public void grandRoque() {
+	int x = cI.x;
+	int y = cI.y;
+	Piece tour= echiquier.cases[0][y];
+	// ajouter la condition Aucune pièce ennemie ne doit contrôler les deux cases que le Roi parcourt pour roquer.
+	if (cI.piece instanceof Roi && x==4 && (y==0 || y==7) && tour instanceof Tour && echiquier.cases[x-1][y]==null && echiquier.cases[x-2][y]==null && echiquier.cases[x-3][y]==null && enEchec()==false ){
+		echiquier.cases[x-2][y]= cI.piece;
+		echiquier.cases[x][y] = null;
+		echiquier.cases[x-1][y]= tour;
+		echiquier.cases[0][y] = null;
+	}
+	else System.out.println ("Vous ne pourvez pas effectuer un grand roque"); // a revoir (i.e fenetre d'erreur)
+}
+
+public void promotion (){
+	String c = cI.piece.couleur;
+	if (cI.piece instanceof Pion && (cI.y==7 || cI.y==0))
+	cI.piece=new Reine(c); // gerer le choix de promotion
+}
+
+public void mangePion() {
+	for (Case c: depPion())
+
 }
 
 public void remplirListDepl(Case c, LinkedList<Case> list{
@@ -234,10 +272,10 @@ public void remplirListDepl(Case c, LinkedList<Case> list{
 public boolean deplacementValide(Case cF){
 	return depPoss.contains(cF);
 }
-  		  
+
 public LinkedList<Case> getDeplPoss(){
  	return dePoss;
-}		  
+}
 
 
 }
