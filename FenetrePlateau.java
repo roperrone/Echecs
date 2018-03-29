@@ -27,7 +27,7 @@ public class FenetrePlateau extends JFrame {
     content.add(plateau, BorderLayout.CENTER);
     content.add(options, BorderLayout.EAST);
     
-   // content.addMouseListener(new MoveListener(this));
+    plateau.addMouseListener(new MoveListener(this));
     
     setContentPane(content);
     setVisible(true);
