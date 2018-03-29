@@ -107,20 +107,25 @@ public class Plateau {
     }
   }
 
-  public Case trouverPiece(Piece p){
-    for(int i = 0; i<cases.length; i){
+  public Case trouverPiece(String n){
+    for(int i = 0; i<cases.length; i++){
       for (int j=0;j<cases[0].length ;j++ ) {
-        if(cases[i][j].piece == p && cases[i][j].piece.couleur == this.couleurCourante){
+        if(cases[i][j].piece.nom == n && cases[i][j].piece.couleur == this.couleurCourante){
           return cases[i][j];
-          break;
         }
       }
     }
+    return null;
   }
 
   public void resetCouleur(){
     for(Case c : depCourant.getDeplPoss()){
       c.resetCouleur();
     }
+  }
+
+  public void echangerPiece(Case c1, Case c2){
+    cases[c2.x][c2.y].setPiece(c1.piece);
+    cases[c1.x][c2.y].setPiece(null);
   }
 }

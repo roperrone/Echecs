@@ -4,6 +4,7 @@ public class Deplacement {
 	public LinkedList<Case> depPoss= new LinkedList<Case>();
 	public LinkedList<Case> toutDeplAdv = new LinkedList<Case>();
  	public LinkedList<Case> toutDepl = new LinkedList<Case>(); //tous les deplacement du joueur courant
+	public LinkedList<Case> depParer = new LinkedList<Case>();
 	boolean echecEtMat=false;
  	boolean pat=false;
 	boolean echec=false;
@@ -12,10 +13,31 @@ public class Deplacement {
 public Deplacement(Plateau p, Case c){
   echiquier = p;
   cI=c;
+	initialiserListes();
   tousDeplacementsAdv();
 	remplirListDepl(cI, depPoss);
   }
 
+public Deplacement(Plateau p, Case c1, Case c2){
+	echiquier = p;
+	p.echangerPiece(c1,c2);
+  cI=c2;
+  tousDeplacementsAdv();
+	remplirListDepl(cI, depPoss);
+}
+
+//Vide les listes des deplacements possibles
+public void initialiserListes(){
+	depPoss.clear();
+	toutDeplAdv.clear();
+	toutDepl.clear();
+	depParer.clear();
+}
+
+
+//
+// ---------- GESTION DES DEPLACEMENTS GENERAUX DES PIECES ---------
+//
 public void depPion(LinkedList<Case> list){
 
 	// le pion est sur la première ligne: il peut avancer de un ou de deux
@@ -167,6 +189,75 @@ public void depRoi( LinkedList <Case> list ){
 
 }
 
+//Rempli le tableau de deplacements possibles
+public void remplirListDepl(Case c, LinkedList<Case> list){
+	if (c.piece instanceof Pion)
+		depPion(list);
+	if (c.piece instanceof Cavalier)
+		depCavalier(list);
+	if (c.piece instanceof Fou)
+		depFou(list);
+	if (c.piece instanceof Tour)
+		depTour(list);
+	if (c.piece instanceof Reine){
+		// combinaison d'une tour et d'un fou
+		depTour(list);
+		depFou(list);
+	}
+	if (c.piece instanceof Roi){
+		depRoi(list);
+	}
+}
+
+
+
+//
+// ---------- REGLES PARTICULIERES DES ECHECS ----------
+//
+
+
+
+public void petitRoque() {
+	int x = cI.x;
+	int y = cI.y;
+	Piece tour= echiquier.cases[x+3][y].piece;
+	// ajouter la condition Aucune pièce ennemie ne doit contrôler les deux cases que le Roi parcourt pour roquer.
+	if (cI.piece instanceof Roi && x==4 && (y==0 || y==7) && tour instanceof Tour && echiquier.cases[x+1][y]==null && echiquier.cases[x+2][y]==null && enEchec()==false ){
+		echiquier.cases[x+2][y].piece= cI.piece;
+		echiquier.cases[x][y].piece = null;
+		echiquier.cases[x+1][y].piece = tour;
+		echiquier.cases[x+3][y].piece = null;
+	}
+	else System.out.println ("Vous ne pouvez pas effectuer un petit roque"); // a revoir (i.e fenetre d'erreur)
+}
+
+public void grandRoque() {
+	int x = cI.x;
+	int y = cI.y;
+	Piece tour= echiquier.cases[0][y].piece;
+	// ajouter la condition Aucune pièce ennemie ne doit contrôler les deux cases que le Roi parcourt pour roquer.
+	if (cI.piece instanceof Roi && x==4 && (y==0 || y==7) && tour instanceof Tour && echiquier.cases[x-1][y]==null && echiquier.cases[x-2][y]==null && echiquier.cases[x-3][y]==null && enEchec()==false ){
+		echiquier.cases[x-2][y].piece = cI.piece;
+		echiquier.cases[x][y].piece = null;
+		echiquier.cases[x-1][y].piece = tour;
+		echiquier.cases[0][y].piece = null;
+	}
+	else System.out.println ("Vous ne pourvez pas effectuer un grand roque"); // a revoir (i.e fenetre d'erreur)
+}
+
+public void promotion (){
+	String c = cI.piece.couleur;
+	if (cI.piece instanceof Pion && (cI.y==7 || cI.y==0))
+	cI.piece=new Reine(c); // gerer le choix de promotion
+}
+
+
+//
+// ---------- ETAT DU JEU ---------
+//
+
+
+
 //Rempli tous les deplacements possibles de l'adversaire
 public void tousDeplacementsAdv(){
 	for(Case[] cases : echiquier.cases){
@@ -189,84 +280,54 @@ public void tousDeplacements(){
 	}
 }
 
-public void parerEchec(){
-	tousDeplacements();
-	for (Case c :toutDepl){
+public boolean parerEchec(){
+	for (int i=0;i<echiquier.cases.length;i++) {
+		for (int j=0;j<echiquier.cases[0].length;j++) {
+			if(echiquier.cases[i][j].piece.couleur.equals(echiquier.couleurCourante)){ // Si la piece appartient au joueur courant
+				Deplacement a = new Deplacement(echiquier, echiquier.cases[i][j]);
+				simuler(a.getDeplPoss()); //Regarde si les deplacement de cette piece permettent de parer l'echec
+			}
+		}
+	}
+	return depParer.isEmpty();
+}
 
+//permet de simuler le deplacement d'une piece et d'evaluer l'état du jeu suite au deplacement
+public void simuler(LinkedList<Case> list){
+	for(Case c : list){
+		Deplacement d = new Deplacement(echiquier, cI, c);
+		if(!d.enEchec()){ //verifie si le deplacement permet de parer l'echec
+			depParer.add(c);
+		}
 	}
 }
 
-public void petitRoque() {
-	int x = cI.x;
-	int y = cI.y;
-	Piece tour= echiquier.cases[x+3][y];
-	// ajouter la condition Aucune pièce ennemie ne doit contrôler les deux cases que le Roi parcourt pour roquer.
-	if (cI.piece instanceof Roi && x==4 && (y==0 || y==7) && tour instanceof Tour && echiquier.cases[x+1][y]==null && echiquier.cases[x+2][y]==null && enEchec()==false ){
-		echiquier.cases[x+2][y]= cI.piece;
-		echiquier.cases[x][y] = null;
-		echiquier.cases[x+1][y]= tour;
-		echiquier.cases[x+3][y] = null;
-	}
-	else System.out.println ("Vous ne pouvez pas effectuer un petit roque"); // a revoir (i.e fenetre d'erreur)
-}
-
-public void grandRoque() {
-	int x = cI.x;
-	int y = cI.y;
-	Piece tour= echiquier.cases[0][y];
-	// ajouter la condition Aucune pièce ennemie ne doit contrôler les deux cases que le Roi parcourt pour roquer.
-	if (cI.piece instanceof Roi && x==4 && (y==0 || y==7) && tour instanceof Tour && echiquier.cases[x-1][y]==null && echiquier.cases[x-2][y]==null && echiquier.cases[x-3][y]==null && enEchec()==false ){
-		echiquier.cases[x-2][y]= cI.piece;
-		echiquier.cases[x][y] = null;
-		echiquier.cases[x-1][y]= tour;
-		echiquier.cases[0][y] = null;
-	}
-	else System.out.println ("Vous ne pourvez pas effectuer un grand roque"); // a revoir (i.e fenetre d'erreur)
-}
-
-public void promotion (){
-	String c = cI.piece.couleur;
-	if (cI.piece instanceof Pion && (cI.y==7 || cI.y==0))
-	cI.piece=new Reine(c); // gerer le choix de promotion
-}
-
-public void mangePion() {
-	for (Case c: depPion())
-
-}
-
-/*
+//Roi pouvant etre mangé par l'adversaire
 public boolean misEnEchec(){
  	if( toutDeplAdv.contains(echiquier.trouverPiece("Roi")) )
 		return true;
  	else
 		return false;
-} */
+}
 
-
-public void remplirListDepl(Case c, LinkedList<Case> list){
-	if (c.piece instanceof Pion)
-		depPion(list);
-	if (c.piece instanceof Cavalier)
-		depCavalier(list);
-	if (c.piece instanceof Fou)
-		depFou(list);
-	if (c.piece instanceof Tour)
-		depTour(list);
-	if (c.piece instanceof Reine){
-		// combinaison d'une tour et d'un fou
-		depTour(list);
-		depFou(list);
-	}
-	if (c.piece instanceof Roi){
-		depRoi(list);
+public boolean enEchec(){
+	if(misEnEchec() && parerEchec()){
+		return true;
+	}else{
+		return false;
 	}
 }
+
+
+//
+// ------ VALIDATION DES COUPS -------
+//
 
 public boolean deplacementValide(Case cF){
 	return depPoss.contains(cF);
 }
 
+//return deplacments possibles
 public LinkedList<Case> getDeplPoss(){
  	return depPoss;
 }
