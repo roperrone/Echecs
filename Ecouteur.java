@@ -32,13 +32,16 @@ public class Ecouteur implements ActionListener {
         f.content.add(f.lancer, BorderLayout.SOUTH);
       } else if(s == f.lancer){
           if(nbjoueurs == 1){
-            Jeu jeu = new Jeu(new Joueur(f.name1.getText()), null); //avec IA
+            Jeu j = new Jeu(new Joueur(f.name1.getText()), null); //avec IA
+            j.start();
+            FenetrePlateau f = new FenetrePlateau(j);
           }else if(nbjoueurs == 2){
-            Jeu jeu = new Jeu(new Joueur(f.name1.getText()), new Joueur(f.name2.getText()));
+            Jeu j = new Jeu(new Joueur(f.name1.getText()), new Joueur(f.name2.getText()) );
+            j.start();
+        		FenetrePlateau fe = new FenetrePlateau(j);
           }
+        }
+
       }
     }
-
-  }
-
 }
