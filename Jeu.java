@@ -1,7 +1,7 @@
 public class Jeu {
-    private Joueur[] tabJoueur;
-    static public int currentPlayer;
+   private Joueur[] tabJoueur;
     public Plateau plateau;
+    static public int currentPlayer;
     
     public Jeu( Joueur j1, Joueur j2 ) {
         tabJoueur = new Joueur[2];

@@ -9,12 +9,11 @@ public class FenetrePlateau extends JFrame {
 
   public FenetrePlateau(Jeu j){
     super("Echecs");
+    jeu = j;
     
     setSize(1200,825);
     setResizable(false);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-	this.jeu = j;
 	
     content = new JPanel(new BorderLayout());
     plateau = new DessinePlateau(this, jeu); 
@@ -31,6 +30,10 @@ public class FenetrePlateau extends JFrame {
     
     setContentPane(content);
     setVisible(true);
+  }
+  
+  public Jeu getJeu(){
+	return jeu;
   }
   
   public static void main(String args[]){

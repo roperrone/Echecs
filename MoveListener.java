@@ -22,7 +22,11 @@ public class MoveListener implements MouseListener {
        Point caseJeu = positionCase(X,Y);
        
        if( !selectionne ) {
-           //selectCase(caseJeu.getX(), caseJeu.getY());
+		   Plateau p = fenetre.getJeu().plateau;
+		   Case c = p.cases[(int)caseJeu.getX()][(int)caseJeu.getY()];
+		   
+           Deplacement dep = new Deplacement(p,c); 
+           LinkedList<Case> depPossible = dep.depPoss;
            
            System.out.println(caseJeu.toString());
            selectionne = true;

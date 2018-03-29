@@ -229,12 +229,12 @@ public void promotion (){
 	if (cI.piece instanceof Pion && (cI.y==7 || cI.y==0))
 	cI.piece=new Reine(c); // gerer le choix de promotion
 }
-
+/*
 public void mangePion() {
 	for (Case c: depPion())
 
 }
-
+*/
 /*
 public boolean misEnEchec(){
  	if( toutDeplAdv.contains(echiquier.trouverPiece("Roi")) )
