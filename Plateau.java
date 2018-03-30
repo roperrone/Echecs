@@ -65,7 +65,7 @@ public class Plateau {
 
     }
 
-    public Case[][] getCases(){
+  public Case[][] getCases(){
 		return cases;
 	}
 
@@ -95,7 +95,7 @@ public class Plateau {
     }
   }
 
-//Quand on arrive au bour du plateau avec un pion on peut l'échanger avec une piece de notre choix
+//Quand on arrive au bout du plateau avec un pion on peut l'échanger avec une piece de notre choix
   public void remplacerPiece(int x, int y,Piece p){
     this.cases[x][y].piece=p;
   }
@@ -111,7 +111,7 @@ public class Plateau {
   public Case trouverPiece(String n){
     for(int i = 0; i<cases.length; i++){
       for (int j=0;j<cases[0].length ;j++ ) {
-        if(cases[i][j].piece.nom == n && cases[i][j].piece.couleur == this.couleurCourante){
+        if(cases[i][j].piece.nom.equals(n) && cases[i][j].piece.couleur.equals(this.couleurCourante)){
           return cases[i][j];
         }
       }

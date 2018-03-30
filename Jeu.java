@@ -14,10 +14,10 @@ public class Jeu {
     public void start() {
    //     do { 
           
-          currentPlayer = (int) Math.random()*2; // 0 ou 1
+          //currentPlayer = (int) Math.random()*2; // 0 ou 1
           
-          Joueur blanc = tabJoueur[currentPlayer];
-          Joueur noir = tabJoueur[Math.abs(currentPlayer-1)];
+          Joueur blanc = tabJoueur[0];
+          Joueur noir = tabJoueur[1];
           
           blanc.definirCouleur("blanc");
           noir.definirCouleur("noir");

@@ -5,7 +5,7 @@ import javax.swing.*;
 
 public class Ecouteur implements ActionListener {
   private FenetreBienvenue f;
-  int nbjoueurs;
+  
 
   public Ecouteur(FenetreBienvenue fe){
     this.f = fe;
@@ -17,28 +17,39 @@ public class Ecouteur implements ActionListener {
 
     if(s instanceof JButton){
       if(s == f.un){
-        nbjoueurs = 1;
+		f.un.setVisible(false);
+		f.deux.setVisible(false);
+		f.joueur.setVisible(false);
+        f.nbJoueurs = 1;
         f.setSize(400,150);
-        f.p2.add(f.name1);
+        f.p2.add(f.p4);
         f.content.add(f.p2, BorderLayout.CENTER);
         f.content.add(f.lancer, BorderLayout.SOUTH);
       }else if(s == f.deux){
-        nbjoueurs = 2;
+		f.un.setVisible(false);
+		f.deux.setVisible(false);
+		f.joueur.setVisible(false);
+        f.nbJoueurs = 2;
         f.setSize(400,170);
-        f.p3.add(f.name1, BorderLayout.NORTH);
-        f.p3.add(f.name2, BorderLayout.SOUTH);
+        f.p3.add(f.p4, BorderLayout.NORTH);
+        f.p3.add(f.p5, BorderLayout.SOUTH);
         f.p2.add(f.p3, BorderLayout.CENTER);
         f.content.add(f.p2, BorderLayout.CENTER);
         f.content.add(f.lancer, BorderLayout.SOUTH);
-      } else if(s == f.lancer){
-          if(nbjoueurs == 1){
+      }else if(s == f.lancer){
+          if(f.nbJoueurs == 1){
             Jeu jeu = new Jeu(new Joueur(f.name1.getText()), null); //avec IA
-          }else if(nbjoueurs == 2){
-            Jeu jeu = new Jeu(new Joueur(f.name1.getText()), new Joueur(f.name2.getText()));
+       }else if(f.nbJoueurs == 2 && !(f.name1.getText().equals(null)) && !(f.name2.getText().equals(null))){
+			Joueur j1=new Joueur(f.name1.getText());
+			Joueur j2=new Joueur(f.name2.getText());
+            Jeu jeu = new Jeu(j1,j2);
+            FenetrePlateau fP = new FenetrePlateau(jeu);
           }
+	  }
+      } 
       }
     }
 
-  }
+  
 
-}
+
