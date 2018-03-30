@@ -36,6 +36,7 @@ public class Ecouteur implements ActionListener {
         f.p2.add(f.p3, BorderLayout.CENTER);
         f.content.add(f.p2, BorderLayout.CENTER);
         f.content.add(f.lancer, BorderLayout.SOUTH);
+
       }else if(s == f.lancer){
           if(f.nbJoueurs == 1){
             Jeu jeu = new Jeu(new Joueur(f.name1.getText()), null); //avec IA
@@ -51,5 +52,4 @@ public class Ecouteur implements ActionListener {
     }
 
   
-
 
