@@ -24,13 +24,15 @@ public class MoveListener implements MouseListener {
 
        if( !selectionne ) {
 		   Plateau p = fenetre.getJeu().plateau;
+
 		   Case c = p.cases[(int)caseJeu.getX()][(int)caseJeu.getY()];
 
            Deplacement dep = new Deplacement(p,c);
            LinkedList<Case> depPossible = dep.getDeplPoss();
 
-           System.out.println(caseJeu.toString());
+           System.out.println(depPossible); 
            selectionne = true;
+          
        }
        else {
             try {
@@ -39,6 +41,7 @@ public class MoveListener implements MouseListener {
                 //
             }
        }
+
     }
 
     /** Retourne les coordonées de la case à partir de la position relative retournée

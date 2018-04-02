@@ -33,7 +33,7 @@ public class FenetrePlateau extends JFrame {
   }
 
   public Jeu getJeu(){ return jeu; }
-/*
+
   public static void main(String args[]){
 	    Joueur j1 = new Joueur("Romain");
 	    Joueur j2 = new Joueur("Marie");
@@ -42,5 +42,5 @@ public class FenetrePlateau extends JFrame {
 		j.start();
 
 		FenetrePlateau f = new FenetrePlateau(j);
-  }*/
+  }
 }

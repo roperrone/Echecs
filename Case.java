@@ -7,7 +7,9 @@ import java.io.IOException;
 public class Case {
   public int x;
   public int y;
+  
   public Piece piece;
+  
   Color couleur;
   Color blanc = new Color(242,197,142);
   Color noir = new Color(129,88,75);
@@ -37,5 +39,9 @@ public class Case {
 
     if( this.piece != null )
 		this.piece.afficher(g,x,y);
-    }
+  }
+  
+  public String toString() {
+     return "[x:"+x+", y:"+y+"]";
+  }
 }
