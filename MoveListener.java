@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
-
+import javax.swing.*;
 public class MoveListener implements MouseListener {
     private FenetrePlateau fenetre;
     private boolean selectionne;
@@ -29,9 +29,14 @@ public class MoveListener implements MouseListener {
 
            Deplacement dep = new Deplacement(p,c);
            LinkedList<Case> depPossible = dep.getDeplPoss();
-
+		
            System.out.println(depPossible); 
            selectionne = true;
+           for (Case a : depPossible){
+			   a.setActif();
+		   }
+		   fenetre.repaint();
+		   
           
        }
        else {
