@@ -22,11 +22,11 @@ public class FenetrePlateau extends JFrame {
     options.setBackground(new Color(247,247,247));
     options.setPreferredSize(new Dimension(400, 820));
 
-
     content.add(plateau, BorderLayout.CENTER);
     content.add(options, BorderLayout.EAST);
 
-    plateau.addMouseListener(new MoveListener(this));
+    plateau.addMouseListener(new ClickListener(this));
+    plateau.addMouseMotionListener(new MoveListener(this));
 
     setContentPane(content);
     setVisible(true);
@@ -34,7 +34,7 @@ public class FenetrePlateau extends JFrame {
 
   public Jeu getJeu(){ return jeu; }
 
- /* public static void main(String args[]){
+  public static void main(String args[]){
 	    Joueur j1 = new Joueur("Romain");
 	    Joueur j2 = new Joueur("Marie");
 
@@ -42,5 +42,5 @@ public class FenetrePlateau extends JFrame {
 		j.start();
 
 		FenetrePlateau f = new FenetrePlateau(j);
-  }*/
+  }
 }
