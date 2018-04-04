@@ -27,19 +27,19 @@ public class ClickListener implements MouseListener {
            int Y = e.getY();
            
            Point c = positionCase(X,Y);
-           caseArrivee = new Case((int)c.getX(), (int)c.getY());
+           caseArrivee = fenetre.getJeu().plateau.cases[(int)c.getX()][(int)c.getY()];
 
-           if ( depPossible.contains(caseArrivee) ){             
-                System.out.println("ok!");   
+           if ( depPossible.contains(caseArrivee) ){                             
+                Piece p = caseDepart.piece;
                 
-                System.out.println( caseArrivee );
-                System.out.println( caseDepart );
-                
-                caseArrivee.setPiece(caseDepart.piece);
                 caseDepart.setPiece(null);
+                caseArrivee.setPiece(p);
                 
+                for (Case a : depPossible){
+                       a.resetCouleur();
+                }
+                   
                 fenetre.repaint();
-                                
                 selectionne = false;
            }
         } 
@@ -62,14 +62,17 @@ public class ClickListener implements MouseListener {
                Deplacement dep = new Deplacement(p,caseDeplacement);
                depPossible = dep.getDeplPoss();
                 
-               selectionne = true;
-               System.out.println(depPossible);
-               
-               for (Case a : depPossible){
-                   a.setActif();
-               }
-               
-               fenetre.repaint();
+               if( depPossible.size() >= 1 ){
+                   selectionne = true;
+                   
+                   for (Case a : depPossible){
+                       a.setActif();
+                   }
+                   
+                   fenetre.repaint();
+                }
+                
+                System.out.println(depPossible);
           }
        }
        

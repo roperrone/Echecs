@@ -14,13 +14,11 @@ public class DessinePlateau extends JPanel {
 		Plateau p = jeu.plateau;
 		Case[][] c = p.getCases();
 		
-		for(int i=0; i<c[0].length; i++){
+		for(int i=0; i<c.length; i++){
 			for(int j=0; j<c.length; j++){
 				c[i][j].afficher(g);
 			}
-		}
-
-		
+		}		
 	}
 	
 }

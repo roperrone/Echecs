@@ -17,8 +17,7 @@ public class Pion extends Piece {
       img = ImageIO.read(new File(super.file+super.nom+(this.couleur == "noir" ? "N.png" : "B.png")));
     } catch(IOException e){}
 
-      g.drawImage(img, 15+i*100, 15+j*100, null);
-
+     g.drawImage(img, 15+i*100, 15+j*100, null);
   }
 
 }

@@ -23,7 +23,7 @@ public class Case {
   }
 
   public void setPiece(Piece p){
-	  piece = p;
+	  this.piece = p;
   }
 
   public void setActif(){
@@ -42,8 +42,8 @@ public class Case {
     g.setColor(couleur);
     g.fillRect(x*100,y*100,100,100);
 
-    if( this.piece != null )
-		this.piece.afficher(g,x,y);
+    if( piece != null )
+		piece.afficher(g,x,y);
   }
   
   public String toString() {
