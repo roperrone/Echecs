@@ -7,13 +7,14 @@ import java.io.IOException;
 public class Case {
   public int x;
   public int y;
-  
+
   public Piece piece;
-  
+
   Color couleur;
   Color blanc = new Color(242,197,142);
   Color noir = new Color(129,88,75);
-  Color actif = new Color(149,188,166);
+  Color actifC = new Color(138,195,74);
+  Color actifF = new Color(123,178,65);
 
   public Case(int i, int j){
     x = i;
@@ -26,7 +27,7 @@ public class Case {
   }
 
   public void setActif(){
-    this.couleur = actif;
+    this.couleur = ((x+y)%2 == 0) ? actifC : actifF;
   }
 
   public void resetCouleur(){
@@ -40,7 +41,7 @@ public class Case {
     if( this.piece != null )
 		this.piece.afficher(g,x,y);
   }
-  
+
   public String toString() {
      return "[x:"+x+", y:"+y+"]";
   }
