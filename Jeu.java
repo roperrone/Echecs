@@ -1,5 +1,5 @@
 public class Jeu {
-   private Joueur[] tabJoueur;
+    private Joueur[] tabJoueur;
     public Plateau plateau;
     static public int currentPlayer;
     
@@ -16,11 +16,11 @@ public class Jeu {
           
           //currentPlayer = (int) Math.random()*2; // 0 ou 1
           
-          Joueur blanc = tabJoueur[0];
-          Joueur noir = tabJoueur[1];
+          Joueur JoueurBlanc = tabJoueur[0];
+          Joueur JoueurNoir = tabJoueur[1];
           
-          blanc.definirCouleur("blanc");
-          noir.definirCouleur("noir");
+          JoueurBlanc.definirCouleur("blanc");
+          JoueurNoir.definirCouleur("noir");
 
 	      
 	      // ajouter listener -> MouseListner position -> méthode pour déduire la case et ses coordonées (x,y)

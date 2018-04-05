@@ -31,12 +31,14 @@ public class ClickListener implements MouseListener {
            Point c = positionCase(X,Y);
            caseArrivee = fenetre.getJeu().plateau.cases[(int)c.getX()][(int)c.getY()];
 
-			// si le déplacement est possible, on déplace la pièce
+			// si le déplacement est possible, on déplace la pièce et on passe au joueur suivant
            if ( depPossible.contains(caseArrivee) ){                             
                 Piece p = caseDepart.piece;
                 
                 caseDepart.setPiece(null);
                 caseArrivee.setPiece(p);
+                
+				fenetre.getJeu().plateau.switchCouleurCourante();
            }
 
 			for (Case a : depPossible){
@@ -44,16 +46,16 @@ public class ClickListener implements MouseListener {
 			}
               
             selectionne = false;
+            
+            pieceSelectionee.resetPosition();
+			pieceSelectionee = null;
+			
+			selectionne = false; 
+			fenetre.repaint();    
         } 
-        
-        pieceSelectionee.resetPosition();
-        pieceSelectionee = null;
-        
-        selectionne = false; 
-        fenetre.repaint();    
     }
 
-    public void mousePressed(MouseEvent e) {
+    public void mousePressed(MouseEvent e) {		
        int X = e.getX();
        int Y = e.getY();
 
@@ -65,22 +67,20 @@ public class ClickListener implements MouseListener {
 		   caseDepart = p.cases[(int)caseJeu.getX()][(int)(caseJeu.getY())];
            Case caseDeplacement = p.cases[(int)caseJeu.getX()][(int)(caseJeu.getY())];                      
                      
-           if( caseDepart.piece != null ){
+           if( caseDepart.piece != null && caseDepart.piece.couleur == fenetre.getJeu().plateau.couleurCourante ){
                Deplacement dep = new Deplacement(p,caseDeplacement);
                pieceSelectionee = caseDepart.piece;
                depPossible = dep.getDeplPoss();
+               
+               selectionne = true;
                 
-               if( depPossible.size() >= 1 ){
-                   selectionne = true;
-                   
+               if( depPossible.size() >= 1 ){                   
                    for (Case a : depPossible){
                        a.setActif();
                    }
                    
                    fenetre.repaint();
                 }
-                
-                System.out.println(depPossible);
           }
        }
        
