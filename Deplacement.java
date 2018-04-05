@@ -88,9 +88,7 @@ public void depCavalier(LinkedList <Case> list ){
             // si la pièce est dans le tableau et que la couleur de la pièce sur la case où l'on se déplace
             // est différente de la couleur du joueur ou ne contient pas de pièce, alors on ajoute ce déplacement aux déplacements possibles
             if (estDansLeTableau(x,y) && (echiquier.cases[x][y].piece == null || !echiquier.cases[x][y].piece.couleur.equals(coul)))
-                    list.add(echiquier.cases[x][y]);
-          
-                   
+                    list.add(echiquier.cases[x][y]);                
         }
 }
 
@@ -111,7 +109,7 @@ public void depFou( LinkedList <Case> list ){
       // Le nombre maximal de coup possible dans chaque direction: 7-a
         int a = Math.min(x,y);
 
-        for (int i=1; i<7-a ; i++){
+        for (int i=1; i<8-a ; i++){
             if (estDansLeTableau (y+i,x+i))
                 depHD.add(new Case(x+i,y+i));
             if (estDansLeTableau(y-i,x+i))
@@ -137,11 +135,11 @@ public void verif(LinkedList <Case> dep, LinkedList <Case> list){
 		 x=c.x;
 		 y=c.y;
 		 // si la case correspondante ne contient pas de pièce
-		 if(echiquier.cases[x][y]==null) {
+		 if(echiquier.cases[x][y].piece==null) {
 			 list.add(echiquier.cases[x][y]);
 		 } else {
 			 // la couleur de la pièce sur la case est différente de la couleur du joueur
-			 if(echiquier.cases[x][y].couleur.equals(coul)){
+			 if(echiquier.cases[x][y].piece!=null && !echiquier.cases[x][y].piece.couleur.equals(coul)){
 				 list.add(echiquier.cases[x][y]);
 			 }
 			 break;
@@ -161,17 +159,16 @@ public void depTour( LinkedList <Case> list ){
             int y = cI.y;
 
             // Le nombre maximal de coup possible dans chaque direction: 7-a
-            int a = Math.min(x,y);
-
-            for (int i=1; i<7-a ; i++){
+    
+            for (int i=1; i<8 ; i++){
                 if (estDansLeTableau (y+i,x))
-                    depH.add(new Case(x,y+i));
+                    depB.add(new Case(x,y+i));
                 if (estDansLeTableau(y,x+i))
                     depD.add(new Case(x+i,y));
                 if (estDansLeTableau(x-i,y))
                     depG.add(new Case(x-i,y));
                 if (estDansLeTableau(y-i,x))
-                    depB.add(new Case(x,y-i));
+                    depH.add(new Case(x,y-i));
             }
 
             verif(depH, list);
@@ -200,10 +197,10 @@ public void depRoi( LinkedList <Case> list ){
        
         for(Case c: dep ) {
             x = c.x;
-            y = 7-c.y;
+            y = c.y;
 
             // si le déplacement est dans le tableau et qu'il n'y a pas de pièce (ou que la pièce n'est pas de la même couleur)
-            if (estDansLeTableau(x,y) && (echiquier.cases[x][y].piece==null || echiquier.cases[x][y].piece.couleur.equals(coul)))
+            if (estDansLeTableau(x,y) && (echiquier.cases[x][y].piece==null || !echiquier.cases[x][y].piece.couleur.equals(coul)))
                 list.add(echiquier.cases[x][y]);
         }
 
