@@ -56,7 +56,7 @@ public class ClickListener implements MouseListener {
 		   Plateau p = fenetre.getJeu().plateau;
 
 		   caseDepart = p.cases[(int)caseJeu.getX()][(int)(caseJeu.getY())];
-           Case caseDeplacement = p.cases[(int)caseJeu.getX()][(int)(7-caseJeu.getY())];                      
+           Case caseDeplacement = p.cases[(int)caseJeu.getX()][(int)(caseJeu.getY())];                      
                      
            if( caseDepart.piece != null ){
                Deplacement dep = new Deplacement(p,caseDeplacement);

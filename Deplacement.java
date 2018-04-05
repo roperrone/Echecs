@@ -50,22 +50,22 @@ public void depPion(LinkedList<Case> list){
 	int y= cI.y;
     try {
         // le pion est sur la première ligne: il peut avancer de un ou de deux
-        if (y==1 && echiquier.cases[x][y+1].piece==null && echiquier.cases[x][y+2].piece==null){
-            list.add(echiquier.cases[x][7-(y+1)]);
-            list.add(echiquier.cases[x][7-(y+2)]);
+        if (y==1 && echiquier.cases[x][2].piece==null && echiquier.cases[x][3].piece==null){
+            list.add(echiquier.cases[x][2]);
+            list.add(echiquier.cases[x][3]);
         }
-        else if (y==6 && echiquier.cases[x][y-1].piece==null && echiquier.cases[x][y-2].piece==null){
-            list.add(echiquier.cases[x][7-(y-1)]);
-            list.add(echiquier.cases[x][7-(y-2)]);
+        else if (y==6 && echiquier.cases[x][5].piece==null && echiquier.cases[x][5].piece==null){
+            list.add(echiquier.cases[x][4]);
+            list.add(echiquier.cases[x][5]);
         } // sinon le pion ne peut avancer que d'une seule case à la fois
         else if (cI.piece.couleur=="noir" && echiquier.cases[x][y+1].piece==null)
-            list.add(echiquier.cases[x][7-(y+1)]);
+            list.add(echiquier.cases[x][y+1]);
         else if (cI.piece.couleur=="blanc" && echiquier.cases[x][y-1]==null)
-            list.add(echiquier.cases[x][7-(y-1)]);
+            list.add(echiquier.cases[x][y-1]);
     } catch( Exception e ){}
 }
 
-public void depCavalier( LinkedList <Case> list ){
+public void depCavalier(LinkedList <Case> list ){
 
         // on envisage tous les déplacements possibles
         LinkedList <Case> dep = new LinkedList<Case>();
@@ -86,8 +86,10 @@ public void depCavalier( LinkedList <Case> list ){
             x=c.x; 	y=c.y;
             // si la pièce est dans le tableau et que la couleur de la pièce sur la case où l'on se déplace
             // est différente de la couleur du joueur ou ne contient pas de pièce, alors on ajoute ce déplacement aux déplacements possibles
-            if ( estDansLeTableau(x,y) && (echiquier.cases[x][y].piece == null || !echiquier.cases[x][y].piece.couleur.equals(coul)))
-                    list.add(echiquier.cases[x][7-y]);
+            if (estDansLeTableau(x,y) && (echiquier.cases[x][y].piece == null || !echiquier.cases[x][y].piece.couleur.equals(coul)))
+                    list.add(echiquier.cases[x][y]);
+          
+                   
         }
 }
 
@@ -132,7 +134,7 @@ public void verif(LinkedList <Case> dep, LinkedList <Case> list){
   int y=0;
   for(Case c: dep){
 		 x=c.x;
-		 y=7-c.y;
+		 y=c.y;
 		 // si la case correspondante ne contient pas de pièce
 		 if(echiquier.cases[x][y]==null) {
 			 list.add(echiquier.cases[x][y]);
