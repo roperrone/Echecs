@@ -5,20 +5,32 @@ import java.io.File;
 import java.io.IOException;
 
 public class Roi extends Piece {
-
+  private Image img;
+  
   public Roi(String c){
-    super(c,"Roi",1);
-  }
-
-  public void afficher(Graphics g, int i, int j){
+    super(c,"Roi",10);
+    
     Image img = null;
-
     try {
       img = ImageIO.read(new File(super.file+super.nom+(this.couleur == "noir" ? "N.png" : "B.png")));
     } catch(IOException e){}
-
-      g.drawImage(img, 15+i*100, 15+j*100, null);
-
+    
   }
 
+  public void afficher(Graphics g, int i, int j){
+    g.drawImage(img, 15+i*100, 15+j*100, null);
+  }
+  
+  public void afficher(Graphics g, int x, int y, boolean custom){
+	if( !custom ) {
+		afficher(g,x,y);
+	} else {
+		g.drawImage(img, x, y, null);
+	}
+  }
+
+  public String toString(){
+	 return "Roi "+this.couleur;
+  }  
+  
 }
