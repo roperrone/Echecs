@@ -65,6 +65,10 @@ public class Plateau {
 
     }
 
+  public void switchCouleurCourante(){
+	 couleurCourante = ( couleurCourante == "blanc" ) ? "noir" : "blanc";
+  }
+
   public Case[][] getCases(){
 		return cases;
 	}
