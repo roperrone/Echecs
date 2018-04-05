@@ -107,9 +107,9 @@ public void depFou( LinkedList <Case> list ){
         int x = cI.x;
         int y = cI.y;
       // Le nombre maximal de coup possible dans chaque direction: 7-a
-        int a = Math.min(x,y);
+   
 
-        for (int i=1; i<8-a ; i++){
+        for (int i=1; i<8 ; i++){
             if (estDansLeTableau (y+i,x+i))
                 depHD.add(new Case(x+i,y+i));
             if (estDansLeTableau(y-i,x+i))
