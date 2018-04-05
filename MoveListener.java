@@ -10,13 +10,15 @@ public class MoveListener implements MouseMotionListener {
         fenetre = f;
     }
 
-    public void mouseDragged(MouseEvent e) {}
-    public void mouseMoved(MouseEvent e) {}
-
-    /** Retourne les coordonées de la case à partir de la position relative retournée
-     * par l'évènement MouseClicked */
-    public Point positionCase(int X, int Y){
-		return new Point( (int)Math.floor(X/100), 7-(int)Math.floor(Y/100) );
+    public void mouseDragged(MouseEvent e) {
+	   int X = e.getX();
+       int Y = e.getY();
+       
+       Piece p = fenetre.clickListen.pieceSelectionee;
+       p.setCustomPosition(X,Y);
+       
+       fenetre.repaint();
 	}
+    public void mouseMoved(MouseEvent e) {}
 
 }

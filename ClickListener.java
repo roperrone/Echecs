@@ -10,6 +10,8 @@ public class ClickListener implements MouseListener {
     public boolean selectionne;
     private Case caseDepart;
     private Case caseArrivee;
+    
+    public Piece pieceSelectionee = null;
 
     public ClickListener(FenetrePlateau f){
         fenetre = f;
@@ -29,21 +31,26 @@ public class ClickListener implements MouseListener {
            Point c = positionCase(X,Y);
            caseArrivee = fenetre.getJeu().plateau.cases[(int)c.getX()][(int)c.getY()];
 
+			// si le déplacement est possible, on déplace la pièce
            if ( depPossible.contains(caseArrivee) ){                             
                 Piece p = caseDepart.piece;
                 
                 caseDepart.setPiece(null);
                 caseArrivee.setPiece(p);
-                
-                for (Case a : depPossible){
-                       a.resetCouleur();
-                }
-                   
-                fenetre.repaint();
-                selectionne = false;
            }
-        } 
 
+			for (Case a : depPossible){
+				a.resetCouleur();
+			}
+              
+            selectionne = false;
+        } 
+        
+        pieceSelectionee.resetPosition();
+        pieceSelectionee = null;
+        
+        selectionne = false; 
+        fenetre.repaint();    
     }
 
     public void mousePressed(MouseEvent e) {
@@ -60,6 +67,7 @@ public class ClickListener implements MouseListener {
                      
            if( caseDepart.piece != null ){
                Deplacement dep = new Deplacement(p,caseDeplacement);
+               pieceSelectionee = caseDepart.piece;
                depPossible = dep.getDeplPoss();
                 
                if( depPossible.size() >= 1 ){

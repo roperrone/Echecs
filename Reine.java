@@ -5,18 +5,26 @@ import java.io.File;
 import java.io.IOException;
 
 public class Reine extends Piece {
-
+  private Image img;
+  
   public Reine(String c){
-    super(c,"Reine",1);
-  }
-
-  public void afficher(Graphics g, int i, int j){
-    Image img = null;
-
+    super(c,"Reine",10);
+    
+    img = null;
     try {
       img = ImageIO.read(new File(super.file+super.nom+(this.couleur == "noir" ? "N.png" : "B.png")));
     } catch(IOException e){}
-
-      g.drawImage(img, 15+i*100, 15+j*100, null);
+    
   }
+
+  public void afficher(Graphics g, int i, int j){
+	 if( position_custom )
+		g.drawImage(img, custom_x, custom_y, null);
+	 else 
+		g.drawImage(img, 15+i*100, 15+j*100, null);
+  }
+  
+  public String toString(){
+	 return "Reine "+this.couleur;
+  }  
 }
