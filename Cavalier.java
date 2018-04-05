@@ -10,7 +10,7 @@ public class Cavalier extends Piece {
   public Cavalier(String c){
     super(c,"Cavalier",3);
     
-    Image img = null;
+    img = null;
     try {
       img = ImageIO.read(new File(super.file+super.nom+(this.couleur == "noir" ? "N.png" : "B.png")));
     } catch(IOException e){}

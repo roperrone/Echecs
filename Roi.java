@@ -10,7 +10,7 @@ public class Roi extends Piece {
   public Roi(String c){
     super(c,"Roi",10);
     
-    Image img = null;
+    img = null;
     try {
       img = ImageIO.read(new File(super.file+super.nom+(this.couleur == "noir" ? "N.png" : "B.png")));
     } catch(IOException e){}

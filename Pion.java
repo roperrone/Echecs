@@ -10,7 +10,7 @@ public class Pion extends Piece {
   public Pion(String c){
     super(c,"Pion",1);
     
-    Image img = null;
+    img = null;
     try {
       img = ImageIO.read(new File(super.file+super.nom+(this.couleur == "noir" ? "N.png" : "B.png")));
     } catch(IOException e){}
