@@ -5,6 +5,10 @@ public class FenetrePlateau extends JFrame {
   public JPanel content;
   public JPanel plateau;
   public JPanel options;
+  
+  public ClickListener clickListen;
+  public MoveListener moveListen;
+  
   private Jeu jeu;
 
   public FenetrePlateau(Jeu j){
@@ -25,8 +29,11 @@ public class FenetrePlateau extends JFrame {
     content.add(plateau, BorderLayout.CENTER);
     content.add(options, BorderLayout.EAST);
 
-    plateau.addMouseListener(new ClickListener(this));
-    plateau.addMouseMotionListener(new MoveListener(this));
+	clickListen = new ClickListener(this);
+	moveListen = new MoveListener(this);
+	
+    plateau.addMouseListener(clickListen);
+    plateau.addMouseMotionListener(moveListen);
 
     setContentPane(content);
     setVisible(true);

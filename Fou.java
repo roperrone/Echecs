@@ -18,17 +18,12 @@ public class Fou extends Piece {
   }
 
   public void afficher(Graphics g, int i, int j){
-    g.drawImage(img, 15+i*100, 15+j*100, null);
+	 if( position_custom )
+		g.drawImage(img, custom_x, custom_y, null);
+	 else 
+		g.drawImage(img, 15+i*100, 15+j*100, null);
   }
-  
-  public void afficher(Graphics g, int x, int y, boolean custom){
-	if( !custom ) {
-		afficher(g,x,y);
-	} else {
-		g.drawImage(img, x, y, null);
-	}
-  }
-  
+    
   public String toString(){
 	 return "Fou "+this.couleur;
   }  

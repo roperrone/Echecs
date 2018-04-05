@@ -10,7 +10,15 @@ public class MoveListener implements MouseMotionListener {
         fenetre = f;
     }
 
-    public void mouseDragged(MouseEvent e) {}
+    public void mouseDragged(MouseEvent e) {
+	   int X = e.getX();
+       int Y = e.getY();
+       
+       Piece p = fenetre.clickListen.pieceSelectionee;
+       p.setCustomPosition(X,Y);
+       
+       fenetre.repaint();
+	}
     public void mouseMoved(MouseEvent e) {}
 
 }

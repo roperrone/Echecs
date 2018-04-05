@@ -18,7 +18,13 @@ public class DessinePlateau extends JPanel {
 			for(int j=0; j<c.length; j++){
 				c[i][j].afficher(g);
 			}
-		}		
+		}	
+		
+		// si la pièce est sélectionnée: on l'affiche au premier plan
+		Piece piece = fen.clickListen.pieceSelectionee;
+		if(piece != null && piece.position_custom ){
+			piece.afficher(g, 0, 0);
+		}
 	}
 	
 }

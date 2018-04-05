@@ -1,4 +1,5 @@
 import java.util.*;
+
 public class Deplacement {
 	Plateau echiquier;
 	public LinkedList<Case> depPoss= new LinkedList<Case>();
