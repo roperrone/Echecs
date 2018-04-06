@@ -7,13 +7,13 @@ public class Deplacement {
  	public LinkedList<Case> toutDepl = new LinkedList<Case>(); //tous les deplacement du joueur courant
 	public LinkedList<Case> depParer = new LinkedList<Case>();
 	Case cI; // @ param case initiale: contient tous les attributs de la case de déplacement
-	
+
 public Deplacement(Plateau p, Case c){
     echiquier = p;
-    
+
     if ( c.piece != null ){
         cI=c;
-        
+
         initialiserListes();
         //tousDeplacementsAdv();
         remplirListDepl(cI, depPoss);
@@ -24,7 +24,7 @@ public Deplacement(Plateau p, Case c){
 public Deplacement(Plateau p, Case c1, Case c2){
 	echiquier = p;
 	p.echangerPiece(c1,c2);
-    
+
     if ( c2.piece != null ){
         cI=c2;
         tousDeplacementsAdv();
@@ -88,7 +88,7 @@ public void depCavalier(LinkedList <Case> list ){
             // si la pièce est dans le tableau et que la couleur de la pièce sur la case où l'on se déplace
             // est différente de la couleur du joueur ou ne contient pas de pièce, alors on ajoute ce déplacement aux déplacements possibles
             if (estDansLeTableau(x,y) && (echiquier.cases[x][y].piece == null || !echiquier.cases[x][y].piece.couleur.equals(coul)))
-                    list.add(echiquier.cases[x][y]);                
+                    list.add(echiquier.cases[x][y]);
         }
 }
 
@@ -107,7 +107,7 @@ public void depFou( LinkedList <Case> list ){
         int x = cI.x;
         int y = cI.y;
       // Le nombre maximal de coup possible dans chaque direction: 7-a
-   
+
 
         for (int i=1; i<8 ; i++){
             if (estDansLeTableau (y+i,x+i))
@@ -129,7 +129,7 @@ public void depFou( LinkedList <Case> list ){
 
 public void verif(LinkedList <Case> dep, LinkedList <Case> list){
   String coul = cI.piece.couleur;
-  int x=0; 
+  int x=0;
   int y=0;
   for(Case c: dep){
 		 x=c.x;
@@ -159,7 +159,7 @@ public void depTour( LinkedList <Case> list ){
             int y = cI.y;
 
             // Le nombre maximal de coup possible dans chaque direction: 7-a
-    
+
             for (int i=1; i<8 ; i++){
                 if (estDansLeTableau (y+i,x))
                     depB.add(new Case(x,y+i));
@@ -179,7 +179,7 @@ public void depTour( LinkedList <Case> list ){
 }
 
 public void depRoi( LinkedList <Case> list ){
-    
+
         int x=cI.x;
         int y=cI.y;
 		String coul= cI.piece.couleur;
@@ -194,7 +194,7 @@ public void depRoi( LinkedList <Case> list ){
         dep.add(new Case(x-1,y+1));
         dep.add(new Case(x+1,y-1));
         dep.add(new Case(x-1,y-1));
-       
+
         for(Case c: dep ) {
             x = c.x;
             y = c.y;
@@ -234,7 +234,7 @@ public void remplirListDepl(Case c, LinkedList<Case> list){
 
 
 
-public void petitRoque() {
+public boolean petitRoque() {
 	int x = cI.x;
 	int y = cI.y;
 	Piece tour= echiquier.cases[x+3][y].piece;
@@ -244,11 +244,16 @@ public void petitRoque() {
 		echiquier.cases[x][y].piece = null;
 		echiquier.cases[x+1][y].piece = tour;
 		echiquier.cases[x+3][y].piece = null;
+
+		return true;
 	}
-	else System.out.println ("Vous ne pouvez pas effectuer un petit roque"); // a revoir (i.e fenetre d'erreur)
+	else{
+		System.out.println ("Vous ne pouvez pas effectuer un petit roque"); // a revoir (i.e fenetre d'erreur)
+		return false;
+	}
 }
 
-public void grandRoque() {
+public boolean grandRoque() {
 	int x = cI.x;
 	int y = cI.y;
 	Piece tour= echiquier.cases[0][y].piece;
@@ -258,8 +263,13 @@ public void grandRoque() {
 		echiquier.cases[x][y].piece = null;
 		echiquier.cases[x-1][y].piece = tour;
 		echiquier.cases[0][y].piece = null;
+
+		return true;
 	}
-	else System.out.println ("Vous ne pourvez pas effectuer un grand roque"); // a revoir (i.e fenetre d'erreur)
+	else{
+		System.out.println ("Vous ne pourvez pas effectuer un grand roque"); // a revoir (i.e fenetre d'erreur)
+		return false;
+	}
 }
 
 public void promotion (){
@@ -341,6 +351,9 @@ public boolean enEchec(){
 //
 
 public boolean deplacementValide(Case cF){
+	if(cI == echiquier.trouverPiece("roi") && cF == echiquier.trouverPiece("tour")){
+		return grandRoque() || petitRoque();
+	}
 	return depPoss.contains(cF);
 }
 
