@@ -331,7 +331,7 @@ public void simuler(LinkedList<Case> list){
 
 //Roi pouvant etre mangé par l'adversaire
 public boolean misEnEchec(){
- 	if( toutDeplAdv.contains(echiquier.trouverPiece("Roi")) )
+ 	if( toutDeplAdv.contains(echiquier.trouverPiece("Roi").getFirst()) )
 		return true;
  	else
 		return false;
@@ -351,8 +351,8 @@ public boolean enEchec(){
 //
 
 public boolean deplacementValide(Case cF){
-	if(cI == echiquier.trouverPiece("roi") && cF == echiquier.trouverPiece("tour")){
-		return grandRoque() || petitRoque();
+	if(echiquier.trouverPiece("roi").contains(cI) && echiquier.trouverPiece("tour").contains(cF)){
+		return (grandRoque() || petitRoque());
 	}
 	return depPoss.contains(cF);
 }
