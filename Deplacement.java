@@ -59,12 +59,25 @@ public void depPion(LinkedList<Case> list){
             list.add(echiquier.cases[x][4]);
             list.add(echiquier.cases[x][5]);
         } // sinon le pion ne peut avancer que d'une seule case à la fois
-        else if (cI.piece.couleur=="noir" && echiquier.cases[x][y+1].piece==null)
+        else if (cI.piece.couleur=="noir" && echiquier.cases[x][y+1].piece==null && estDansLeTableau(x,y+1))
             list.add(echiquier.cases[x][y+1]);
-        else if (cI.piece.couleur=="blanc" && echiquier.cases[x][y-1]==null)
+        else if (cI.piece.couleur=="blanc" && echiquier.cases[x][y-1].piece==null && estDansLeTableau(x,y-1))
             list.add(echiquier.cases[x][y-1]);
-    } catch( Exception e ){}
+	 } catch( Exception e ){}
 }
+public void prisePion(LinkedList<Case> list){
+		int x= cI.x;
+		int y= cI.y;
+		  // gestion des prises des pions
+		if (cI.piece.couleur=="noir" && echiquier.cases[x+1][y+1].piece!=null && echiquier.cases[x+1][y+1].piece.couleur=="blanc" && estDansLeTableau(x+1,y+1))
+			list.add(echiquier.cases[x+1][y+1]);
+		if (cI.piece.couleur=="noir" && echiquier.cases[x-1][y+1].piece!=null && echiquier.cases[x-1][y+1].piece.couleur=="blanc" && estDansLeTableau(x-1,y+1))
+			list.add(echiquier.cases[x-1][y+1]);
+		if (cI.piece.couleur=="blanc" && echiquier.cases[x-1][y-1].piece!=null && echiquier.cases[x-1][y-1].piece.couleur=="noir"&& estDansLeTableau(x-1,y-1))	
+			list.add(echiquier.cases[x-1][y-1]);
+		if (cI.piece.couleur=="blanc" && echiquier.cases[x+1][y-1].piece!=null && echiquier.cases[x+1][y-1].piece.couleur=="noir" && estDansLeTableau(x-1,y-1))	
+			list.add(echiquier.cases[x+1][y-1]);	
+}  
 
 public void depCavalier(LinkedList <Case> list ){
 
@@ -210,6 +223,7 @@ public void depRoi( LinkedList <Case> list ){
 public void remplirListDepl(Case c, LinkedList<Case> list){
 	if (c.piece instanceof Pion)
 		depPion(list);
+		prisePion(list);
 	if (c.piece instanceof Cavalier)
 		depCavalier(list);
 	if (c.piece instanceof Fou)
