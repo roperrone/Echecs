@@ -69,14 +69,18 @@ public void prisePion(LinkedList<Case> list){
 		int x= cI.x;
 		int y= cI.y;
 		  // gestion des prises des pions
-		if (cI.piece.couleur=="noir" && echiquier.cases[x+1][y+1].piece!=null && echiquier.cases[x+1][y+1].piece.couleur=="blanc" && estDansLeTableau(x+1,y+1))
-			list.add(echiquier.cases[x+1][y+1]);
-		if (cI.piece.couleur=="noir" && echiquier.cases[x-1][y+1].piece!=null && echiquier.cases[x-1][y+1].piece.couleur=="blanc" && estDansLeTableau(x-1,y+1))
-			list.add(echiquier.cases[x-1][y+1]);
-		if (cI.piece.couleur=="blanc" && echiquier.cases[x-1][y-1].piece!=null && echiquier.cases[x-1][y-1].piece.couleur=="noir"&& estDansLeTableau(x-1,y-1))	
-			list.add(echiquier.cases[x-1][y-1]);
-		if (cI.piece.couleur=="blanc" && echiquier.cases[x+1][y-1].piece!=null && echiquier.cases[x+1][y-1].piece.couleur=="noir" && estDansLeTableau(x-1,y-1))	
-			list.add(echiquier.cases[x+1][y-1]);	
+		if (cI.piece.couleur=="noir"){
+			if(estDansLeTableau(x+1,y+1) && echiquier.cases[x+1][y+1].piece!=null && echiquier.cases[x+1][y+1].piece.couleur=="blanc" )
+				list.add(echiquier.cases[x+1][y+1]);
+			if (estDansLeTableau(x-1,y+1) && echiquier.cases[x-1][y+1].piece!=null && echiquier.cases[x-1][y+1].piece.couleur=="blanc")
+				list.add(echiquier.cases[x-1][y+1]);
+		}
+		if (cI.piece.couleur=="blanc"){
+			if( estDansLeTableau(x-1,y-1) && echiquier.cases[x-1][y-1].piece!=null && echiquier.cases[x-1][y-1].piece.couleur=="noir" )	
+				list.add(echiquier.cases[x-1][y-1]);
+			if (estDansLeTableau(x+1,y-1) && echiquier.cases[x+1][y-1].piece!=null && echiquier.cases[x+1][y-1].piece.couleur=="noir" )	
+				list.add(echiquier.cases[x+1][y-1]);
+		}	
 }  
 
 public void depCavalier(LinkedList <Case> list ){
