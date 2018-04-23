@@ -12,6 +12,7 @@ public class Piece {
   public int custom_x;
   public int custom_y;
   public boolean position_custom = false;
+  public boolean deja_bougee = false;
   protected String file = "images/";
 
   public Piece(String c, String n, int v){

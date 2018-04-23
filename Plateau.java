@@ -71,7 +71,7 @@ public class Plateau {
 
   public Case[][] getCases(){
 		return cases;
-	}
+  }
 
   public void selectCase(int x, int y){
     if(cases[x][y].piece!=null){
@@ -100,7 +100,7 @@ public class Plateau {
   }
 
 //Quand on arrive au bout du plateau avec un pion on peut l'échanger avec une piece de notre choix
-  public void remplacerPiece(int x, int y,Piece p){
+  public void remplacerPiece(int x, int y, Piece p){
     this.cases[x][y].piece=p;
   }
 

@@ -97,11 +97,18 @@ public void prisePion(LinkedList<Case> list){
 		int y= cI.y;
         
         String couleurAdverse = (cI.piece.couleur == "blanc" ) ? "noir" : "blanc";
-
-        if( estDansLeTableau(x-1,y-1) && echiquier.cases[x-1][y-1].piece!=null && echiquier.cases[x-1][y-1].piece.couleur==couleurAdverse )	
-            list.add(echiquier.cases[x-1][y-1]);
-        if (estDansLeTableau(x+1,y-1) && echiquier.cases[x+1][y-1].piece!=null && echiquier.cases[x+1][y-1].piece.couleur==couleurAdverse )	
-            list.add(echiquier.cases[x+1][y-1]);	
+        
+        if(cI.piece.couleur == "blanc" ){        
+            if( estDansLeTableau(x-1,y-1) && echiquier.cases[x-1][y-1].piece!=null && echiquier.cases[x-1][y-1].piece.couleur==couleurAdverse )	
+                list.add(echiquier.cases[x-1][y-1]);
+            if (estDansLeTableau(x+1,y-1) && echiquier.cases[x+1][y-1].piece!=null && echiquier.cases[x+1][y-1].piece.couleur==couleurAdverse )	
+                list.add(echiquier.cases[x+1][y-1]);	
+        } else {
+            if( estDansLeTableau(x-1,y+1) && echiquier.cases[x-1][y+1].piece!=null && echiquier.cases[x-1][y+1].piece.couleur==couleurAdverse )	
+                list.add(echiquier.cases[x-1][y+1]);
+            if (estDansLeTableau(x+1,y+1) && echiquier.cases[x+1][y+1].piece!=null && echiquier.cases[x+1][y+1].piece.couleur==couleurAdverse )	
+                list.add(echiquier.cases[x+1][y+1]);	
+        }
 }  
 
 /** Méthode remplissant une liste de déplacement, passée en paramètre. 
@@ -275,17 +282,17 @@ public void depRoi( LinkedList <Case> list ){
             depRoiAdverse.add(new Case(r_x+1,r_y+1));
             depRoiAdverse.add(new Case(r_x-1,r_y+1));
             depRoiAdverse.add(new Case(r_x+1,r_y-1));
-            depRoiAdverse.add(new Case(r_x-1,r_y-1));        
-        }        
+            depRoiAdverse.add(new Case(r_x-1,r_y-1));
+        }
+        
         
         for(Case c: dep ) {
             x = c.x;
             y = c.y;
 
             // si le déplacement est dans le tableau et  qu'il n'y a pas de pièce (ou que la pièce n'est pas de la même couleur), et que le déplacement est autorisé 
-            if ( estDansLeTableau(x,y) 
+            if ( estDansLeTableau(x,y) && !depRoiAdverse.contains(c)
                     && (echiquier.cases[x][y].piece==null || !echiquier.cases[x][y].piece.couleur.equals(coul))
-                    && !depRoiAdverse.contains(echiquier.cases[x][y])
                 )
                 list.add(echiquier.cases[x][y]);
         }
@@ -294,15 +301,16 @@ public void depRoi( LinkedList <Case> list ){
 
 //Rempli le tableau de deplacements possibles
 public void remplirListDepl(Case c, LinkedList<Case> list){
-	if (c.piece instanceof Pion)
+	if (c.piece instanceof Pion) {
 		depPion(list);
 		prisePion(list);
-	if (c.piece instanceof Cavalier)
+    } else if (c.piece instanceof Cavalier) {
 		depCavalier(list);
-	if (c.piece instanceof Fou)
+    } else if (c.piece instanceof Fou) {
 		depFou(list);
-	if (c.piece instanceof Tour)
+    } else if (c.piece instanceof Tour) {
 		depTour(list);
+    }
 	if (c.piece instanceof Reine){
 		// combinaison d'une tour et d'un fou
 		depTour(list);
@@ -313,31 +321,32 @@ public void remplirListDepl(Case c, LinkedList<Case> list){
 	}
 }
 
-//Rempli le tableau des mises en échec possible
 public void remplirListDeplEchec(Case c, LinkedList<Case> list){
-	if (c.piece instanceof Pion)
+	if (c.piece instanceof Pion) {
 		prisePion(list); // le pion peut mettre le roi en échec uniquement sur sa diagonale
-	if (c.piece instanceof Cavalier)
+    } else if (c.piece instanceof Cavalier) {
 		depCavalier(list);
-	if (c.piece instanceof Fou)
+    } else if (c.piece instanceof Fou) {
 		depFou(list);
-	if (c.piece instanceof Tour)
+    } else if (c.piece instanceof Tour) {
 		depTour(list);
+    }
 	if (c.piece instanceof Reine){
+		// combinaison d'une tour et d'un fou
 		depTour(list);
 		depFou(list);
 	}
+	if (c.piece instanceof Roi){
+		depRoi(list);
+	}
 }
 
-//
 // ---------- REGLES PARTICULIERES DES ECHECS ----------
-//
-
-
 
 public boolean petitRoque() {
 	int x = cI.x;
 	int y = cI.y;
+    
 	Piece tour= echiquier.cases[x+3][y].piece;
 	// ajouter la condition Aucune pièce ennemie ne doit contrôler les deux cases que le Roi parcourt pour roquer.
 	if (cI.piece instanceof Roi && x==4 && (y==0 || y==7) && tour instanceof Tour && echiquier.cases[x+1][y]==null && echiquier.cases[x+2][y]==null && enEchec()==false ){
@@ -348,10 +357,8 @@ public boolean petitRoque() {
 
 		return true;
 	}
-	else{
-		System.out.println ("Vous ne pouvez pas effectuer un petit roque"); // a revoir (i.e fenetre d'erreur)
-		return false;
-	}
+    
+    return false;
 }
 
 public boolean grandRoque() {
@@ -367,16 +374,17 @@ public boolean grandRoque() {
 
 		return true;
 	}
-	else{
-		System.out.println ("Vous ne pourvez pas effectuer un grand roque"); // a revoir (i.e fenetre d'erreur)
-		return false;
-	}
+    
+    return false;
 }
 
-public void promotion (){
+public void promotion(){
 	String c = cI.piece.couleur;
-	if (cI.piece instanceof Pion && (cI.y==7 || cI.y==0))
-	cI.piece=new Reine(c); // gerer le choix de promotion
+    
+	if (cI.piece instanceof Pion && c == "blanc" && cI.y==0)
+        cI.piece=new Reine(c);
+    else if( cI.piece instanceof Pion && c == "noir" && cI.y==7 )
+        cI.piece=new Reine(c);
 }
 
 

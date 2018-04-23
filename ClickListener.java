@@ -35,9 +35,10 @@ public class ClickListener implements MouseListener {
            if ( depPossible.contains(caseArrivee) ){                             
                 Piece p = caseDepart.piece;
                 
-                caseDepart.setPiece(null);
-                caseArrivee.setPiece(p);
+                fenetre.getJeu().plateau.supprPiece(caseDepart.x, caseDepart.y);
+                fenetre.getJeu().plateau.remplacerPiece((int)c.getX(), (int)c.getY(), p);
                 
+                p.deja_bougee = true;
 				fenetre.getJeu().plateau.switchCouleurCourante();
            }
 
