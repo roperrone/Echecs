@@ -1,7 +1,7 @@
 public class Jeu {
     private Joueur[] tabJoueur;
     public Plateau plateau;
-    static public int currentPlayer;
+    public int currentPlayer;
     
     public Jeu( Joueur j1, Joueur j2 ) {
         tabJoueur = new Joueur[2];
@@ -10,36 +10,26 @@ public class Jeu {
         tabJoueur[0] = j1;
         tabJoueur[1] = j2;
     }
-        
+    
+    public void tourSuivant(){        
+        // réinitialise l'attribut boolean pion en passant après un tour
+        if( !plateau.pionEnPassant.isEmpty() && plateau.couleurCourante == plateau.pionEnPassant.get(0).couleur ) {
+            plateau.pionEnPassant.get(0).pion_en_passant = false;
+            plateau.pionEnPassant.remove(0);
+        }
+    }
+    
     public void start() {
-   //     do { 
-          
-          //currentPlayer = (int) Math.random()*2; // 0 ou 1
-          
           Joueur JoueurBlanc = tabJoueur[0];
           Joueur JoueurNoir = tabJoueur[1];
           
           JoueurBlanc.definirCouleur("blanc");
           JoueurNoir.definirCouleur("noir");
-
-	      
-	      // ajouter listener -> MouseListner position -> méthode pour déduire la case et ses coordonées (x,y)
-	 //     p.selectCase()   
-	 //     p.deplacerPiece(x,y) // (x,y) déplacement case final
-	      
-	      
-	      //callback de déplacer pièce
-            
-       // } while (!partieTerminee()); // tant que la partie n'est pas terminée
     }
     
     public boolean partieTerminee() {
 		boolean b = false;
-		
-		// le joueur courrant est en échec et mat ou la partie est nulle
-//		if( p.echecEtMat() || p.estNulle() )
-	//		b = true;
-		
+
         return b;
 	}
 	

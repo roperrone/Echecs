@@ -4,9 +4,11 @@ public class Plateau {
 
     // Attributs
     public Case[][] cases;
-    LinkedList <Piece> pieceSuppr= new LinkedList<Piece>();;
-    String couleurCourante;
-    Deplacement depCourant; //deplacement courant
+    public LinkedList <Piece> pieceSuppr= new LinkedList<Piece>();
+    public LinkedList <Piece> pionEnPassant= new LinkedList<Piece>();
+    public String couleurCourante; 
+    
+    public Deplacement depCourant; //deplacement courant
 
     //Constructeur
     public Plateau(){
@@ -67,6 +69,7 @@ public class Plateau {
 
   public void switchCouleurCourante(){
 	 couleurCourante = ( couleurCourante == "blanc" ) ? "noir" : "blanc";
+     
   }
 
   public Case[][] getCases(){
@@ -87,21 +90,32 @@ public class Plateau {
     cases[x][y].piece=null;
   }
 
-    // dx dy coordonnees case de d'arrivée
+  // dx dy coordonnees case de d'arrivée
   public void deplacerPiece(int dx, int dy, String couleur){
-    if(depCourant.deplacementValide(cases[dx][dy])){
       resetCouleur();
       if(this.cases[dx][dy].piece != null && cases[dx][dy].piece.couleur != couleurCourante){
         supprPiece(dx, dy);
       }
       cases[dx][dy].piece = cases[depCourant.cI.x][depCourant.cI.y].piece;
       cases[depCourant.cI.x][depCourant.cI.y] = null;
-    }
   }
 
-//Quand on arrive au bout du plateau avec un pion on peut l'échanger avec une piece de notre choix
+  //Quand on arrive au bout du plateau avec un pion on peut l'échanger avec une piece de notre choix
   public void remplacerPiece(int x, int y, Piece p){
     this.cases[x][y].piece=p;
+  }
+  
+  public void roquer(int x, int y, Piece p) {
+      if( x == 2 ) { // on effectue le petit roque
+          remplacerPiece(x,y,p);
+          remplacerPiece(x+1,y, cases[x-2][y].piece );
+          
+          remplacerPiece(x-2,y, null );
+      } else if ( x == 6 ) { // on effectue le grand roque
+          remplacerPiece(x,y,p);
+          remplacerPiece(x-1,y, cases[x+1][y].piece );
+          remplacerPiece(x+1,y, null );
+      }
   }
 
 

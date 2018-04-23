@@ -103,12 +103,39 @@ public void prisePion(LinkedList<Case> list){
                 list.add(echiquier.cases[x-1][y-1]);
             if (estDansLeTableau(x+1,y-1) && echiquier.cases[x+1][y-1].piece!=null && echiquier.cases[x+1][y-1].piece.couleur==couleurAdverse )	
                 list.add(echiquier.cases[x+1][y-1]);	
+                
+            // vérifie si le pion peut être pris en passant
+            if( estDansLeTableau(x-1,y) && echiquier.cases[x-1][y].piece!=null && echiquier.cases[x-1][y].piece instanceof Pion
+                && echiquier.cases[x-1][y].piece.pion_en_passant && echiquier.cases[x-1][y].piece.couleur==couleurAdverse ) {
+                list.add(echiquier.cases[x-1][y-1]);
+            }
+                
+                
+             if( estDansLeTableau(x+1,y) && echiquier.cases[x+1][y].piece!=null && echiquier.cases[x+1][y].piece instanceof Pion
+                && echiquier.cases[x+1][y].piece.pion_en_passant && echiquier.cases[x+1][y].piece.couleur==couleurAdverse ) {
+                list.add(echiquier.cases[x+1][y-1]);
+            }
         } else {
             if( estDansLeTableau(x-1,y+1) && echiquier.cases[x-1][y+1].piece!=null && echiquier.cases[x-1][y+1].piece.couleur==couleurAdverse )	
                 list.add(echiquier.cases[x-1][y+1]);
             if (estDansLeTableau(x+1,y+1) && echiquier.cases[x+1][y+1].piece!=null && echiquier.cases[x+1][y+1].piece.couleur==couleurAdverse )	
                 list.add(echiquier.cases[x+1][y+1]);	
+                
+            // vérifie si le pion peut être pris en passant
+            if( estDansLeTableau(x-1,y) && echiquier.cases[x-1][y].piece!=null && echiquier.cases[x-1][y].piece instanceof Pion
+                && echiquier.cases[x-1][y].piece.pion_en_passant && echiquier.cases[x-1][y].piece.couleur==couleurAdverse ) {
+                list.add(echiquier.cases[x-1][y+1]);
+            }
+                
+                
+             if( estDansLeTableau(x+1,y) && echiquier.cases[x+1][y].piece!=null && echiquier.cases[x+1][y].piece instanceof Pion
+                && echiquier.cases[x+1][y].piece.pion_en_passant && echiquier.cases[x+1][y].piece.couleur==couleurAdverse ) {
+                list.add(echiquier.cases[x+1][y+1]);
+            }
         }
+        
+            
+        
 }  
 
 /** Méthode remplissant une liste de déplacement, passée en paramètre. 
@@ -488,14 +515,6 @@ public boolean enEchec(){
 // ------ VALIDATION DES COUPS -------
 //
 
-/*
-public boolean deplacementValide(Case cF){
-	if(echiquier.trouverPiece("roi").contains(cI) && echiquier.trouverPiece("tour").contains(cF)){
-		return (grandRoque() || petitRoque());
-	}
-	return depPoss.contains(cF);
-}
-*/
 
 //return deplacments possibles
 public LinkedList<Case> getDeplPoss(){
