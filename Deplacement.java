@@ -260,18 +260,36 @@ public void depRoi( LinkedList <Case> list ){
         String couleurAdverse = (echiquier.couleurCourante == "blanc") ? "noir" : "blanc";
         Case roiAdverse = echiquier.trouverPiece("Roi", couleurAdverse ).getFirst();
         
+        LinkedList <Case> depRoiAdverse = new LinkedList<Case>();
         
-        
+        // si le Roi se trouve à proximité de l'autre Roi, on remplit la liste de déplacement du roi adverse
+        // afin d'interdir aux 2 rois de se coller
+        if( Math.abs(x-roiAdverse.x) <= 2 || Math.abs(y-roiAdverse.y) <= 2 ){
+            int r_x = roiAdverse.x;
+            int r_y = roiAdverse.y;
+                
+            depRoiAdverse.add(new Case(r_x+1,r_y));
+            depRoiAdverse.add(new Case(r_x-1,r_y));
+            depRoiAdverse.add(new Case(r_x,r_y-1));
+            depRoiAdverse.add(new Case(r_x,r_y+1));
+            depRoiAdverse.add(new Case(r_x+1,r_y+1));
+            depRoiAdverse.add(new Case(r_x-1,r_y+1));
+            depRoiAdverse.add(new Case(r_x+1,r_y-1));
+            depRoiAdverse.add(new Case(r_x-1,r_y-1));        
+        }        
         
         for(Case c: dep ) {
             x = c.x;
             y = c.y;
 
-            // si le déplacement est dans le tableau et qu'il n'y a pas de pièce (ou que la pièce n'est pas de la même couleur)
-            if (estDansLeTableau(x,y) && (echiquier.cases[x][y].piece==null || !echiquier.cases[x][y].piece.couleur.equals(coul)))
+            // si le déplacement est dans le tableau et  qu'il n'y a pas de pièce (ou que la pièce n'est pas de la même couleur), et que le déplacement est autorisé 
+            if ( estDansLeTableau(x,y) 
+                    && (echiquier.cases[x][y].piece==null || !echiquier.cases[x][y].piece.couleur.equals(coul))
+                    && !depRoiAdverse.contains(echiquier.cases[x][y])
+                )
                 list.add(echiquier.cases[x][y]);
         }
-
+        
 }
 
 //Rempli le tableau de deplacements possibles
