@@ -112,12 +112,12 @@ public class Plateau {
   }
 
 
-  public LinkedList<Case> trouverPiece(String n){
+  public LinkedList<Case> trouverPiece(String n, String couleur){
     LinkedList<Case> list = new LinkedList<Case>();
 
     for(int i = 0; i<cases.length; i++){
       for (int j=0;j<cases[0].length ;j++ ) {
-        if(cases[i][j].piece.nom.equals(n) && cases[i][j].piece.couleur.equals(this.couleurCourante)){
+        if(cases[i][j].piece.nom.equals(n) && cases[i][j].piece.couleur.equals(couleur)){
           list.add(cases[i][j]);
         }
       }
@@ -125,6 +125,10 @@ public class Plateau {
     return list;
   }
 
+  public LinkedList<Case> trouverPiece(String n){
+    return trouverPiece(n, this.couleurCourante);
+  }
+  
   public void resetCouleur(){
     for(Case c : depCourant.getDeplPoss()){
       c.resetCouleur();

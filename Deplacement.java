@@ -2,25 +2,34 @@ import java.util.*;
 
 public class Deplacement {
 	Plateau echiquier;
+    
 	public LinkedList<Case> depPoss= new LinkedList<Case>();
 	public LinkedList<Case> toutDeplAdv = new LinkedList<Case>();
+    public LinkedList<Case> toutDeplEchec = new LinkedList<Case>();
  	public LinkedList<Case> toutDepl = new LinkedList<Case>(); //tous les deplacement du joueur courant
 	public LinkedList<Case> depParer = new LinkedList<Case>();
 	Case cI; // @ param case initiale: contient tous les attributs de la case de déplacement
 
+
+/** @param p: Plateau de jeu
+ *  @param c: Case à jouer
+ *  Constructeur de la classe Déplacement */
 public Deplacement(Plateau p, Case c){
     echiquier = p;
-
+    
+    // si la case contient une pièce, on remplit la liste de déplacement
     if ( c.piece != null ){
         cI=c;
 
         initialiserListes();
-        //tousDeplacementsAdv();
         remplirListDepl(cI, depPoss);
     }
-    //adaptGrille();
 }
 
+/** @param p: Plateau de jeu
+ *  @param c1: Case de départ
+ *  @param c2: Case d'arrivée
+ *  Constructeur de la classe Déplacement */
 public Deplacement(Plateau p, Case c1, Case c2){
 	echiquier = p;
 	p.echangerPiece(c1,c2);
@@ -30,13 +39,13 @@ public Deplacement(Plateau p, Case c1, Case c2){
         tousDeplacementsAdv();
         remplirListDepl(cI, depPoss);
     }
-    //adaptGrille();
 }
 
 //Vide les listes des deplacements possibles
 public void initialiserListes(){
 	depPoss.clear();
 	toutDeplAdv.clear();
+    toutDeplEchec.clear();
 	toutDepl.clear();
 	depParer.clear();
 }
@@ -68,7 +77,8 @@ public void depPion(LinkedList<Case> list){
 public void prisePion(LinkedList<Case> list){
 		int x= cI.x;
 		int y= cI.y;
-		  // gestion des prises des pions
+        
+		  // gestion des prises de pièces par les pions
 		if (cI.piece.couleur=="noir"){
 			if(estDansLeTableau(x+1,y+1) && echiquier.cases[x+1][y+1].piece!=null && echiquier.cases[x+1][y+1].piece.couleur=="blanc" )
 				list.add(echiquier.cases[x+1][y+1]);
@@ -202,7 +212,7 @@ public void depRoi( LinkedList <Case> list ){
 		String coul= cI.piece.couleur;
         LinkedList<Case> dep = new LinkedList<Case>();
 
-     // on ajoute les 8 déplacements possibles
+        // on ajoute les 8 déplacements possibles
         dep.add(new Case(x+1,y));
         dep.add(new Case(x-1,y));
         dep.add(new Case(x,y-1));
@@ -212,6 +222,13 @@ public void depRoi( LinkedList <Case> list ){
         dep.add(new Case(x+1,y-1));
         dep.add(new Case(x-1,y-1));
 
+        // on récupère la position du roi adverse
+        String couleurAdverse = (echiquier.couleurCourante == "blanc") ? "noir" : "blanc";
+        Case roiAdverse = echiquier.trouverPiece("Roi", couleurAdverse ).getFirst();
+        
+        
+        
+        
         for(Case c: dep ) {
             x = c.x;
             y = c.y;
@@ -244,7 +261,21 @@ public void remplirListDepl(Case c, LinkedList<Case> list){
 	}
 }
 
-
+//Rempli le tableau des mises en échec possible
+public void remplirListDeplEchec(Case c, LinkedList<Case> list){
+	if (c.piece instanceof Pion)
+		prisePion(list); // le pion peut mettre le roi en échec uniquement sur sa diagonale
+	if (c.piece instanceof Cavalier)
+		depCavalier(list);
+	if (c.piece instanceof Fou)
+		depFou(list);
+	if (c.piece instanceof Tour)
+		depTour(list);
+	if (c.piece instanceof Reine){
+		depTour(list);
+		depFou(list);
+	}
+}
 
 //
 // ---------- REGLES PARTICULIERES DES ECHECS ----------
@@ -314,6 +345,17 @@ public void tousDeplacementsAdv(){
 	}
 }
 
+//Rempli tous les mises en échec possible
+public void toutDeplacementsEchec(){
+    for(Case[] cases : echiquier.cases){
+		for(Case c : cases){
+			if((c.piece != null) && (c.piece.couleur != cI.piece.couleur)){
+				remplirListDeplEchec(c, toutDeplEchec);
+			}
+		}
+	}
+}
+
 //Remplir tous les deplacements possibles du joueur
 public void tousDeplacements(){
 	for(Case[] cases : echiquier.cases){
@@ -347,7 +389,7 @@ public void simuler(LinkedList<Case> list){
 	}
 }
 
-//Roi pouvant etre mangé par l'adversaire
+//Roi pouvant etre mis en échec par l'adversaire
 public boolean misEnEchec(){
  	if( toutDeplAdv.contains(echiquier.trouverPiece("Roi").getFirst()) )
 		return true;
