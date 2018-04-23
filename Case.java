@@ -9,12 +9,15 @@ public class Case {
   public int y;
   
   public Piece piece;
+  public boolean roque_possible = false;
   
   Color couleur;
   Color blanc = new Color(242,197,142);
   Color noir = new Color(129,88,75);
   Color actifC = new Color(138,195,74);
   Color actifF = new Color(123,178,65);
+  
+  Color actifRoque = new Color(0,255,94);
 
   public Case(int i, int j){
     x = i;
@@ -27,11 +30,15 @@ public class Case {
   }
 
   public void setActif(){
-    this.couleur = ((x+y)%2 == 0) ? actifC : actifF;
+    if( !roque_possible )
+        this.couleur = ((x+y)%2 == 0) ? actifC : actifF;
+    else
+        this.couleur = actifRoque;
   }
 
   public void resetCouleur(){
     this.couleur = ((x+y)%2 == 0) ? blanc : noir;
+    roque_possible = false;
   }
   
   public void setY(int y){

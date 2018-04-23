@@ -318,6 +318,16 @@ public void remplirListDepl(Case c, LinkedList<Case> list){
 	}
 	if (c.piece instanceof Roi){
 		depRoi(list);
+        
+        if( verifier_petitRoque() ){
+            list.add(echiquier.cases[cI.x+2][cI.y]);
+            echiquier.cases[cI.x+2][cI.y].roque_possible = true;
+        } 
+        
+        if ( verifier_grandRoque() ){
+            list.add(echiquier.cases[cI.x-2][cI.y]);
+            echiquier.cases[cI.x-2][cI.y].roque_possible = true;
+        }
 	}
 }
 
@@ -343,39 +353,47 @@ public void remplirListDeplEchec(Case c, LinkedList<Case> list){
 
 // ---------- REGLES PARTICULIERES DES ECHECS ----------
 
-public boolean petitRoque() {
+public boolean verifier_petitRoque() {
 	int x = cI.x;
 	int y = cI.y;
     
-	Piece tour= echiquier.cases[x+3][y].piece;
-	// ajouter la condition Aucune pièce ennemie ne doit contrôler les deux cases que le Roi parcourt pour roquer.
-	if (cI.piece instanceof Roi && x==4 && (y==0 || y==7) && tour instanceof Tour && echiquier.cases[x+1][y]==null && echiquier.cases[x+2][y]==null && enEchec()==false ){
-		echiquier.cases[x+2][y].piece= cI.piece;
-		echiquier.cases[x][y].piece = null;
-		echiquier.cases[x+1][y].piece = tour;
-		echiquier.cases[x+3][y].piece = null;
-
-		return true;
-	}
+    // on récupère les attributs du roi  
+    Piece roi = echiquier.trouverPiece("Roi", cI.piece.couleur).getFirst().piece;
     
-    return false;
+    // si le roi a bougé, on ne peut pas roquer
+    if( roi.deja_bougee )
+        return false;
+        
+    // de même pour la tour
+    if ( echiquier.cases[x+3][y].piece == null )
+        return false;
+    else if ( echiquier.cases[x+3][y].piece.deja_bougee )
+        return false;
+    
+    return ( echiquier.cases[x+1][y].piece == null && 
+                echiquier.cases[x+2][y].piece == null );
 }
-
-public boolean grandRoque() {
+    
+public boolean verifier_grandRoque() {
 	int x = cI.x;
 	int y = cI.y;
-	Piece tour= echiquier.cases[0][y].piece;
-	// ajouter la condition Aucune pièce ennemie ne doit contrôler les deux cases que le Roi parcourt pour roquer.
-	if (cI.piece instanceof Roi && x==4 && (y==0 || y==7) && tour instanceof Tour && echiquier.cases[x-1][y]==null && echiquier.cases[x-2][y]==null && echiquier.cases[x-3][y]==null && enEchec()==false ){
-		echiquier.cases[x-2][y].piece = cI.piece;
-		echiquier.cases[x][y].piece = null;
-		echiquier.cases[x-1][y].piece = tour;
-		echiquier.cases[0][y].piece = null;
-
-		return true;
-	}
     
-    return false;
+    // on récupère les attributs du roi  
+    Piece roi = echiquier.trouverPiece("Roi", cI.piece.couleur).getFirst().piece;
+    
+    // si le roi a bougé, on ne peut pas roquer
+    if( roi.deja_bougee )
+        return false;
+        
+    // de même pour la tour
+    if ( echiquier.cases[x-4][y].piece == null )
+        return false;
+    else if ( echiquier.cases[x-4][y].piece.deja_bougee )
+        return false;
+    
+    return ( echiquier.cases[x-1][y].piece == null && 
+                echiquier.cases[x-2][y].piece == null && 
+                    echiquier.cases[x-3][y].piece == null );
 }
 
 public void promotion(){
@@ -470,12 +488,14 @@ public boolean enEchec(){
 // ------ VALIDATION DES COUPS -------
 //
 
+/*
 public boolean deplacementValide(Case cF){
 	if(echiquier.trouverPiece("roi").contains(cI) && echiquier.trouverPiece("tour").contains(cF)){
 		return (grandRoque() || petitRoque());
 	}
 	return depPoss.contains(cF);
 }
+*/
 
 //return deplacments possibles
 public LinkedList<Case> getDeplPoss(){
