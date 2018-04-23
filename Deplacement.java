@@ -28,12 +28,12 @@ public Deplacement(Plateau p, Case c){
 
 /** @param p: Plateau de jeu
  *  @param c1: Case de départ
- *  @param c2: Case d'arrivée
- *  Constructeur de la classe Déplacement */
+ *  ???? à compléter */
 public Deplacement(Plateau p, Case c1, Case c2){
 	echiquier = p;
 	p.echangerPiece(c1,c2);
 
+    // si la case contient une pièce, on remplit la liste de déplacement
     if ( c2.piece != null ){
         cI=c2;
         tousDeplacementsAdv();
@@ -41,7 +41,7 @@ public Deplacement(Plateau p, Case c1, Case c2){
     }
 }
 
-//Vide les listes des deplacements possibles
+/** Réinitialise les listes de deplacements possibles */
 public void initialiserListes(){
 	depPoss.clear();
 	toutDeplAdv.clear();
@@ -49,15 +49,28 @@ public void initialiserListes(){
 	toutDepl.clear();
 	depParer.clear();
 }
+
+/** à documenter */
 public void adaptGrille(){
 	cI.y=cI.y;
 }
-//
-// ---------- GESTION DES DEPLACEMENTS GENERAUX DES PIECES ---------
-//
+
+
+/** Vérifie si les coordonées [i,j] passées en paramètre
+ *  appartiennent à l'échiquier */
+public boolean estDansLeTableau(int i, int j){
+	return (i>=0 && j>=0 && i<8 && j<8 );
+}
+
+
+/** Méthode remplissant une liste de déplacement, passée en paramètre. 
+ *  Les déplacements sont ceux des PIONS
+ *  @param list: Liste de déplacements à remplir */
+
 public void depPion(LinkedList<Case> list){
 	int x= cI.x;
 	int y= cI.y;
+    
     try {
         // le pion est sur la première ligne: il peut avancer de un ou de deux
         if (y==1 && echiquier.cases[x][2].piece==null && echiquier.cases[x][3].piece==null){
@@ -74,31 +87,35 @@ public void depPion(LinkedList<Case> list){
             list.add(echiquier.cases[x][y-1]);
 	 } catch( Exception e ){}
 }
+
+/** Méthode remplissant une liste de déplacement, passée en paramètre. 
+ *  Les déplacements sont ceux des PIONS, lorsqu'ils menacent de prendre une pièce
+ *  @param list: Liste de déplacements à remplir */
+ 
 public void prisePion(LinkedList<Case> list){
 		int x= cI.x;
 		int y= cI.y;
         
-		  // gestion des prises de pièces par les pions
-		if (cI.piece.couleur=="noir"){
-			if(estDansLeTableau(x+1,y+1) && echiquier.cases[x+1][y+1].piece!=null && echiquier.cases[x+1][y+1].piece.couleur=="blanc" )
-				list.add(echiquier.cases[x+1][y+1]);
-			if (estDansLeTableau(x-1,y+1) && echiquier.cases[x-1][y+1].piece!=null && echiquier.cases[x-1][y+1].piece.couleur=="blanc")
-				list.add(echiquier.cases[x-1][y+1]);
-		}
-		if (cI.piece.couleur=="blanc"){
-			if( estDansLeTableau(x-1,y-1) && echiquier.cases[x-1][y-1].piece!=null && echiquier.cases[x-1][y-1].piece.couleur=="noir" )	
-				list.add(echiquier.cases[x-1][y-1]);
-			if (estDansLeTableau(x+1,y-1) && echiquier.cases[x+1][y-1].piece!=null && echiquier.cases[x+1][y-1].piece.couleur=="noir" )	
-				list.add(echiquier.cases[x+1][y-1]);
-		}	
+        String couleurAdverse = (cI.piece.couleur == "blanc" ) ? "noir" : "blanc";
+
+        if( estDansLeTableau(x-1,y-1) && echiquier.cases[x-1][y-1].piece!=null && echiquier.cases[x-1][y-1].piece.couleur==couleurAdverse )	
+            list.add(echiquier.cases[x-1][y-1]);
+        if (estDansLeTableau(x+1,y-1) && echiquier.cases[x+1][y-1].piece!=null && echiquier.cases[x+1][y-1].piece.couleur==couleurAdverse )	
+            list.add(echiquier.cases[x+1][y-1]);	
 }  
 
+/** Méthode remplissant une liste de déplacement, passée en paramètre. 
+ *  Les déplacements sont ceux des CAVALIERS
+ *  @param list: Liste de déplacements à remplir */
+ 
 public void depCavalier(LinkedList <Case> list ){
 
         // on envisage tous les déplacements possibles
         LinkedList <Case> dep = new LinkedList<Case>();
+        
         int x=cI.x;
         int y=cI.y;
+        
         dep.add(new Case(x+1,y+2));
         dep.add(new Case(x+1,y-2));
         dep.add(new Case(x-1,y+2));
@@ -119,10 +136,10 @@ public void depCavalier(LinkedList <Case> list ){
         }
 }
 
-public boolean estDansLeTableau(int i, int j){
-	return (i>=0 && j>=0 && i<8 && j<8 );
-}
-
+/** Méthode remplissant une liste de déplacement, passée en paramètre. 
+ *  Les déplacements sont ceux des FOUS
+ *  @param list: Liste de déplacements à remplir */
+ 
 public void depFou( LinkedList <Case> list ){
 
       //Initialise 4 tableaux représentant les sens de déplacement possible en  diagonale: HD (haut-droit), ...
@@ -154,6 +171,11 @@ public void depFou( LinkedList <Case> list ){
 }
 
 
+/** Méthode remplissant une liste de déplacement jusqu'à rencontrer une pièce.
+ *  @param list: Liste de déplacements à remplir 
+ *  @param dep: Déplacements pouvant être ajoutés
+ * */
+ 
 public void verif(LinkedList <Case> dep, LinkedList <Case> list){
   String coul = cI.piece.couleur;
   int x=0;
@@ -161,19 +183,26 @@ public void verif(LinkedList <Case> dep, LinkedList <Case> list){
   for(Case c: dep){
 		 x=c.x;
 		 y=c.y;
+         
 		 // si la case correspondante ne contient pas de pièce
 		 if(echiquier.cases[x][y].piece==null) {
 			 list.add(echiquier.cases[x][y]);
 		 } else {
-			 // la couleur de la pièce sur la case est différente de la couleur du joueur
+             
+			 // si l'on rencontre une pièce, on arrête l'ajout.
+             // si la pièce est ADVERSE, on l'ajoute à la liste des déplacements possibles
 			 if(echiquier.cases[x][y].piece!=null && !echiquier.cases[x][y].piece.couleur.equals(coul)){
-				 list.add(echiquier.cases[x][y]);
+				 list.add(echiquier.cases[x][y]); 
 			 }
 			 break;
 		 }
 	}
 }
 
+/** Méthode remplissant une liste de déplacement, passée en paramètre. 
+ *  Les déplacements sont ceux des TOURS
+ *  @param list: Liste de déplacements à remplir */
+ 
 public void depTour( LinkedList <Case> list ){
 
         //Initialise 4 tableaux représentant les sens de déplacement possible en  diagonale: H (haut), ...
@@ -205,10 +234,15 @@ public void depTour( LinkedList <Case> list ){
 
 }
 
+/** Méthode remplissant une liste de déplacement, passée en paramètre. 
+ *  Les déplacements sont ceux du ROI
+ *  @param list: Liste de déplacements à remplir */
+ 
 public void depRoi( LinkedList <Case> list ){
 
         int x=cI.x;
         int y=cI.y;
+        
 		String coul= cI.piece.couleur;
         LinkedList<Case> dep = new LinkedList<Case>();
 
