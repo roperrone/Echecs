@@ -257,8 +257,8 @@ public void depRoi( LinkedList <Case> list ){
         dep.add(new Case(x-1,y-1));
 
         // on récupère la position du roi adverse
-        String couleurAdverse = (echiquier.couleurCourante == "blanc") ? "noir" : "blanc";
-        Case roiAdverse = echiquier.trouverPiece("Roi", couleurAdverse ).getFirst();
+        String couleurAdverse = (echiquier.couleurCourante == "blanc") ? "noir" : "blanc";       
+        Case roiAdverse = echiquier.trouverPiece("Roi", couleurAdverse).getFirst();
         
         LinkedList <Case> depRoiAdverse = new LinkedList<Case>();
         
