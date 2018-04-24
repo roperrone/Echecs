@@ -42,7 +42,7 @@ public class Jeu {
             }
             
             // on tire une pièce au hasard
-            int coup = (int)(Math.random()*piecesNoires.size());
+            int coup = (int)(Math.random()*piecesNoires.size())-1;
             Case aJouer = piecesNoires.get(coup);
             
             Deplacement dep = new Deplacement(plateau, aJouer);
