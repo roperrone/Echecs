@@ -477,7 +477,7 @@ public boolean parerEchec(){
 		for (int j=0;j<echiquier.cases[0].length;j++) {
 			if(echiquier.cases[i][j].piece.couleur.equals(echiquier.couleurCourante)){ // Si la piece appartient au joueur courant
 				Deplacement a = new Deplacement(echiquier, echiquier.cases[i][j]);
-				simuler(a.getDeplPoss()); //Regarde si les deplacement de cette piece permettent de parer l'echec
+				simuler(a; //Regarde si les deplacement de cette piece permettent de parer l'echec
 			}
 		}
 	}
