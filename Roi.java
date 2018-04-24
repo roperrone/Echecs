@@ -8,7 +8,7 @@ public class Roi extends Piece {
   private Image img;
   
   public Roi(String c){
-    super(c,"Roi",10);
+    super(c,"Roi",900);
     
     img = null;
     try {
