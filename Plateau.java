@@ -6,70 +6,73 @@ public class Plateau {
     public Case[][] cases;
     public LinkedList <Piece> pieceSuppr= new LinkedList<Piece>();
     public LinkedList <Piece> pionEnPassant= new LinkedList<Piece>();
-    public String couleurCourante; 
-    
+    public String couleurCourante;
+
     public Deplacement depCourant; //deplacement courant
+    public Deplacement dernierDeplacement;
 
     //Constructeur
-    public Plateau(){
-       cases = new Case[8][8];
-       couleurCourante= "blanc";
+  public Plateau(){
+    cases = new Case[8][8];
+    couleurCourante= "blanc";
+    initialisation();
+  }
 
-	   for(int i=0; i<8; i++) {
-		  for(int j=0; j<8; j++) {
-				cases[i][j] = new Case(i,j);
-		  }
-	   }
-
-       // initialisation des pièces principales
-       for(int i=0; i<8; i++) {
-		   Piece p1 = null;
-		   Piece p2 = null;
-
-		   switch(i){
-			   case 0:
-			   case 7:
-				    p1 = new Tour("noir");
-				    p2 = new Tour("blanc");
-				  break;
-			   case 1:
-			   case 6:
-				  p1 = new Cavalier("noir");
-				  p2 = new Cavalier("blanc");
-				  break;
-			   case 2:
-			   case 5:
-				  p1 = new Fou("noir");
-				  p2 = new Fou("blanc");
-			      break;
-			   case 3:
-				  p1 = new Reine("noir");
-				  p2 = new Reine("blanc");
-				  break;
-			   case 4:
-				  p1 = new Roi("noir");
-				  p2 = new Roi("blanc");
-				  break;
-		   }
-
-		   cases[i][0].setPiece(p1);
-		   cases[i][7].setPiece(p2);
-	   }
-
-       // initialisation des pions
-       for(int i=0; i<8; i++) {
-		   Piece p1 = new Pion("noir");
-		   Piece p2 = new Pion("blanc");
-
-		   cases[i][1].setPiece(p1);
-		   cases[i][6].setPiece(p2);
-	   }
-
+  public void initialisation(){
+    for(int i=0; i<8; i++) {
+     for(int j=0; j<8; j++) {
+       cases[i][j] = new Case(i,j);
+     }
     }
+
+      // initialisation des pièces principales
+      for(int i=0; i<8; i++) {
+      Piece p1 = null;
+      Piece p2 = null;
+
+      switch(i){
+        case 0:
+        case 7:
+           p1 = new Tour("noir");
+           p2 = new Tour("blanc");
+         break;
+        case 1:
+        case 6:
+         p1 = new Cavalier("noir");
+         p2 = new Cavalier("blanc");
+         break;
+        case 2:
+        case 5:
+         p1 = new Fou("noir");
+         p2 = new Fou("blanc");
+           break;
+        case 3:
+         p1 = new Reine("noir");
+         p2 = new Reine("blanc");
+         break;
+        case 4:
+         p1 = new Roi("noir");
+         p2 = new Roi("blanc");
+         break;
+      }
+
+      cases[i][0].setPiece(p1);
+      cases[i][7].setPiece(p2);
+    }
+
+      // initialisation des pions
+      for(int i=0; i<8; i++) {
+      Piece p1 = new Pion("noir");
+      Piece p2 = new Pion("blanc");
+
+      cases[i][1].setPiece(p1);
+      cases[i][6].setPiece(p2);
+    }
+  }
 
   public void switchCouleurCourante(){
 	 couleurCourante = ( couleurCourante == "blanc" ) ? "noir" : "blanc";
-     
+
   }
 
   public Case[][] getCases(){
@@ -92,6 +95,7 @@ public class Plateau {
 
   // dx dy coordonnees case de d'arrivée
   public void deplacerPiece(int dx, int dy, String couleur){
+    dernierDeplacement = depCourant; //si le déplacmeente st effectué le dernier deplacement deviens le depCourant
       resetCouleur();
       if(this.cases[dx][dy].piece != null && cases[dx][dy].piece.couleur != couleurCourante){
         supprPiece(dx, dy);
@@ -104,12 +108,12 @@ public class Plateau {
   public void remplacerPiece(int x, int y, Piece p){
     this.cases[x][y].piece=p;
   }
-  
+
   public void roquer(int x, int y, Piece p) {
       if( x == 2 ) { // on effectue le petit roque
           remplacerPiece(x,y,p);
           remplacerPiece(x+1,y, cases[x-2][y].piece );
-          
+
           remplacerPiece(x-2,y, null );
       } else if ( x == 6 ) { // on effectue le grand roque
           remplacerPiece(x,y,p);
@@ -142,7 +146,7 @@ public class Plateau {
   public LinkedList<Case> trouverPiece(String n){
     return trouverPiece(n, this.couleurCourante);
   }
-  
+
   public void resetCouleur(){
     for(Case c : depCourant.getDeplPoss()){
       c.resetCouleur();
@@ -153,4 +157,35 @@ public class Plateau {
     cases[c2.x][c2.y].setPiece(c1.piece);
     cases[c1.x][c2.y].setPiece(null);
   }
+
+  public void simuler(Deplacement d){
+    this.cases[d.cF.x][d.cF.y]=d.cI;
+    this.cases[d.cI.x][d.cI.y]=null;
+  }
+
+  public int estimer(){
+    int somme=0;
+    for(int i=0; i<this.cases.length; i++){
+      for(int j=0; j<this.cases[0].length; j++){
+        somme += this.cases[i][j].piece.valeur;
+      }
+    }
+    return somme;
+  }
+
+  public ArrayList<Deplacement> deplacementsPossibles(){
+    ArrayList<Deplacement> list = new ArrayList<Deplacement>();
+
+    for(int i=0; i<this.cases.length; i++){
+      for(int j=0; j<this.cases[0].length; j++){
+        Deplacement d = new Deplacement(this, this.cases[i][j]);
+        for(Case a : d.getDeplPoss()){
+          list.add(new Deplacement(this, d.cI, a));
+        }
+      }
+    }
+    return list;
+  }
+
+
 }

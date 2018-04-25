@@ -2,61 +2,46 @@ import java.util.*;
 
 public class Minimax {
 
-  Plateau echiquier;
 
-  public Deplacement Minimax(int profondeur, Joueur j, Jeu jeu){
+  public Deplacement Minimax(int profondeur, String couleur, Plateau echiquier){
 
-
-  if(profondeur == 0 || echiquier.depCourant.misEnEchec()){
-    jeu.plateau.estimer(); //return le meilleur deplacemeent
-  }else{
+    ArrayList<Deplacement> t = echiquier.deplacementsPossibles();
 
 
+    if(profondeur == 0 || echiquier.depCourant.misEnEchec() || t.isEmpty()){
+      return echiquier.dernierDeplacement; //return le meilleur deplacement de la fin de la branche
+    }else{
 
-  if(j.couleur.couleurCourante == "blanc") {
+    Deplacement best = new Deplacement(echiquier, null, null);
 
-  	Deplacement best = new Deplacement(-9999); //deplacement
-  	ArrayList<Deplacement> t = jeu.plateau.deplacementsPossibles();
+    if(couleur == "blanc") {
+      best.score = -9999;
 
-  	if (t.size() != null) {
+    	  for(Deplacement d : t){
+          if(d.cI.piece.couleur == "blanc"){
+            echiquier.simuler(d); //simule le deplacement sur le plateau
+      	    Deplacement a = Minimax(profondeur -1, "noir", echiquier);
+      	    if (a.score > best.score) {
+      	      best = a;
+      	    }
+          }
+    	  }
+    }
 
-  	  for(Deplacement d : t){
-        d.simuler(echiquier); //simule le deplacement sur le plateau
-  	    Deplacement a = minimax(profondeur -1, jeu.tabJoueur[1], jeu)
-  	    if (a.score() > best.score()) {
-  	      best = a;
-  	    }
-  	  }
-  	}
-    return best;
-  }
+     if(couleur == "noir") {
+       best.score = 9999;
 
-
-
-  /**
-   * The search algorithm for min (Black player)
-   * @param depth - The current depth
-   * @return the best evaluation
-   */
-
-   if(j.couleur.couleurCourante == "noir") {
-
-     Deplacement best = new Deplacement(9999); //deplacement
-     ArrayList<Deplacement> t = jeu.plateau.deplacementsPossibles();
-
-     if (t.size() != null) {
-
-       for(Deplacement d : t){
-         d.simuler(echiquier); //simule le deplacement sur le plateau
-         Deplacement a = minimax(profondeur -1, jeu.tabJoueur[1], jeu)
-         if (a.score() < best.score()) {
-           best = a;
+         for(Deplacement d : t){
+           if(d.cI.piece.couleur == "noir"){
+             echiquier.simuler(d); //simule le deplacement sur le plateau
+             Deplacement a = Minimax(profondeur -1, "blanc", echiquier);
+             if (a.score < best.score) {
+               best = a;
+             }
+           }
          }
-       }
      }
      return best;
-   }
-
+    }
   }
-}
 }

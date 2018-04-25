@@ -5,11 +5,12 @@ public class Deplacement {
 
 	public LinkedList<Case> depPoss= new LinkedList<Case>();
 	public LinkedList<Case> toutDeplAdv = new LinkedList<Case>();
-    public LinkedList<Case> toutDeplEchec = new LinkedList<Case>();
+  public LinkedList<Case> toutDeplEchec = new LinkedList<Case>();
  	public LinkedList<Case> toutDepl = new LinkedList<Case>(); //tous les deplacement du joueur courant
 	public LinkedList<Case> depParer = new LinkedList<Case>();
 	Case cI; // @ param case initiale: contient tous les attributs de la case de déplacement
-
+	Case cF; //
+	int score;
 
 /** @param p: Plateau de jeu
  *  @param c: Case à jouer
@@ -31,8 +32,8 @@ public Deplacement(Plateau p, Case c){
  *  ???? à compléter */
 public Deplacement(Plateau p, Case c1, Case c2){
 	echiquier = p;
-	p.echangerPiece(c1,c2);
-
+	echiquier.echangerPiece(c1,c2);
+	score = echiquier.estimer();
     // si la case contient une pièce, on remplit la liste de déplacement
     if ( c2.piece != null ){
         cI=c2;
@@ -477,7 +478,7 @@ public boolean parerEchec(){
 		for (int j=0;j<echiquier.cases[0].length;j++) {
 			if(echiquier.cases[i][j].piece.couleur.equals(echiquier.couleurCourante)){ // Si la piece appartient au joueur courant
 				Deplacement a = new Deplacement(echiquier, echiquier.cases[i][j]);
-				simuler(a; //Regarde si les deplacement de cette piece permettent de parer l'echec
+				simuler(a); //Regarde si les deplacement de cette piece permettent de parer l'echec
 			}
 		}
 	}
@@ -512,7 +513,9 @@ public boolean enEchec(){
 	}
 }
 
-
+public int estimer(){
+	return echiquier.estimer();
+}
 //
 // ------ VALIDATION DES COUPS -------
 //
