@@ -13,8 +13,8 @@ public class Jeu {
         tabJoueur[0] = j1;
         tabJoueur[1] = j2;
         
-       // ai_active = false;
-        ai_active = true;
+       ai_active = false;
+       // ai_active = true;
     }
   
     public Jeu( Joueur j1, boolean ai_active ) {
@@ -29,7 +29,7 @@ public class Jeu {
             plateau.pionEnPassant.remove(0);
         }
         
-        // à l'ordinateur de jouer
+        // à l'ordinateur de jouer: dummy version
         if( plateau.couleurCourante == "noir" && ai_active ) {
             LinkedList<Case> piecesNoires = new LinkedList<Case>();
             
@@ -41,38 +41,50 @@ public class Jeu {
                 }
             }
             
-            // on tire une pièce au hasard
-            int coup = (int)(Math.random()*piecesNoires.size())-1;
-            Case aJouer = piecesNoires.get(coup);
+            boolean stop = true;
             
-            Deplacement dep = new Deplacement(plateau, aJouer);
-            LinkedList<Case> depPossible = dep.getDeplPoss();
-            
-            Case caseArrivee = depPossible.get( (int)(Math.random()*depPossible.size()) );
-            Case casePionPassant = plateau.cases[caseArrivee.x][aJouer.y];
-            Piece p = aJouer.piece;
-            
-            plateau.supprPiece(aJouer.x, aJouer.y);
-            
-            if( caseArrivee.roque_possible ){
-                plateau.roquer(caseArrivee.x, caseArrivee.y, p);
-            } else if( casePionPassant.piece != null && casePionPassant.piece.pion_en_passant ) { // si le pion peut être pris en passant
-                plateau.remplacerPiece(caseArrivee.x, caseArrivee.y, p);
-                plateau.supprPiece(caseArrivee.x, aJouer.y);
-            } else {
-                 plateau.remplacerPiece(caseArrivee.x, caseArrivee.y, p);
-                                 
-                // rend le pion vulnérable à une attaque du pion en passant
-                if( p instanceof Pion && Math.abs(caseArrivee.y - aJouer.y) == 2 ){
-                    p.pion_en_passant = true;
-                    plateau.pionEnPassant.add(p);
-                }
-            }
-            
-            p.deja_bougee = true;
+            do {
+                // on tire une pièce au hasard
+                int coup = (int)(Math.random()*piecesNoires.size());
+                Case aJouer = piecesNoires.get(coup);
+                    
 
-            plateau.switchCouleurCourante();
-            tourSuivant();
+                Deplacement dep = new Deplacement(plateau, aJouer);
+                LinkedList<Case> depPossible = dep.getDeplPoss();
+            
+                if ( !depPossible.isEmpty() ) {
+                    Case caseArrivee = depPossible.get( (int)(Math.random()*depPossible.size()) );
+
+                    Case casePionPassant = plateau.cases[caseArrivee.x][aJouer.y];
+                    Piece p = aJouer.piece;
+                    
+                    plateau.remplacerPiece(aJouer.x, aJouer.y, null);
+                    
+                    if( caseArrivee.roque_possible ){
+                        plateau.roquer(caseArrivee.x, caseArrivee.y, p);
+                    } else if( casePionPassant.piece != null && casePionPassant.piece.pion_en_passant ) { // si le pion peut être pris en passant
+                        plateau.remplacerPiece(caseArrivee.x, caseArrivee.y, p);
+                        plateau.supprPiece(caseArrivee.x, aJouer.y);
+                    } else {
+                         plateau.remplacerPiece(caseArrivee.x, caseArrivee.y, p);
+                                         
+                        // rend le pion vulnérable à une attaque du pion en passant
+                        if( p instanceof Pion && Math.abs(caseArrivee.y - aJouer.y) == 2 ){
+                            p.pion_en_passant = true;
+                            plateau.pionEnPassant.add(p);
+                        }
+                    }
+                    
+                    p.deja_bougee = true;
+
+                    plateau.switchCouleurCourante();
+                    tourSuivant();
+                    
+                    stop = true;
+                } else {
+                    stop = false;
+                }
+            } while( !stop );
             
             
         }

@@ -24,6 +24,17 @@ public class Case {
     y = j;
     couleur = ((x+y)%2 == 0) ? blanc : noir;
   }
+  
+  public Object clone() {    
+	    Case c_case = new Case(x, y);
+	    c_case.roque_possible = roque_possible;
+        
+        if( piece != null )
+            c_case.piece = (Piece) piece.clone();
+	    
+	    return c_case;
+  }
+
 
   public void setPiece(Piece p){
 	  this.piece = p;

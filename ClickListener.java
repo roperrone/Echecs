@@ -36,7 +36,7 @@ public class ClickListener implements MouseListener {
            if ( depPossible.contains(caseArrivee) ){                             
                 Piece p = caseDepart.piece;
                                     
-                fenetre.getJeu().plateau.supprPiece(caseDepart.x, caseDepart.y);
+                fenetre.getJeu().plateau.remplacerPiece(caseDepart.x, caseDepart.y, null);
                 
                 if( caseArrivee.roque_possible ){
                     fenetre.getJeu().plateau.roquer((int)c.getX(), (int)c.getY(), p);
