@@ -74,11 +74,11 @@ public void depPion(LinkedList<Case> list){
 
     try {
         // le pion est sur la première ligne: il peut avancer de un ou de deux
-        if (y==1 && echiquier.cases[x][2].piece==null && echiquier.cases[x][3].piece==null){
+        if (y==1 && echiquier.cases[x][2].piece==null && echiquier.cases[x][3].piece==null && cI.piece.couleur == "noir" ){
             list.add(echiquier.cases[x][2]);
             list.add(echiquier.cases[x][3]);
         }
-        else if (y==6 && echiquier.cases[x][5].piece==null && echiquier.cases[x][5].piece==null){
+        else if (y==6 && echiquier.cases[x][5].piece==null && echiquier.cases[x][5].piece==null && cI.piece.couleur == "blanc"){
             list.add(echiquier.cases[x][4]);
             list.add(echiquier.cases[x][5]);
         } // sinon le pion ne peut avancer que d'une seule case à la fois
@@ -134,9 +134,27 @@ public void prisePion(LinkedList<Case> list){
                 list.add(echiquier.cases[x+1][y+1]);
             }
         }
+}
 
+/** Méthode remplissant une liste de déplacement, passée en paramètre.
+ *  Les déplacements sont ceux du roi adverse menacé par les PIONS.
+ *  @param list: Liste de déplacements à remplir */
 
+public void pionMenaceRoi(LinkedList<Case> list){
+		int x= cI.x;
+		int y= cI.y;
 
+        if(cI.piece.couleur == "blanc" && echiquier.couleurCourante == "noir" ){
+            if( estDansLeTableau(x-1,y-1) )
+                list.add(echiquier.cases[x-1][y-1]);
+            if (estDansLeTableau(x+1,y-1) )
+                list.add(echiquier.cases[x+1][y-1]);
+        } else if ( cI.piece.couleur == "noir" && echiquier.couleurCourante == "blanc") {
+            if( estDansLeTableau(x-1,y+1) )
+                list.add(echiquier.cases[x-1][y+1]);
+            if (estDansLeTableau(x+1,y+1) )
+                list.add(echiquier.cases[x+1][y+1]);
+        }
 }
 
 /** Méthode remplissant une liste de déplacement, passée en paramètre.
@@ -314,6 +332,7 @@ public void depRoi( LinkedList <Case> list ){
         }
 
 
+        LinkedList <Case> tmp = new LinkedList <Case>();
         for(Case c: dep ) {
             x = c.x;
             y = c.y;
@@ -321,8 +340,19 @@ public void depRoi( LinkedList <Case> list ){
             // si le déplacement est dans le tableau et  qu'il n'y a pas de pièce (ou que la pièce n'est pas de la même couleur), et que le déplacement est autorisé
             if ( estDansLeTableau(x,y) && !depRoiAdverse.contains(c)
                     && (echiquier.cases[x][y].piece==null || !echiquier.cases[x][y].piece.couleur.equals(coul))
-                )
-                list.add(echiquier.cases[x][y]);
+                ) {
+                tmp.add(echiquier.cases[x][y]);
+            }
+        }
+    
+        // le roi ne peut se déplacer que sur des cases qui ne sont pas mises en échec
+        for( Case c: tmp ){
+            Plateau eq = echiquier.simulateMove(cI, c);
+            Deplacement d = new Deplacement(eq, c);
+            
+            if(!d.misEnEchec()) {
+                list.add(c);
+            }
         }
 
 }
@@ -360,8 +390,10 @@ public void remplirListDepl(Case c, LinkedList<Case> list){
 }
 
 public void remplirListDeplEchec(Case c, LinkedList<Case> list){
+    this.cI = c;
+    
 	if (c.piece instanceof Pion) {
-		prisePion(list); // le pion peut mettre le roi en échec uniquement sur sa diagonale
+		pionMenaceRoi(list); // le pion peut mettre le roi en échec uniquement sur sa diagonale
     } else if (c.piece instanceof Cavalier) {
 		depCavalier(list);
     } else if (c.piece instanceof Fou) {
@@ -424,16 +456,6 @@ public boolean verifier_grandRoque() {
                     echiquier.cases[x-3][y].piece == null );
 }
 
-public void promotion(){
-	String c = cI.piece.couleur;
-
-	if (cI.piece instanceof Pion && c == "blanc" && cI.y==0)
-        cI.piece=new Reine(c);
-    else if( cI.piece instanceof Pion && c == "noir" && cI.y==7 )
-        cI.piece=new Reine(c);
-}
-
-
 //
 // ---------- ETAT DU JEU ---------
 //
@@ -453,10 +475,12 @@ public void tousDeplacementsAdv(){
 
 //Rempli tous les mises en échec possible
 public void toutDeplacementsEchec(){
+    LinkedList<Case> deplacement = new LinkedList<Case>();
+    
     for(Case[] cases : echiquier.cases){
 		for(Case c : cases){
-			if((c.piece != null) && (c.piece.couleur != cI.piece.couleur)){
-				remplirListDeplEchec(c, toutDeplEchec);
+			if((c.piece != null) && (!c.piece.couleur.equals(echiquier.couleurCourante))){
+				remplirListDeplEchec(c, this.toutDeplEchec);
 			}
 		}
 	}
@@ -496,8 +520,10 @@ public void simuler(Deplacement d){
 }
 
 //Roi pouvant etre mis en échec par l'adversaire
-public boolean misEnEchec(){
- 	if( toutDeplAdv.contains(echiquier.trouverPiece("Roi",echiquier.couleurCourante).getFirst()) )
+public boolean misEnEchec(){    
+    toutDeplacementsEchec();
+    
+ 	if( getDeplEchec().contains(echiquier.trouverPiece("Roi", echiquier.couleurCourante).getFirst()) )
 		return true;
  	else
 		return false;
@@ -521,10 +547,15 @@ public int estimer(){
 //
 
 
-//return deplacments possibles
+//return deplacements possibles
 public LinkedList<Case> getDeplPoss(){
  	return depPoss;
 }
+
+public LinkedList<Case> getDeplEchec(){
+ 	return toutDeplEchec;
+}
+
 
 
 }

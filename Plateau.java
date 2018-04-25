@@ -59,6 +59,11 @@ public class Plateau {
       cases[i][0].setPiece(p1);
       cases[i][7].setPiece(p2);
     }
+    
+  public Plateau( Case[][] cases, String couleur ){
+        this.cases = cases;
+        couleurCourante = couleur;
+  }
 
       // initialisation des pions
       for(int i=0; i<8; i++) {
@@ -107,6 +112,16 @@ public class Plateau {
   //Quand on arrive au bout du plateau avec un pion on peut l'échanger avec une piece de notre choix
   public void remplacerPiece(int x, int y, Piece p){
     this.cases[x][y].piece=p;
+    effectuerPromotion(x,y,p);
+  }
+  
+  public void effectuerPromotion(int x, int y, Piece p){
+    if( p != null ){
+        String c = p.couleur;
+
+        if (p instanceof Pion && ((c == "blanc" && y==0) || (c == "noir" && y==7)) )
+            remplacerPiece(x,y, new Reine(c));
+    }
   }
 
   public void roquer(int x, int y, Piece p) {
@@ -122,7 +137,45 @@ public class Plateau {
       }
   }
 
-
+  public Plateau simulateMove( Case c1, Case c2 ){
+     // on passe en mode simulation
+     Case[][] case_t = new Case[8][8];
+     
+     for(int i=0; i<cases.length; i++ ){
+         for(int j=0; j<cases.length; j++ ){
+             case_t[i][j] = (Case) cases[i][j].clone();
+         }
+     }
+     
+     Plateau pl = new Plateau(case_t, couleurCourante);
+     Case depart =  pl.cases[c1.x][c1.y];
+     Case arrivee =  pl.cases[c2.x][c2.y];
+     Case casePionPassant = pl.cases[arrivee.x][depart.y];
+     
+     Piece p = depart.piece;
+     
+     pl.remplacerPiece(c1.x, c2.y, null);
+     pl.remplacerPiece(c2.x, c2.y, p);
+     
+    if( arrivee.roque_possible ){
+        pl.roquer(arrivee.x, arrivee.y, p);
+    } else if( casePionPassant.piece != null && casePionPassant.piece.pion_en_passant ) { // si le pion peut être pris en passant
+        pl.remplacerPiece(arrivee.x, arrivee.y, p);
+        pl.supprPiece(arrivee.x, depart.y);
+    } else {
+         pl.remplacerPiece(arrivee.x, arrivee.y, p);
+                         
+        // rend le pion vulnérable à une attaque du pion en passant
+        if( p instanceof Pion && Math.abs(arrivee.y - depart.y) == 2 ){
+            p.pion_en_passant = true;
+            pl.pionEnPassant.add(p);
+        }
+    }
+    
+    p.deja_bougee = true;    
+    return pl;
+  }
+  
   public void remplirCases(){
     for(Case c : depCourant.getDeplPoss()){
       c.setActif();

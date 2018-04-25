@@ -35,6 +35,29 @@ public class Piece {
 	position_custom = false;
   }
 
+  public Object clone() {
+        Piece piece;
+
+      	if (this instanceof Pion) {
+           piece = new Pion(couleur);
+        } else if (this instanceof Cavalier) {
+            piece = new Pion(couleur);
+        } else if (this instanceof Fou) {
+            piece = new Fou(couleur);
+        } else if (this instanceof Tour) {
+           piece = new Tour(couleur);
+        } else if (this instanceof Reine){
+            piece = new Reine(couleur);
+        } else {
+            piece = new Roi(couleur);
+        }
+	    piece.position_custom = position_custom;
+        piece.deja_bougee = deja_bougee;
+        piece.pion_en_passant = pion_en_passant;
+
+	    return piece;
+  }
+
   public void afficher(Graphics g, int i, int j){}
 
 
