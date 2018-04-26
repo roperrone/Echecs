@@ -5,7 +5,11 @@ public class FenetrePlateau extends JFrame {
   public JPanel content;
   public JPanel plateau;
   public JPanel options;
-  
+  public JPanel boutons;
+  public JButton abandonne;
+  public JButton rejouer;
+  public JTextArea text;
+    
   public ClickListener clickListen;
   public MoveListener moveListen;
   
@@ -21,11 +25,23 @@ public class FenetrePlateau extends JFrame {
 
     content = new JPanel(new BorderLayout());
     plateau = new DessinePlateau(this, jeu);
-    options = new JPanel();
-
+    options = new JPanel(new BorderLayout());
+    boutons = new JPanel(new GridLayout(2,2,10,10));
+	abandonne=new JButton("Abandonner");
+	rejouer=new JButton("Rejouer");
+	text=new JTextArea(jeu.tabJoueur[0]+ "\n" +jeu.tabJoueur[1]);
+	
+	boutons.add(rejouer);
+	boutons.add(abandonne);
+	
+	abandonne.addActionListener(new EcouteurJeu(this));
+	rejouer.addActionListener(new EcouteurJeu(this));
+	
     options.setBackground(new Color(247,247,247));
     options.setPreferredSize(new Dimension(400, 820));
-
+	options.add(boutons, BorderLayout.SOUTH);
+	options.add(text, BorderLayout.CENTER);
+	
     content.add(plateau, BorderLayout.CENTER);
     content.add(options, BorderLayout.EAST);
 
@@ -41,13 +57,5 @@ public class FenetrePlateau extends JFrame {
 
   public Jeu getJeu(){ return jeu; }
 
-  public static void main(String args[]){
-	    Joueur j1 = new Joueur("Romain");
-	    Joueur j2 = new Joueur("Marie");
-
-	    Jeu j = new Jeu(j1, j2);
-		j.start();
-
-		FenetrePlateau f = new FenetrePlateau(j);
-  }
 }
+

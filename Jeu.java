@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Jeu {
-    private Joueur[] tabJoueur;
+    public Joueur[] tabJoueur;
     public Plateau plateau;
     public int currentPlayer;
     public boolean ai_active;
