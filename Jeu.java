@@ -14,7 +14,7 @@ public class Jeu {
         tabJoueur[1] = j2;
         
        ai_active = false;
-       // ai_active = true;
+      // ai_active = true;
     }
   
     public Jeu( Joueur j1, boolean ai_active ) {
@@ -28,6 +28,13 @@ public class Jeu {
             plateau.pionEnPassant.get(0).pion_en_passant = false;
             plateau.pionEnPassant.remove(0);
         }
+        
+        Case roi = plateau.trouverPiece("Roi", plateau.couleurCourante).getFirst();
+        Deplacement d = new Deplacement(plateau, roi);
+        
+        if( d.misEnEchec() ) {
+			roi.misEnEchec(true);
+		}
         
         // à l'ordinateur de jouer: dummy version
         if( plateau.couleurCourante == "noir" && ai_active ) {
@@ -62,7 +69,7 @@ public class Jeu {
                     
                     if( caseArrivee.roque_possible ){
                         plateau.roquer(caseArrivee.x, caseArrivee.y, p);
-                    } else if( casePionPassant.piece != null && casePionPassant.piece.pion_en_passant ) { // si le pion peut être pris en passant
+                    } else if( casePionPassant.piece != null && casePionPassant.piece.pion_en_passant && p instanceof Pion ) { // si le pion peut être pris en passant
                         plateau.remplacerPiece(caseArrivee.x, caseArrivee.y, p);
                         plateau.supprPiece(caseArrivee.x, aJouer.y);
                     } else {

@@ -10,12 +10,14 @@ public class Case {
   
   public Piece piece;
   public boolean roque_possible = false;
+  public boolean enEchec = false;
   
   Color couleur;
   Color blanc = new Color(242,197,142);
   Color noir = new Color(129,88,75);
   Color actifC = new Color(138,195,74);
   Color actifF = new Color(123,178,65);
+  Color EchecC = new Color(253,60,60);
   
   Color actifRoque = new Color(0,255,94);
 
@@ -40,9 +42,19 @@ public class Case {
 	  this.piece = p;
   }
 
+  public void misEnEchec(boolean b){
+	if( b ){
+		this.couleur = EchecC;
+		enEchec = true;
+	} else {
+		resetCouleur();
+		enEchec = false;
+	}
+  }
+
   public void setActif(){
     if( !roque_possible )
-        this.couleur = ((x+y)%2 == 0) ? actifC : actifF;
+		this.couleur = ((x+y)%2 == 0) ? actifC : actifF;
     else
         this.couleur = actifRoque;
   }

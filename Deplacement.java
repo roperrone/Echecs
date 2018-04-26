@@ -5,7 +5,7 @@ public class Deplacement {
 
 	public LinkedList<Case> depPoss= new LinkedList<Case>();
 	public LinkedList<Case> toutDeplAdv = new LinkedList<Case>();
-  public LinkedList<Case> toutDeplEchec = new LinkedList<Case>();
+	public LinkedList<Case> toutDeplEchec = new LinkedList<Case>();
  	public LinkedList<Case> toutDepl = new LinkedList<Case>(); //tous les deplacement du joueur courant
 	public LinkedList<Case> depParer = new LinkedList<Case>();
 	Case cI; // @ param case initiale: contient tous les attributs de la case de déplacement
@@ -308,7 +308,7 @@ public void depRoi( LinkedList <Case> list ){
         dep.add(new Case(x-1,y+1));
         dep.add(new Case(x+1,y-1));
         dep.add(new Case(x-1,y-1));
-
+		
         // on récupère la position du roi adverse
         String couleurAdverse = (echiquier.couleurCourante == "blanc") ? "noir" : "blanc";
         Case roiAdverse = echiquier.trouverPiece("Roi", couleurAdverse).getFirst();
@@ -352,13 +352,13 @@ public void depRoi( LinkedList <Case> list ){
                         
             if(!d.misEnEchec()) {
                 list.add(c);
-            }
+            } 
         }
 
 }
 
 //Rempli le tableau de deplacements possibles
-public void remplirListDepl(Case c, LinkedList<Case> list){	
+public void remplirListDepl(Case c, LinkedList<Case> list){		
 	if (c.piece instanceof Pion) {
 		depPion(list);
 		prisePion(list);
@@ -387,6 +387,20 @@ public void remplirListDepl(Case c, LinkedList<Case> list){
             echiquier.cases[cI.x-2][cI.y].roque_possible = true;
         }
 	}
+	
+	Case roi = plateau.trouverPiece("Roi", plateau.couleurCourante).getFirst();
+	LinkedList<Case> tmp = new LinkedList<Case>();
+	
+	if( roi.enEchec ){
+		for( Case c : list ) {
+			simuler( new Deplacement(plateau, c) );
+
+			if( !depParer.isEmpty() )
+				tmp.add(c);
+		}
+	}
+	
+	
 }
 
 public void remplirListDeplEchec(Case c, LinkedList<Case> list){
@@ -426,6 +440,14 @@ public boolean verifier_petitRoque() {
     else if ( echiquier.cases[x+3][y].piece.deja_bougee )
         return false;
 
+	for( int i=0; i<=2; i++ ) {
+		Plateau eq = echiquier.simulateMove(cI, echiquier.cases[x+i][y]);
+		Deplacement d = new Deplacement(eq, echiquier.cases[x+i][y]);
+		
+		if( d.misEnEchec() )
+			return false;
+	}
+	
     return ( echiquier.cases[x+1][y].piece == null &&
                 echiquier.cases[x+2][y].piece == null );
 }
@@ -447,6 +469,14 @@ public boolean verifier_grandRoque() {
     else if ( echiquier.cases[x-4][y].piece.deja_bougee )
         return false;
 
+	for( int i=0; i<=3; i++ ) {
+		Plateau eq = echiquier.simulateMove(cI, echiquier.cases[x-i][y]);
+		Deplacement d = new Deplacement(eq, echiquier.cases[x-i][y]);
+		
+		if( d.misEnEchec() )
+			return false;
+	}
+            
     return ( echiquier.cases[x-1][y].piece == null &&
                 echiquier.cases[x-2][y].piece == null &&
                     echiquier.cases[x-3][y].piece == null );
@@ -500,14 +530,18 @@ public boolean parerEchec(){
 			}
 		}
 	}
+	
 	return depParer.isEmpty();
 }
 
 //permet de simuler le deplacement d'une piece et d'evaluer l'état du jeu suite au deplacement
 public void simuler(Deplacement d){
 	for(Case c : d.getDeplPoss()){
-		Deplacement a = new Deplacement(echiquier, d.cI, c);
-		if(!a.enEchec()){ //verifie si le deplacement permet de parer l'echec
+		
+		Plateau eq = echiquier.simulateMove(d.cI, c);
+        Deplacement a = new Deplacement(eq, c);
+
+		if(!a.misEnEchec()){ //verifie si le deplacement permet de parer l'echec
 			depParer.add(c);
 		}
 	}

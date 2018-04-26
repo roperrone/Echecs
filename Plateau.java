@@ -156,12 +156,12 @@ public class Plateau {
 
      Piece p = depart.piece;
 
-     pl.remplacerPiece(c1.x, c2.y, null);
+     pl.remplacerPiece(c1.x, c1.y, null);
      pl.remplacerPiece(c2.x, c2.y, p);
 
     if( arrivee.roque_possible ){
         pl.roquer(arrivee.x, arrivee.y, p);
-    } else if( casePionPassant.piece != null && casePionPassant.piece.pion_en_passant ) { // si le pion peut être pris en passant
+    } else if( casePionPassant.piece != null && casePionPassant.piece.pion_en_passant && p instanceof Pion ) { // si le pion peut être pris en passant
         pl.remplacerPiece(arrivee.x, arrivee.y, p);
         pl.supprPiece(arrivee.x, depart.y);
     } else {
@@ -201,6 +201,7 @@ public class Plateau {
   public LinkedList<Case> trouverPiece(String n){
     return trouverPiece(n, this.couleurCourante);
   }
+
 
   public void resetCouleur(){
     for(Case c : depCourant.getDeplPoss()){

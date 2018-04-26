@@ -35,12 +35,15 @@ public class ClickListener implements MouseListener {
 			// si le déplacement est possible, on déplace la pièce et on passe au joueur suivant
            if ( depPossible.contains(caseArrivee) ){                             
                 Piece p = caseDepart.piece;
-                                    
+                
+                Case roi = fenetre.getJeu().plateau.trouverPiece("Roi", p.couleur).getFirst();
+				roi.misEnEchec(false);
+				
                 fenetre.getJeu().plateau.remplacerPiece(caseDepart.x, caseDepart.y, null);
                 
                 if( caseArrivee.roque_possible ){
                     fenetre.getJeu().plateau.roquer((int)c.getX(), (int)c.getY(), p);
-                } else if( casePionPassant.piece != null && casePionPassant.piece.pion_en_passant ) { // si le pion peut être pris en passant
+                } else if( casePionPassant.piece != null && casePionPassant.piece.pion_en_passant && p instanceof Pion ) { // si le pion peut être pris en passant
                     fenetre.getJeu().plateau.remplacerPiece((int)c.getX(), (int)c.getY(), p);
                     fenetre.getJeu().plateau.supprPiece((int)c.getX(), caseDepart.y);
                 } else {
@@ -52,7 +55,7 @@ public class ClickListener implements MouseListener {
                         fenetre.getJeu().plateau.pionEnPassant.add(p);
                     }
                 }
-                
+               				
                 p.deja_bougee = true;
 
 				fenetre.getJeu().plateau.switchCouleurCourante();
@@ -62,7 +65,7 @@ public class ClickListener implements MouseListener {
 			for (Case a : depPossible){
 				a.resetCouleur();
 			}
-              
+            
             selectionne = false;
             
             pieceSelectionee.resetPosition();
