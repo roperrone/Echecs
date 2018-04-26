@@ -102,13 +102,15 @@ public class Plateau {
 
   // dx dy coordonnees case de d'arrivée
   public void deplacerPiece(int dx, int dy, String couleur){
-    dernierDeplacement = depCourant; //si le déplacmeente st effectué le dernier deplacement deviens le depCourant
+    dernierDeplacement = depCourant; //si le déplacmeent est effectué le dernier deplacement deviens le depCourant
       resetCouleur();
       if(this.cases[dx][dy].piece != null && cases[dx][dy].piece.couleur != couleurCourante){
         supprPiece(dx, dy);
       }
       cases[dx][dy].piece = cases[depCourant.cI.x][depCourant.cI.y].piece;
       cases[depCourant.cI.x][depCourant.cI.y] = null;
+
+
   }
 
   //Quand on arrive au bout du plateau avec un pion on peut l'échanger avec une piece de notre choix
@@ -214,15 +216,17 @@ public class Plateau {
   }
 
   public void simuler(Deplacement d){
-    this.cases[d.cF.x][d.cF.y]=d.cI;
-    this.cases[d.cI.x][d.cI.y]=null;
+    cases[d.cF.x][d.cF.y]=d.cI;
+    cases[d.cI.x][d.cI.y]=null;
   }
 
   public int estimer(){
     int somme=0;
-    for(int i=0; i<this.cases.length; i++){
-      for(int j=0; j<this.cases[0].length; j++){
-        somme += this.cases[i][j].piece.valeur;
+    for(int i=0; i<cases.length; i++){
+      for(int j=0; j<cases[0].length; j++){
+        if(cases[i][j].piece != null){
+          somme += cases[i][j].piece.valeur;
+        }
       }
     }
     return somme;
