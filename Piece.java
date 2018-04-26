@@ -41,7 +41,7 @@ public class Piece {
       	if (this instanceof Pion) {
            piece = new Pion(couleur);
         } else if (this instanceof Cavalier) {
-            piece = new Pion(couleur);
+            piece = new Cavalier(couleur);
         } else if (this instanceof Fou) {
             piece = new Fou(couleur);
         } else if (this instanceof Tour) {

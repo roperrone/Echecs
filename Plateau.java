@@ -69,11 +69,11 @@ public class Plateau {
 
       // initialisation des pions
       for(int i=0; i<8; i++) {
-      Piece p1 = new Pion("noir");
-      Piece p2 = new Pion("blanc");
+		  Piece p1 = new Pion("noir");
+		  Piece p2 = new Pion("blanc");
 
-      cases[i][1].setPiece(p1);
-      cases[i][6].setPiece(p2);
+		  cases[i][1].setPiece(p1);
+		  cases[i][6].setPiece(p2);
     }
   }
 

@@ -349,7 +349,7 @@ public void depRoi( LinkedList <Case> list ){
         for( Case c: tmp ){
             Plateau eq = echiquier.simulateMove(cI, c);
             Deplacement d = new Deplacement(eq, c);
-            
+                        
             if(!d.misEnEchec()) {
                 list.add(c);
             }
@@ -358,7 +358,7 @@ public void depRoi( LinkedList <Case> list ){
 }
 
 //Rempli le tableau de deplacements possibles
-public void remplirListDepl(Case c, LinkedList<Case> list){
+public void remplirListDepl(Case c, LinkedList<Case> list){	
 	if (c.piece instanceof Pion) {
 		depPion(list);
 		prisePion(list);
@@ -400,14 +400,10 @@ public void remplirListDeplEchec(Case c, LinkedList<Case> list){
 		depFou(list);
     } else if (c.piece instanceof Tour) {
 		depTour(list);
-    }
-	if (c.piece instanceof Reine){
+    } else if (c.piece instanceof Reine){
 		// combinaison d'une tour et d'un fou
 		depTour(list);
 		depFou(list);
-	}
-	if (c.piece instanceof Roi){
-		depRoi(list);
 	}
 }
 
@@ -474,12 +470,10 @@ public void tousDeplacementsAdv(){
 }
 
 //Rempli tous les mises en échec possible
-public void toutDeplacementsEchec(){
-    LinkedList<Case> deplacement = new LinkedList<Case>();
-    
+public void toutDeplacementsEchec(){   	
     for(Case[] cases : echiquier.cases){
 		for(Case c : cases){
-			if((c.piece != null) && (!c.piece.couleur.equals(echiquier.couleurCourante))){
+			if((c.piece != null) && (c.piece.couleur != echiquier.couleurCourante)){
 				remplirListDeplEchec(c, this.toutDeplEchec);
 			}
 		}
