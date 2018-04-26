@@ -5,7 +5,6 @@ public class PlateauSimulation extends Plateau {
   Plateau origine;
 
   public PlateauSimulation(Plateau p){
-    super();
     origine=p;
   }
 

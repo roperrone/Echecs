@@ -1,12 +1,19 @@
 import java.util.*;
 
-public class Minimax {
+public class JoueurIA extends Joueur {
 
+  Plateau echiquier;
+  Plateau echiquierSimulate;
+
+  public JoueurIA(Plateau p){
+    super("IA");
+    echiquier = p;
+    echiquierSimulate = new PlateauSimulation(echiquier);
+  }
 
   public Deplacement Minimax(int profondeur, String couleur, Plateau echiquier){
 
     ArrayList<Deplacement> t = echiquier.deplacementsPossibles();
-
 
     if(profondeur == 0 || echiquier.depCourant.misEnEchec() || t.isEmpty()){
       return echiquier.dernierDeplacement; //return le meilleur deplacement de la fin de la branche
@@ -44,4 +51,9 @@ public class Minimax {
      return best;
     }
   }
+
+  public Deplacement move(){
+    return this.Minimax(3, super.getCouleur(), echiquierSimulate);
+  }
+
 }

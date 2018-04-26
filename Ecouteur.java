@@ -25,6 +25,7 @@ public class Ecouteur implements ActionListener {
         f.p2.add(f.p4);
         f.content.add(f.p2, BorderLayout.CENTER);
         f.content.add(f.lancer, BorderLayout.SOUTH);
+        
       }else if(s == f.deux){
 		f.un.setVisible(false);
 		f.deux.setVisible(false);
@@ -47,6 +48,7 @@ public class Ecouteur implements ActionListener {
             Jeu jeu = new Jeu(j1,j2);
             FenetrePlateau fP = new FenetrePlateau(jeu);
           }
+          f.dispose();
 	  }
       } 
       }
