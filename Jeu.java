@@ -30,17 +30,17 @@ public class Jeu {
             plateau.pionEnPassant.get(0).pion_en_passant = false;
             plateau.pionEnPassant.remove(0);
         }
-        
-        Case roi = plateau.trouverPiece("Roi", plateau.couleurCourante).getFirst();
+
+        Case roi = plateau.trouverPiece("Roi", plateau.couleurCourante).get(0);
         Deplacement d = new Deplacement(plateau, roi);
-        
+
         if( d.misEnEchec() ) {
 			roi.misEnEchec(true);
 		}
-    
+
         // à l'ordinateur de jouer: dummy version
         if( plateau.couleurCourante == "noir" && ai_active ) {
-            LinkedList<Case> piecesNoires = new LinkedList<Case>();
+            ArrayList<Case> piecesNoires = new ArrayList<Case>();
 
             for( Case[] cases : plateau.cases ){
                 for( Case c2: cases ){
@@ -59,7 +59,7 @@ public class Jeu {
 
 
                 Deplacement dep = new Deplacement(plateau, aJouer);
-                LinkedList<Case> depPossible = dep.getDeplPoss();
+                ArrayList<Case> depPossible = dep.getDeplPoss();
 
                 if ( !depPossible.isEmpty() ) {
                     Case caseArrivee = depPossible.get( (int)(Math.random()*depPossible.size()) );
