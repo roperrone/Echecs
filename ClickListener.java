@@ -37,7 +37,7 @@ public class ClickListener implements MouseListener {
                 Piece p = caseDepart.piece;
 
                 Case roi = fenetre.getJeu().plateau.trouverPiece("Roi", p.couleur).get(0);
-				roi.misEnEchec(false);
+				        roi.misEnEchec(false);
 
                 fenetre.getJeu().plateau.remplacerPiece(caseDepart.x, caseDepart.y, null);
 
@@ -58,8 +58,15 @@ public class ClickListener implements MouseListener {
 
                 p.deja_bougee = true;
 
-				fenetre.getJeu().plateau.switchCouleurCourante();
+                fenetre.getJeu().plateau.switchCouleurCourante();
                 fenetre.getJeu().tourSuivant();
+
+
+                //Se ferme si la partie est gagnée
+                if(fenetre.getJeu().partieTerminee()){
+                  fenetre.getJeu().plateau.switchCouleurCourante();
+                  System.out.println("BRAVO ! Les "+fenetre.getJeu().plateau.couleurCourante+" gagnent !");
+                }
            }
 
 			for (Case a : depPossible){

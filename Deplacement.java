@@ -32,13 +32,13 @@ public Deplacement(Plateau p, Case c){
  *  ???? à compléter */
 public Deplacement(Plateau p, Case c1, Case c2){
 	echiquier = p;
-	echiquier.echangerPiece(c1,c2);
 	score = echiquier.estimer();
     // si la case contient une pièce, on remplit la liste de déplacement
     if ( c2.piece != null ){
-        cI=c2;
-        tousDeplacementsAdv();
-        remplirListDepl(cI, depPoss);
+        cI=c1;
+				cF=c2;
+				initialiserListes();
+  			remplirListDepl(cI, depPoss);
     }
 }
 
@@ -46,7 +46,7 @@ public Deplacement(Plateau p, Case c1, Case c2){
 public void initialiserListes(){
 	depPoss.clear();
 	toutDeplAdv.clear();
-    toutDeplEchec.clear();
+  toutDeplEchec.clear();
 	toutDepl.clear();
 	depParer.clear();
 }
@@ -396,18 +396,17 @@ public void remplirListDepl(Case c, ArrayList<Case> list){
 	if( roi.enEchec ){
 		for( Case a : list ) {
 			Plateau p = echiquier.simulateMove(c,a);
-			Case r = p.trouverPiece("Roi", echiquier.couleurCourante).get(0);
 
-			Deplacement d = new Deplacement(p, r);
- /*
-			if( d.misEnEchec() ) {
-				 roi.misEnEchec(true);
-			 } */
+			if(!p.trouverPiece("Roi", echiquier.couleurCourante).isEmpty()){
+				Case r = p.trouverPiece("Roi", echiquier.couleurCourante).get(0);
 
+				Deplacement d = new Deplacement(p, r);
 
-			if(!d.misEnEchec()){
-				tmp.add(a);
+				if(!d.misEnEchec()){
+					tmp.add(a);
+				}
 			}
+
 		}
 
 		list.clear();
@@ -600,6 +599,15 @@ public ArrayList<Case> getDeplEchec(){
  	return toutDeplEchec;
 }
 
+
+public String toString(){
+	String s ="* ";
+	s += (cI == null) ? " - " : cI.toString();
+	s += " vers ";
+	s += (cF == null) ? " - " : cF.toString();
+
+	return s;
+}
 
 
 }

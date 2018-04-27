@@ -37,8 +37,11 @@ public class Jeu {
 			       roi.misEnEchec(true);
 		     }
 
+         System.out.println("Echec et mate : "+d.enEchecEtMate());
+         System.out.println(plateau.deplacementsPossibles().size());
+
         // à l'ordinateur de jouer: dummy version
-        if( plateau.couleurCourante == "noir" && ai_active ) {
+        /*if( plateau.couleurCourante == "noir" && ai_active ) {
             ArrayList<Case> piecesNoires = new ArrayList<Case>();
 
             for( Case[] cases : plateau.cases ){
@@ -95,7 +98,7 @@ public class Jeu {
             } while( !stop );
 
 
-        }
+        } */
     }
 
     public void start() {
@@ -107,7 +110,17 @@ public class Jeu {
     }
 
     public boolean partieTerminee() {
-		boolean b = false;
+		    boolean b = false;
+
+        Case roi = plateau.trouverPiece("Roi", plateau.couleurCourante).get(0);
+        Deplacement d = new Deplacement(plateau, roi);
+
+        if(d.enEchecEtMate()){
+          b = true;
+        }else{
+          b = false;
+        }
+
 
         return b;
 	}

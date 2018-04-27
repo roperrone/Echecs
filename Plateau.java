@@ -155,7 +155,7 @@ public class Plateau {
      Case depart =  pl.cases[c1.x][c1.y];
      Case arrivee =  pl.cases[c2.x][c2.y];
      Case casePionPassant = pl.cases[arrivee.x][depart.y];
-     
+
      Piece p = depart.piece;
 
      pl.remplacerPiece(c1.x, c1.y, null);
@@ -238,9 +238,13 @@ public class Plateau {
 
     for(int i=0; i<this.cases.length; i++){
       for(int j=0; j<this.cases[0].length; j++){
-        Deplacement d = new Deplacement(this, this.cases[i][j]);
-        for(Case a : d.getDeplPoss()){
-          list.add(new Deplacement(this, d.cI, a));
+        if(this.cases[i][j].piece != null && this.cases[i][j].piece.couleur == couleurCourante){
+          Deplacement d = new Deplacement(this, this.cases[i][j]);
+          if(!d.getDeplPoss().isEmpty()){
+            for(Case a : d.getDeplPoss()){
+              list.add(new Deplacement(this, this.cases[i][j], a));
+            }
+          }
         }
       }
     }
