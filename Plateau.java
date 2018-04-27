@@ -18,8 +18,8 @@ public class Plateau {
     initialisation();
   }
 
-  public Plateau(Case[][] cases, String couleur){
-    this.cases = cases;
+  public Plateau(Case[][] c, String couleur){
+    this.cases = c;
     couleurCourante = couleur;
   }
 
@@ -155,7 +155,7 @@ public class Plateau {
      Case depart =  pl.cases[c1.x][c1.y];
      Case arrivee =  pl.cases[c2.x][c2.y];
      Case casePionPassant = pl.cases[arrivee.x][depart.y];
-
+     
      Piece p = depart.piece;
 
      pl.remplacerPiece(c1.x, c1.y, null);

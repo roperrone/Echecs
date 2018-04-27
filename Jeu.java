@@ -24,7 +24,6 @@ public class Jeu {
 
     public void tourSuivant(){
 
-      System.out.println(plateau.estimer());
         // réinitialise l'attribut boolean pion en passant après un tour
         if( !plateau.pionEnPassant.isEmpty() && plateau.couleurCourante == plateau.pionEnPassant.get(0).couleur ) {
             plateau.pionEnPassant.get(0).pion_en_passant = false;
@@ -35,8 +34,8 @@ public class Jeu {
         Deplacement d = new Deplacement(plateau, roi);
 
         if( d.misEnEchec() ) {
-			roi.misEnEchec(true);
-		}
+			       roi.misEnEchec(true);
+		     }
 
         // à l'ordinateur de jouer: dummy version
         if( plateau.couleurCourante == "noir" && ai_active ) {

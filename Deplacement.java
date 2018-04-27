@@ -78,7 +78,7 @@ public void depPion(ArrayList<Case> list){
             list.add(echiquier.cases[x][2]);
             list.add(echiquier.cases[x][3]);
         }
-        else if (y==6 && echiquier.cases[x][5].piece==null && echiquier.cases[x][5].piece==null && cI.piece.couleur == "blanc"){
+        else if (y==6 && echiquier.cases[x][5].piece==null && echiquier.cases[x][4].piece==null && cI.piece.couleur == "blanc"){
             list.add(echiquier.cases[x][4]);
             list.add(echiquier.cases[x][5]);
         } // sinon le pion ne peut avancer que d'une seule case à la fois
@@ -395,9 +395,23 @@ public void remplirListDepl(Case c, ArrayList<Case> list){
 	// Si le joueur est en echec on verifie si son deplacement permet de parer l'echec
 	if( roi.enEchec ){
 		for( Case a : list ) {
-			if( !echiquier.simulateMove(this.cI, c).trouverPiece("Roi", echiquier.couleurCourante).get(0).enEchec )
-				tmp.add(c);
+			Plateau p = echiquier.simulateMove(c,a);
+			Case r = p.trouverPiece("Roi", echiquier.couleurCourante).get(0);
+
+			Deplacement d = new Deplacement(p, r);
+ /*
+			if( d.misEnEchec() ) {
+				 roi.misEnEchec(true);
+			 } */
+
+
+			if(!d.misEnEchec()){
+				tmp.add(a);
+			}
 		}
+
+		list.clear();
+		list.addAll(tmp);
 	}
 
 
@@ -560,9 +574,9 @@ public boolean misEnEchec(){
 }
 
 
-//Echec et mate
+// Est en Echec et mate
 public boolean enEchecEtMate(){
-	if(misEnEchec() && parerEchec()){
+	if(misEnEchec() && echiquier.deplacementsPossibles().isEmpty()){
 		return true;
 	}else{
 		return false;
