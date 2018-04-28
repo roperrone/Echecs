@@ -5,11 +5,11 @@ import javax.swing.*;
 
 public class EcouteurJeu implements ActionListener {
   private FenetrePlateau f;
+  private FenetreFin fe;
 
   public EcouteurJeu(FenetrePlateau fe){
     this.f = fe;
   }
-
   public void actionPerformed(ActionEvent e){
 
     Object s = e.getSource();
@@ -25,7 +25,6 @@ public class EcouteurJeu implements ActionListener {
 		 FenetrePlateau fen= new FenetrePlateau(new Jeu(tableauJoueur[0],tableauJoueur[1]));
 		 
 	 }
-	
     }
   }
 }

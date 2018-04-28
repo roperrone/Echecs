@@ -297,7 +297,7 @@ public class Plateau {
                     nb[4]=nbReine;
                 }else if( p instanceof Roi){
                     nbRoi++;
-                    nb[5]=nbReine;
+                    nb[5]=nbRoi;
                 }
             }
         }

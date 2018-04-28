@@ -28,10 +28,9 @@ public class FenetrePlateau extends JFrame implements ActionListener {
   public JLabel nbTourN;
   public JLabel nbReineB;
   public JLabel nbReineN;
-  public JLabel nbRoiB;
-  public JLabel nbRoiN;
   public JLabel titreB;
   public JLabel titreN;
+  public Timer t;
   
   public ClickListener clickListen;
   public MoveListener moveListen;
@@ -54,7 +53,7 @@ public class FenetrePlateau extends JFrame implements ActionListener {
     boutons = new JPanel(new GridLayout(2,2,10,10));
 	abandonne=new JButton("Abandonner");
 	rejouer=new JButton("Rejouer");
-	text=new JLabel("<html>Partie d'échec <br>"+jeu.tabJoueur[0].getNom()+" contre "+jeu.tabJoueur[1].getNom()+"</html>");
+	text=new JLabel("<html> Partie d'échec <br>"+jeu.tabJoueur[0].getNom()+" contre "+jeu.tabJoueur[1].getNom()+"</html>");
    
     nbPieceBlanc=new JPanel(new GridLayout(7,0));
     nbPieceNoir=new JPanel(new GridLayout(7,0));
@@ -139,7 +138,6 @@ public class FenetrePlateau extends JFrame implements ActionListener {
 	options.add(text, BorderLayout.NORTH);
     options.add(panelPiece, BorderLayout.CENTER);
     
-    panelPiece.repaint();
     content.add(plateau, BorderLayout.CENTER);
     content.add(options, BorderLayout.EAST);
 
@@ -149,7 +147,8 @@ public class FenetrePlateau extends JFrame implements ActionListener {
     plateau.addMouseListener(clickListen);
     plateau.addMouseMotionListener(moveListen);
 
-    Timer t= new Timer(100,this);
+   
+    t= new Timer(100,this);
     t.start();
     
     setContentPane(content);
@@ -158,6 +157,12 @@ public class FenetrePlateau extends JFrame implements ActionListener {
     
   public void actionPerformed( ActionEvent e){
       this.actualiser();
+        if(jeu.plateau.gameOver()){
+            FenetreFin f= new FenetreFin(jeu);
+            t.stop();
+            this.dispose();
+            
+    }
   }
 
   
@@ -172,7 +177,7 @@ public class FenetrePlateau extends JFrame implements ActionListener {
     nbTourN.setText(""+jeu.plateau.getNbPieceMangees("noir")[3]);
     nbReineB.setText(""+jeu.plateau.getNbPieceMangees("blanc")[4]);
     nbReineN.setText(""+jeu.plateau.getNbPieceMangees("noir")[4]);
-      
+
   }
   
   public Jeu getJeu(){ return jeu; }
