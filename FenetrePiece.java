@@ -39,9 +39,6 @@ public class FenetrePiece extends JPanel {
 
         Reine d=new Reine(color);
         d.afficher(g,0,5 ,tailleImage,tailleImage);
-
-        Roi r= new Roi(color);
-        r.afficher(g,0,6 ,tailleImage,tailleImage);
         
     }
 }

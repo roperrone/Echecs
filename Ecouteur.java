@@ -42,11 +42,14 @@ public class Ecouteur implements ActionListener {
           if(f.nbJoueurs == 1){
             Jeu jeu = new Jeu(new Joueur(f.name1.getText()), null); //avec IA
             FenetrePlateau fP = new FenetrePlateau(jeu);
+            jeu.setFenetre(fP);
        }else if(f.nbJoueurs == 2 && !(f.name1.getText().equals(null)) && !(f.name2.getText().equals(null))){
 			Joueur j1=new Joueur(f.name1.getText());
 			Joueur j2=new Joueur(f.name2.getText());
+            
             Jeu jeu = new Jeu(j1,j2);
             FenetrePlateau fP = new FenetrePlateau(jeu);
+            jeu.setFenetre(fP);
           }
           f.dispose();
 	  }

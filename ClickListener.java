@@ -5,7 +5,7 @@ import javax.swing.*;
 
 public class ClickListener implements MouseListener {
     private FenetrePlateau fenetre;
-    private ArrayList<Case> depPossible;
+    private LinkedList<Case> depPossible;
 
     public boolean selectionne;
     private Case caseDepart;
@@ -32,12 +32,15 @@ public class ClickListener implements MouseListener {
            caseArrivee = fenetre.getJeu().plateau.cases[(int)c.getX()][(int)c.getY()];
            Case casePionPassant = fenetre.getJeu().plateau.cases[(int)c.getX()][caseDepart.y];
 
+            // permet de rafraichir l'affichage le plus tôt possible
+            boolean _continue = false;
+
 			// si le déplacement est possible, on déplace la pièce et on passe au joueur suivant
            if ( depPossible.contains(caseArrivee) ){
                 Piece p = caseDepart.piece;
 
                 Case roi = fenetre.getJeu().plateau.trouverPiece("Roi", p.couleur).get(0);
-				        roi.misEnEchec(false);
+                roi.misEnEchec(false);
 
                 fenetre.getJeu().plateau.remplacerPiece(caseDepart.x, caseDepart.y, null);
 
@@ -61,16 +64,9 @@ public class ClickListener implements MouseListener {
                 }
 
                 p.deja_bougee = true;
-
                 fenetre.getJeu().plateau.switchCouleurCourante();
-                fenetre.getJeu().tourSuivant();
-
-
-                //Se ferme si la partie est gagnée
-                if(fenetre.getJeu().partieTerminee()){
-                  fenetre.getJeu().plateau.switchCouleurCourante();
-                  System.out.println("BRAVO ! Les "+fenetre.getJeu().plateau.couleurCourante+" gagnent !");
-                }
+                
+                _continue = true;
            }
 
 			for (Case a : depPossible){
@@ -84,6 +80,23 @@ public class ClickListener implements MouseListener {
 
 			selectionne = false;
 			fenetre.repaint();
+            
+            if ( _continue ) {
+                    new java.util.Timer().schedule( 
+                        new java.util.TimerTask() {
+                            @Override
+                            public void run() {
+                                fenetre.getJeu().tourSuivant();
+
+                                //Se ferme si la partie est gagnée
+                                if(fenetre.getJeu().partieTerminee()){
+                                  System.out.println("BRAVO ! Les "+fenetre.getJeu().plateau.couleurCourante+" l'emportent !");
+                                }
+                            }
+                        }, 
+                        50 
+                );
+            } 
         }
     }
 

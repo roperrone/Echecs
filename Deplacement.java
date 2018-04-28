@@ -3,11 +3,11 @@ import java.util.*;
 public class Deplacement {
 	Plateau echiquier;
 
-	public ArrayList<Case> depPoss= new ArrayList<Case>();
-	public ArrayList<Case> toutDeplAdv = new ArrayList<Case>();
-	public ArrayList<Case> toutDeplEchec = new ArrayList<Case>();
- 	public ArrayList<Case> toutDepl = new ArrayList<Case>(); //tous les deplacement du joueur courant
-	public ArrayList<Case> depParer = new ArrayList<Case>();
+	public LinkedList<Case> depPoss= new LinkedList<Case>();
+	public LinkedList<Case> toutDeplAdv = new LinkedList<Case>();
+	public LinkedList<Case> toutDeplEchec = new LinkedList<Case>();
+ 	public LinkedList<Case> toutDepl = new LinkedList<Case>(); //tous les deplacement du joueur courant
+	public LinkedList<Case> depParer = new LinkedList<Case>();
 	Case cI; // @ param case initiale: contient tous les attributs de la case de déplacement
 	Case cF; //
 	int score;
@@ -67,7 +67,7 @@ public boolean estDansLeTableau(int i, int j){
  *  Les déplacements sont ceux des PIONS
  *  @param list: Liste de déplacements à remplir */
 
-public void depPion(ArrayList<Case> list){
+public void depPion(LinkedList<Case> list){
 	int x= cI.x;
 	int y= cI.y;
 
@@ -92,7 +92,7 @@ public void depPion(ArrayList<Case> list){
  *  Les déplacements sont ceux des PIONS, lorsqu'ils menacent de prendre une pièce
  *  @param list: Liste de déplacements à remplir */
 
-public void prisePion(ArrayList<Case> list){
+public void prisePion(LinkedList<Case> list){
 		int x= cI.x;
 		int y= cI.y;
 
@@ -139,7 +139,7 @@ public void prisePion(ArrayList<Case> list){
  *  Les déplacements sont ceux du roi adverse menacé par les PIONS.
  *  @param list: Liste de déplacements à remplir */
 
-public void pionMenaceRoi(ArrayList<Case> list){
+public void pionMenaceRoi(LinkedList<Case> list){
 		int x= cI.x;
 		int y= cI.y;
 
@@ -160,10 +160,10 @@ public void pionMenaceRoi(ArrayList<Case> list){
  *  Les déplacements sont ceux des CAVALIERS
  *  @param list: Liste de déplacements à remplir */
 
-public void depCavalier(ArrayList <Case> list ){
+public void depCavalier(LinkedList <Case> list ){
 
         // on envisage tous les déplacements possibles
-        ArrayList <Case> dep = new ArrayList<Case>();
+        LinkedList <Case> dep = new LinkedList<Case>();
 
         int x=cI.x;
         int y=cI.y;
@@ -192,13 +192,13 @@ public void depCavalier(ArrayList <Case> list ){
  *  Les déplacements sont ceux des FOUS
  *  @param list: Liste de déplacements à remplir */
 
-public void depFou( ArrayList <Case> list ){
+public void depFou( LinkedList <Case> list ){
 
       //Initialise 4 tableaux représentant les sens de déplacement possible en  diagonale: HD (haut-droit), ...
-        ArrayList<Case>depHD= new ArrayList<Case>();
-        ArrayList<Case>depBD= new ArrayList<Case>();
-        ArrayList<Case>depHG= new ArrayList<Case>();
-        ArrayList<Case>depBG= new ArrayList<Case>();
+        LinkedList<Case>depHD= new LinkedList<Case>();
+        LinkedList<Case>depBD= new LinkedList<Case>();
+        LinkedList<Case>depHG= new LinkedList<Case>();
+        LinkedList<Case>depBG= new LinkedList<Case>();
 
         int x = cI.x;
         int y = cI.y;
@@ -228,7 +228,7 @@ public void depFou( ArrayList <Case> list ){
  *  @param dep: Déplacements pouvant être ajoutés
  * */
 
-public void verif(ArrayList <Case> dep, ArrayList <Case> list){
+public void verif(LinkedList <Case> dep, LinkedList <Case> list){
   String coul = cI.piece.couleur;
   int x=0;
   int y=0;
@@ -255,13 +255,13 @@ public void verif(ArrayList <Case> dep, ArrayList <Case> list){
  *  Les déplacements sont ceux des TOURS
  *  @param list: Liste de déplacements à remplir */
 
-public void depTour( ArrayList <Case> list ){
+public void depTour( LinkedList <Case> list ){
 
         //Initialise 4 tableaux représentant les sens de déplacement possible en  diagonale: H (haut), ...
-            ArrayList<Case>depH= new ArrayList<Case>();
-            ArrayList<Case>depB= new ArrayList<Case>();
-            ArrayList<Case>depD= new ArrayList<Case>();
-            ArrayList<Case>depG= new ArrayList<Case>();
+            LinkedList<Case>depH= new LinkedList<Case>();
+            LinkedList<Case>depB= new LinkedList<Case>();
+            LinkedList<Case>depD= new LinkedList<Case>();
+            LinkedList<Case>depG= new LinkedList<Case>();
 
             int x = cI.x;
             int y = cI.y;
@@ -290,13 +290,13 @@ public void depTour( ArrayList <Case> list ){
  *  Les déplacements sont ceux du ROI
  *  @param list: Liste de déplacements à remplir */
 
-public void depRoi( ArrayList <Case> list ){
+public void depRoi( LinkedList <Case> list ){
 
         int x=cI.x;
         int y=cI.y;
 
 		String coul= cI.piece.couleur;
-        ArrayList<Case> dep = new ArrayList<Case>();
+        LinkedList<Case> dep = new LinkedList<Case>();
 
         // on ajoute les 8 déplacements possibles
         dep.add(new Case(x+1,y));
@@ -312,7 +312,7 @@ public void depRoi( ArrayList <Case> list ){
         String couleurAdverse = (echiquier.couleurCourante == "blanc") ? "noir" : "blanc";
         Case roiAdverse = echiquier.trouverPiece("Roi", couleurAdverse).get(0);
 
-        ArrayList <Case> depRoiAdverse = new ArrayList<Case>();
+        LinkedList <Case> depRoiAdverse = new LinkedList<Case>();
 
         // si le Roi se trouve à proximité de l'autre Roi, on remplit la liste de déplacement du roi adverse
         // afin d'interdir aux 2 rois de se coller
@@ -331,7 +331,7 @@ public void depRoi( ArrayList <Case> list ){
         }
 
 
-        ArrayList <Case> tmp = new ArrayList <Case>();
+        LinkedList <Case> tmp = new LinkedList <Case>();
         for(Case c: dep ) {
             x = c.x;
             y = c.y;
@@ -357,7 +357,7 @@ public void depRoi( ArrayList <Case> list ){
 }
 
 //Rempli le tableau de deplacements possibles
-public void remplirListDepl(Case c, ArrayList<Case> list){
+public void remplirListDepl(Case c, LinkedList<Case> list){
 	if (c.piece instanceof Pion) {
 		depPion(list);
 		prisePion(list);
@@ -388,7 +388,7 @@ public void remplirListDepl(Case c, ArrayList<Case> list){
 	}
 
 	Case roi = echiquier.trouverPiece("Roi", echiquier.couleurCourante).get(0);
-	ArrayList<Case> tmp = new ArrayList<Case>();
+	LinkedList<Case> tmp = new LinkedList<Case>();
 
 
 	// Si le joueur est en echec on verifie si son deplacement permet de parer l'echec
@@ -415,7 +415,7 @@ public void remplirListDepl(Case c, ArrayList<Case> list){
 
 }
 
-public void remplirListDeplEchec(Case c, ArrayList<Case> list){
+public void remplirListDeplEchec(Case c, LinkedList<Case> list){
     this.cI = c;
 
 	if (c.piece instanceof Pion) {
@@ -590,11 +590,11 @@ public int estimer(){
 
 
 //return deplacements possibles
-public ArrayList<Case> getDeplPoss(){
+public LinkedList<Case> getDeplPoss(){
  	return depPoss;
 }
 
-public ArrayList<Case> getDeplEchec(){
+public LinkedList<Case> getDeplEchec(){
  	return toutDeplEchec;
 }
 

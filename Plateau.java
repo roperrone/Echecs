@@ -4,8 +4,8 @@ public class Plateau {
 
     // Attributs
     public Case[][] cases;
-    public ArrayList <Piece> pieceSuppr= new ArrayList<Piece>();
-    public ArrayList <Piece> pionEnPassant= new ArrayList<Piece>();
+    public LinkedList<Piece> pieceSuppr= new LinkedList<Piece>();
+    public LinkedList<Piece> pionEnPassant= new LinkedList<Piece>();
     public String couleurCourante;
 
     public Deplacement depCourant; //deplacement courant
@@ -201,8 +201,8 @@ public class Plateau {
   }
 
 
-  public ArrayList<Case> trouverPiece(String n, String color){
-    ArrayList<Case> list = new ArrayList<Case>();
+  public LinkedList<Case> trouverPiece(String n, String color){
+    LinkedList<Case> list = new LinkedList<Case>();
 
     for(int i = 0; i<cases.length; i++){
       for (int j=0;j<cases[0].length ;j++ ) {
@@ -214,7 +214,7 @@ public class Plateau {
     return list;
   }
 
-  public ArrayList<Case> trouverPiece(String n){
+  public LinkedList<Case> trouverPiece(String n){
     return trouverPiece(n, this.couleurCourante);
   }
 
@@ -249,8 +249,8 @@ public class Plateau {
 
 
   //Renvoi tous les deplacement possibles concernants toutes les pieces de la couleur courante
-  public ArrayList<Deplacement> deplacementsPossibles(){
-    ArrayList<Deplacement> list = new ArrayList<Deplacement>();
+  public LinkedList<Deplacement> deplacementsPossibles(){
+    LinkedList<Deplacement> list = new LinkedList<Deplacement>();
 
     for(int i=0; i<this.cases.length; i++){
       for(int j=0; j<this.cases[0].length; j++){
