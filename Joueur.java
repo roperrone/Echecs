@@ -52,5 +52,7 @@ public class Joueur {
     }
 
 
-
+  public String getNom(){
+      return nom;
+  }
 }

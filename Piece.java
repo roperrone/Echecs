@@ -60,5 +60,6 @@ public class Piece {
 
   public void afficher(Graphics g, int i, int j){}
 
+  public void afficher(Graphics g, int i, int j, int largeur, int hauteur){}
 
 }

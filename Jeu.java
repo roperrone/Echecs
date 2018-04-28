@@ -60,7 +60,11 @@ public class Jeu {
                     } else if( casePionPassant.piece != null && casePionPassant.piece.pion_en_passant && p instanceof Pion ) { // si le pion peut être pris en passant
                         plateau.remplacerPiece(caseArrivee.x, caseArrivee.y, p);
                         plateau.supprPiece(caseArrivee.x, aJouer.y);
-                    } else {
+                    }else if(caseArrivee.piece!=null){
+                    plateau.supprPiece(caseArrivee.x, caseArrivee.y);
+                    plateau.remplacerPiece(caseArrivee.x, caseArrivee.y, p);
+                
+                    }else {
                          plateau.remplacerPiece(caseArrivee.x, caseArrivee.y, p);
 
                         // rend le pion vulnérable à une attaque du pion en passant

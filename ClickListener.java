@@ -46,6 +46,10 @@ public class ClickListener implements MouseListener {
                 } else if( casePionPassant.piece != null && casePionPassant.piece.pion_en_passant && p instanceof Pion ) { // si le pion peut être pris en passant
                     fenetre.getJeu().plateau.remplacerPiece((int)c.getX(), (int)c.getY(), p);
                     fenetre.getJeu().plateau.supprPiece((int)c.getX(), caseDepart.y);
+                }else if(caseArrivee.piece!=null){
+                    fenetre.getJeu().plateau.supprPiece((int)c.getX(), (int)c.getY());
+                    fenetre.getJeu().plateau.remplacerPiece((int)c.getX(), (int)c.getY(), p);
+                
                 } else {
                     fenetre.getJeu().plateau.remplacerPiece((int)c.getX(), (int)c.getY(), p);
 

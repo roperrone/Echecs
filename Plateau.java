@@ -269,6 +269,42 @@ public class Plateau {
     }
     return list;
   }
+    public int [] getNbPieceMangees(String couleur){
+      int nbPion=0;
+      int nbFou=0;
+      int nbCavalier=0;
+      int nbTour=0;
+      int nbReine=0;
+      int nbRoi=0;
+      int [] nb= new int[6];
+      
+        for(Piece p: pieceSuppr){
+            if(p.couleur==couleur){
+                if( p instanceof Pion){
+                    nbPion++;
+                    nb[0]=nbPion;
+                }else if( p instanceof Cavalier){
+                    nbCavalier++;
+                    nb[1]=nbCavalier;
+                }else if( p instanceof Fou){
+                    nbFou++;
+                    nb[2]=nbFou;
+                }else if( p instanceof Tour){
+                    nbTour++;
+                    nb[3]=nbTour;
+                }else if( p instanceof Reine){
+                    nbReine++;
+                    nb[4]=nbReine;
+                }else if( p instanceof Roi){
+                    nbRoi++;
+                    nb[5]=nbReine;
+                }
+            }
+        }
+    
+    return nb;
+    
+  }
 
 
 }

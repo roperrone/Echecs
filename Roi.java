@@ -23,6 +23,12 @@ public class Roi extends Piece {
 	 else 
 		g.drawImage(img, 15+i*100, 15+j*100, null);
   }
+    public void afficher(Graphics g, int i, int j, int largeur, int hauteur ){ 
+	 if( position_custom )
+		g.drawImage(img, custom_x, custom_y,largeur, hauteur ,null);
+	 else 
+		g.drawImage(img, 15+i*100, 15+j*100,largeur, hauteur ,null);
+  }
   
   public String toString(){
 	 return "Roi "+this.couleur;
