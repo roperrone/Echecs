@@ -82,6 +82,20 @@ public class Plateau {
 
   }
 
+  public boolean gameOver(){
+    boolean b;
+    Case roi = this.trouverPiece("Roi", this.couleurCourante).get(0);
+    Deplacement d = new Deplacement(this, roi);
+
+    if(d.enEchecEtMate()){
+      b = true;
+    }else{
+      b = false;
+    }
+
+    return b;
+  }
+
   public Case[][] getCases(){
 		return cases;
   }
@@ -233,6 +247,8 @@ public class Plateau {
     return somme;
   }
 
+
+  //Renvoi tous les deplacement possibles concernants toutes les pieces de la couleur courante
   public ArrayList<Deplacement> deplacementsPossibles(){
     ArrayList<Deplacement> list = new ArrayList<Deplacement>();
 
@@ -242,7 +258,10 @@ public class Plateau {
           Deplacement d = new Deplacement(this, this.cases[i][j]);
           if(!d.getDeplPoss().isEmpty()){
             for(Case a : d.getDeplPoss()){
-              list.add(new Deplacement(this, this.cases[i][j], a));
+              Case cI = this.cases[i][j];
+              Case cF = a;
+              Deplacement depl = new Deplacement(this, cI, cF);
+              list.add(depl);
             }
           }
         }

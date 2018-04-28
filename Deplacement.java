@@ -33,13 +33,12 @@ public Deplacement(Plateau p, Case c){
 public Deplacement(Plateau p, Case c1, Case c2){
 	echiquier = p;
 	score = echiquier.estimer();
-    // si la case contient une pièce, on remplit la liste de déplacement
-    if ( c2.piece != null ){
-        cI=c1;
-				cF=c2;
-				initialiserListes();
-  			remplirListDepl(cI, depPoss);
-    }
+
+  cI=c1;
+	cF=c2;
+	initialiserListes();
+  			//remplirListDepl(cI, depPoss);
+
 }
 
 /** Réinitialise les listes de deplacements possibles */

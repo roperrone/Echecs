@@ -37,34 +37,18 @@ public class Jeu {
 			       roi.misEnEchec(true);
 		     }
 
-         System.out.println("Echec et mate : "+d.enEchecEtMate());
-         System.out.println(plateau.deplacementsPossibles().size());
-
-        // à l'ordinateur de jouer: dummy version
-        /*if( plateau.couleurCourante == "noir" && ai_active ) {
-            ArrayList<Case> piecesNoires = new ArrayList<Case>();
-
-            for( Case[] cases : plateau.cases ){
-                for( Case c2: cases ){
-                    if( c2.piece != null && c2.piece.couleur == "noir" ){
-                        piecesNoires.add(c2);
-                    }
-                }
-            }
+        // à l'ordinateur de jouer
+        if( plateau.couleurCourante == "noir" && ai_active ) {
 
             boolean stop = true;
 
             do {
-                // on tire une pièce au hasard
-                int coup = (int)(Math.random()*piecesNoires.size());
-                Case aJouer = piecesNoires.get(coup);
+              JoueurIA j = (JoueurIA) tabJoueur[1];
+              Deplacement dep = j.execute(plateau, 4);
 
-
-                Deplacement dep = new Deplacement(plateau, aJouer);
-                ArrayList<Case> depPossible = dep.getDeplPoss();
-
-                if ( !depPossible.isEmpty() ) {
-                    Case caseArrivee = depPossible.get( (int)(Math.random()*depPossible.size()) );
+                if ( dep != null ) {
+                    Case caseArrivee = dep.cF;
+                    Case aJouer = dep.cI;
 
                     Case casePionPassant = plateau.cases[caseArrivee.x][aJouer.y];
                     Piece p = aJouer.piece;
@@ -98,7 +82,7 @@ public class Jeu {
             } while( !stop );
 
 
-        } */
+        }
     }
 
     public void start() {
@@ -112,15 +96,11 @@ public class Jeu {
     public boolean partieTerminee() {
 		    boolean b = false;
 
-        Case roi = plateau.trouverPiece("Roi", plateau.couleurCourante).get(0);
-        Deplacement d = new Deplacement(plateau, roi);
-
-        if(d.enEchecEtMate()){
+        if(plateau.gameOver()){
           b = true;
         }else{
           b = false;
         }
-
 
         return b;
 	}
