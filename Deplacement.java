@@ -3,14 +3,15 @@ import java.util.*;
 public class Deplacement {
 	Plateau echiquier;
 
-	public ArrayList <Case> depPossTemp = new ArrayList <Case>();
 	public ArrayList<Case> depPoss= new ArrayList<Case>();
 	public ArrayList<Case> toutDeplAdv = new ArrayList<Case>();
 	public ArrayList<Case> toutDeplEchec = new ArrayList<Case>();
  	public ArrayList<Case> toutDepl = new ArrayList<Case>(); //tous les deplacement du joueur courant
 	public ArrayList<Case> depParer = new ArrayList<Case>();
+	
 	Case cI; // @ param case initiale: contient tous les attributs de la case de déplacement
 	Case cF; //
+	
 	int score;
 
 /** @param p: Plateau de jeu
@@ -45,7 +46,6 @@ public Deplacement(Plateau p, Case c1, Case c2){
 
 /** Réinitialise les listes de deplacements possibles */
 public void initialiserListes(){
-	depPossTemp.clear();
 	depPoss.clear();
 	toutDeplAdv.clear();
 	toutDeplEchec.clear();
@@ -76,17 +76,17 @@ public void depPion(ArrayList<Case> list){
 
     try {
         // le pion est sur la première ligne: il peut avancer de un ou de deux
-        if (y==1 && echiquier.cases[x][2].piece==null && echiquier.cases[x][3].piece==null && cI.piece.couleur == "noir" ){
+        if (y==1 && echiquier.cases[x][2].piece==null && echiquier.cases[x][3].piece==null && cI.piece.couleur.equals("noir")){
             list.add(echiquier.cases[x][2]);
             list.add(echiquier.cases[x][3]);
         }
-        else if (y==6 && echiquier.cases[x][5].piece==null && echiquier.cases[x][4].piece==null && cI.piece.couleur == "blanc"){
+        else if (y==6 && echiquier.cases[x][5].piece==null && echiquier.cases[x][4].piece==null && cI.piece.couleur.equals("blanc")){
             list.add(echiquier.cases[x][4]);
             list.add(echiquier.cases[x][5]);
         } // sinon le pion ne peut avancer que d'une seule case à la fois
-        else if (cI.piece.couleur=="noir" && echiquier.cases[x][y+1].piece==null && estDansLeTableau(x,y+1))
+        else if (cI.piece.couleur.equals("noir") && echiquier.cases[x][y+1].piece==null && estDansLeTableau(x,y+1))
             list.add(echiquier.cases[x][y+1]);
-        else if (cI.piece.couleur=="blanc" && echiquier.cases[x][y-1].piece==null && estDansLeTableau(x,y-1))
+        else if (cI.piece.couleur.equals("blanc") && echiquier.cases[x][y-1].piece==null && estDansLeTableau(x,y-1))
             list.add(echiquier.cases[x][y-1]);
 	 } catch( Exception e ){}
 }
@@ -99,40 +99,40 @@ public void prisePion(ArrayList<Case> list){
 		int x= cI.x;
 		int y= cI.y;
 
-        String couleurAdverse = (cI.piece.couleur == "blanc" ) ? "noir" : "blanc";
+        String couleurAdverse = (cI.piece.couleur.equals("blanc") ) ? "noir" : "blanc";
 
-        if(cI.piece.couleur == "blanc" ){
-            if( estDansLeTableau(x-1,y-1) && echiquier.cases[x-1][y-1].piece!=null && echiquier.cases[x-1][y-1].piece.couleur==couleurAdverse )
+        if(cI.piece.couleur.equals("blanc")){
+            if( estDansLeTableau(x-1,y-1) && echiquier.cases[x-1][y-1].piece!=null && echiquier.cases[x-1][y-1].piece.couleur.equals(couleurAdverse) )
                 list.add(echiquier.cases[x-1][y-1]);
-            if (estDansLeTableau(x+1,y-1) && echiquier.cases[x+1][y-1].piece!=null && echiquier.cases[x+1][y-1].piece.couleur==couleurAdverse )
+            if (estDansLeTableau(x+1,y-1) && echiquier.cases[x+1][y-1].piece!=null && echiquier.cases[x+1][y-1].piece.couleur.equals(couleurAdverse) )
                 list.add(echiquier.cases[x+1][y-1]);
 
             // vérifie si le pion peut être pris en passant
             if( estDansLeTableau(x-1,y) && echiquier.cases[x-1][y].piece!=null && echiquier.cases[x-1][y].piece instanceof Pion
-                && echiquier.cases[x-1][y].piece.pion_en_passant && echiquier.cases[x-1][y].piece.couleur==couleurAdverse ) {
+                && echiquier.cases[x-1][y].piece.pion_en_passant && echiquier.cases[x-1][y].piece.couleur.equals(couleurAdverse)) {
                 list.add(echiquier.cases[x-1][y-1]);
             }
 
 
              if( estDansLeTableau(x+1,y) && echiquier.cases[x+1][y].piece!=null && echiquier.cases[x+1][y].piece instanceof Pion
-                && echiquier.cases[x+1][y].piece.pion_en_passant && echiquier.cases[x+1][y].piece.couleur==couleurAdverse ) {
+                && echiquier.cases[x+1][y].piece.pion_en_passant && echiquier.cases[x+1][y].piece.couleur.equals(couleurAdverse)) {
                 list.add(echiquier.cases[x+1][y-1]);
             }
         } else {
-            if( estDansLeTableau(x-1,y+1) && echiquier.cases[x-1][y+1].piece!=null && echiquier.cases[x-1][y+1].piece.couleur==couleurAdverse )
+            if( estDansLeTableau(x-1,y+1) && echiquier.cases[x-1][y+1].piece!=null && echiquier.cases[x-1][y+1].piece.couleur.equals(couleurAdverse))
                 list.add(echiquier.cases[x-1][y+1]);
-            if (estDansLeTableau(x+1,y+1) && echiquier.cases[x+1][y+1].piece!=null && echiquier.cases[x+1][y+1].piece.couleur==couleurAdverse )
+            if (estDansLeTableau(x+1,y+1) && echiquier.cases[x+1][y+1].piece!=null && echiquier.cases[x+1][y+1].piece.couleur.equals(couleurAdverse))
                 list.add(echiquier.cases[x+1][y+1]);
 
             // vérifie si le pion peut être pris en passant
             if( estDansLeTableau(x-1,y) && echiquier.cases[x-1][y].piece!=null && echiquier.cases[x-1][y].piece instanceof Pion
-                && echiquier.cases[x-1][y].piece.pion_en_passant && echiquier.cases[x-1][y].piece.couleur==couleurAdverse ) {
+                && echiquier.cases[x-1][y].piece.pion_en_passant && echiquier.cases[x-1][y].piece.couleur.equals(couleurAdverse)) {
                 list.add(echiquier.cases[x-1][y+1]);
             }
 
 
              if( estDansLeTableau(x+1,y) && echiquier.cases[x+1][y].piece!=null && echiquier.cases[x+1][y].piece instanceof Pion
-                && echiquier.cases[x+1][y].piece.pion_en_passant && echiquier.cases[x+1][y].piece.couleur==couleurAdverse ) {
+                && echiquier.cases[x+1][y].piece.pion_en_passant && echiquier.cases[x+1][y].piece.couleur.equals(couleurAdverse) ) {
                 list.add(echiquier.cases[x+1][y+1]);
             }
         }
@@ -146,12 +146,12 @@ public void pionMenaceRoi(ArrayList<Case> list){
 		int x= cI.x;
 		int y= cI.y;
 
-        if(cI.piece.couleur == "blanc" && echiquier.couleurCourante == "noir" ){
+        if(cI.piece.couleur.equals("blanc") && echiquier.couleurCourante.equals("noir") ){
             if( estDansLeTableau(x-1,y-1) )
                 list.add(echiquier.cases[x-1][y-1]);
             if (estDansLeTableau(x+1,y-1) )
                 list.add(echiquier.cases[x+1][y-1]);
-        } else if ( cI.piece.couleur == "noir" && echiquier.couleurCourante == "blanc") {
+        } else if ( cI.piece.couleur.equals("noir") && echiquier.couleurCourante.equals("blanc")) {
             if( estDansLeTableau(x-1,y+1) )
                 list.add(echiquier.cases[x-1][y+1]);
             if (estDansLeTableau(x+1,y+1) )
@@ -312,7 +312,7 @@ public void depRoi( ArrayList <Case> list ){
         dep.add(new Case(x-1,y-1));
 
         // on récupère la position du roi adverse
-        String couleurAdverse = (echiquier.couleurCourante == "blanc") ? "noir" : "blanc";
+        String couleurAdverse = (echiquier.couleurCourante.equals("blanc")) ? "noir" : "blanc";
         Case roiAdverse = echiquier.trouverPiece("Roi", couleurAdverse).get(0);
 
         ArrayList <Case> depRoiAdverse = new ArrayList<Case>();
