@@ -68,7 +68,7 @@ public class Jeu {
                     } else if( casePionPassant.piece != null && casePionPassant.piece.pion_en_passant && p instanceof Pion ) { // si le pion peut être pris en passant
                         plateau.remplacerPiece(caseArrivee.x, caseArrivee.y, p);
                         plateau.supprPiece(caseArrivee.x, aJouer.y);
-                    } else if(caseArrivee.piece!=null && caseArrivee.piece.couleur != p.couleurCourante ){
+                    } else if(caseArrivee.piece!=null && caseArrivee.piece.couleur != p.couleur ){
                         plateau.supprPiece(caseArrivee.x, caseArrivee.y);
                         plateau.remplacerPiece(caseArrivee.x, caseArrivee.y, p);
                 

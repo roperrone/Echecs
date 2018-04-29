@@ -180,7 +180,7 @@ public class Plateau {
     } else if( casePionPassant.piece != null && casePionPassant.piece.pion_en_passant && p instanceof Pion ) { // si le pion peut être pris en passant
         pl.remplacerPiece(arrivee.x, arrivee.y, p);
         pl.supprPiece(arrivee.x, depart.y);
-    } else if(caseArrivee.piece!=null && caseArrivee.piece.couleur != p.couleurCourante ){
+    } else if(arrivee.piece!=null && arrivee.piece.couleur != p.couleur ){
         pl.supprPiece(arrivee.x, arrivee.y);
         pl.remplacerPiece(arrivee.x, arrivee.y, p);
     } else {
