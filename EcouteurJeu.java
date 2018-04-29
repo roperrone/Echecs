@@ -7,9 +7,14 @@ public class EcouteurJeu implements ActionListener {
   private FenetrePlateau f;
 
 
+/** @param fen: Fenetre Plateau
+ *  Constructeur de la classe EcouteurJeu */
   public EcouteurJeu(FenetrePlateau fe){
     this.f = fe;
   }
+  
+/** @param e : Action
+ * méthode appelée lorsqu'une action se produit */
   public void actionPerformed(ActionEvent e){
 
     Object s = e.getSource();

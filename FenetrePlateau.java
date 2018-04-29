@@ -30,13 +30,15 @@ public class FenetrePlateau extends JFrame {
   public JLabel nbReineN;
   public JLabel titreB;
   public JLabel titreN;
-  //public Timer t;
+
   
   public ClickListener clickListen;
   public MoveListener moveListen;
 
   private Jeu jeu;
 
+/**@param j: Jeu en cours 
+ * Constructeur de la classe FenetrePlateau*/
   public FenetrePlateau(Jeu j){
     super("Echecs");
     jeu = j;
@@ -85,6 +87,7 @@ public class FenetrePlateau extends JFrame {
     titreB= new JLabel("");
     titreN= new JLabel("");
     
+    // centrer les JLabel
     nbPionB.setHorizontalAlignment(JLabel.CENTER);
     nbPionB.setVerticalAlignment(JLabel.CENTER);
     nbPionN.setHorizontalAlignment(JLabel.CENTER);
@@ -153,7 +156,9 @@ public class FenetrePlateau extends JFrame {
     setContentPane(content);
     setVisible(true);
   }
-    
+
+ /** méthode permettant de mettre a jour la fenetre et de 
+ * créer une FenetreFin*/
   public void maj_fenetre(){
       this.actualiser();
       if(jeu.plateau.gameOver()){
@@ -171,7 +176,8 @@ public class FenetrePlateau extends JFrame {
      }
    }
 
-  
+/** Méthode permettant d'actualiser le nombre de pièces supprimées de
+ * l'échiquier*/
   public void actualiser(){
     nbPionB.setText(""+jeu.plateau.getNbPieceMangees("blanc")[0]);
     nbPionN.setText(""+jeu.plateau.getNbPieceMangees("noir")[0]);
@@ -185,10 +191,12 @@ public class FenetrePlateau extends JFrame {
     nbReineN.setText(""+jeu.plateau.getNbPieceMangees("noir")[4]);
 
   }
-  
+/** Méthode retournant le jeu en cours*/
   public Jeu getJeu(){ return jeu; }
   
-  // Source: https://stackoverflow.com/questions/7434845/setting-the-default-font-of-swing-program
+// Source: https://stackoverflow.com/questions/7434845/setting-the-default-font-of-swing-program
+/**@param f : Font
+ * Méthode permettant de changer le font*/
   public static void setUIFont (javax.swing.plaf.FontUIResource f){
     java.util.Enumeration keys = UIManager.getDefaults().keys();
     while (keys.hasMoreElements()) {

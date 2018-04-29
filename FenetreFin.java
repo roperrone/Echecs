@@ -15,6 +15,8 @@ public class FenetreFin extends JFrame {
 
   public Jeu jeu;
 
+/** @param j: jeu en cours
+ *  Constructeur de la classe FenetreFin */
   public FenetreFin(Jeu j){
     super("Fin de la partie");
     jeu = j;

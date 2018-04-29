@@ -18,23 +18,30 @@ public class Piece {
 
   protected String file = "images/";
 
+/**@param c : couleur de la pièce
+ * @param n : nom de la pièce
+ * @param v : valeur de la pièce
+ * Constructeur de la classe Piece */
   public Piece(String c, String n, int v){
     this.couleur = c;
     this.nom = n;
     this.valeur = (couleur == "noir") ? -v : v;
   }
 
+/**@param x :
+ * @param y :
+ * Méthode */
   public void setCustomPosition(int x, int y){
 	 custom_x = x-30;
 	 custom_y = y-30;
 
 	 position_custom = true;
   }
-
+/** Méthode  */
   public void resetPosition(){
 	position_custom = false;
   }
-
+/**Méthode qui permet de cloner une pièce */
   public Object clone() {
         Piece piece;
 
@@ -57,9 +64,18 @@ public class Piece {
 
 	    return piece;
   }
-
+/**@param g : Graphics
+ * @param i : position d'affichage
+ * @param j : position d'affichage
+ * Méthode qui affiche l'image de la pièce*/
   public void afficher(Graphics g, int i, int j){}
 
+/**@param g : Graphics
+ * @param i : position d'affichage
+ * @param j : position d'affichage
+ * @param largeur : largeur de l'image
+ * @param hauteur : hauteur de l'image 
+ * Méthode qui affiche l'image de la pièce*/
   public void afficher(Graphics g, int i, int j, int largeur, int hauteur){}
 
 }
