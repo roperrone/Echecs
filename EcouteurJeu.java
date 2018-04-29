@@ -5,7 +5,7 @@ import javax.swing.*;
 
 public class EcouteurJeu implements ActionListener {
   private FenetrePlateau f;
-  private FenetreFin fe;
+
 
   public EcouteurJeu(FenetrePlateau fe){
     this.f = fe;
@@ -22,8 +22,13 @@ public class EcouteurJeu implements ActionListener {
 		 Jeu jeu=f.getJeu();
 		 Joueur[] tableauJoueur=jeu.tabJoueur;
 		 f.dispose();
-		 FenetrePlateau fen= new FenetrePlateau(new Jeu(tableauJoueur[0],tableauJoueur[1]));
-		 
+         
+         if(tableauJoueur[1] instanceof JoueurIA){
+            tableauJoueur[1] = null;
+          } 
+         Jeu j=new Jeu(tableauJoueur[0],tableauJoueur[1]);
+		 FenetrePlateau fen= new FenetrePlateau(j);
+		 j.setFenetre(fen);
 	 }
     }
   }
