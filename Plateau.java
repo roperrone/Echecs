@@ -110,8 +110,12 @@ public class Plateau {
   }
 
   public void supprPiece(int x, int y){
-    pieceSuppr.add(this.cases[x][y].piece);
-    cases[x][y].piece=null;
+    Piece p = this.cases[x][y].piece;
+    
+    if(!(p instanceof Roi) ){
+        pieceSuppr.add(this.cases[x][y].piece);
+        cases[x][y].piece=null;
+    }  
   }
 
   // dx dy coordonnees case de d'arrivée
