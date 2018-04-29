@@ -6,10 +6,14 @@ import javax.swing.*;
 public class EcouteurFin implements ActionListener {
   private FenetreFin fe;
 
+/** @param f: Fenetre de fin
+ *  Constructeur de la classe EcouteurFin */
   public EcouteurFin(FenetreFin fen){
     this.fe=fen;
   }
-
+  
+/** @param e : Action
+ * méthode appelée lorsqu'une action se produit */
   public void actionPerformed(ActionEvent e){
     Object s = e.getSource();
 

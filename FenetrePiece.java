@@ -13,13 +13,19 @@ public class FenetrePiece extends JPanel {
 
     public String color;
     
-       
+    
+/**@param f : FenetrePlateau dans laquelle va être créée cette FenetrePiece
+ * @param j: jeu en cours
+ * @param couleur : couleur des pièces que l'on veut afficher
+ *  Constructeur de la classe FenetrePiece */
 	public FenetrePiece( FenetrePlateau f, Jeu j, String couleur ){
 		fen = f;
 		jeu = j;
         color=couleur;
 	}
-	
+
+/**@param g : Objet de type graphics
+ * méthode qui crée l'affichage du panel FenetrePiece */	
 	public void paintComponent(Graphics g){
         super.paintComponent(g);
         int [] nombre =jeu.plateau.getNbPieceMangees(color);

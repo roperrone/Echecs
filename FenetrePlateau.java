@@ -198,9 +198,9 @@ public class FenetrePlateau extends JFrame {
     nbReineN.setText(""+jeu.plateau.getNbPieceMangees("noir")[4]);
 
   }
-  
+/** Méthode retournant le jeu en cours*/
   public Jeu getJeu(){ return jeu; }
-  
+
   /** Définit la police de caractère par défaut:
     @author : https://stackoverflow.com/questions/7434845/setting-the-default-font-of-swing-program
   */
