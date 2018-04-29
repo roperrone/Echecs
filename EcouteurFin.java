@@ -11,7 +11,6 @@ public class EcouteurFin implements ActionListener {
   }
 
   public void actionPerformed(ActionEvent e){
-
     Object s = e.getSource();
 
     if(s instanceof JButton){

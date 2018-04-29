@@ -26,13 +26,16 @@ public class FenetreFin extends JFrame {
 
    
     content = new JPanel(new BorderLayout());
-    fin= new JLabel("Game Over");
+    
+    String couleur = ( j.plateau.couleurCourante == "blanc" ) ? "noir" : "blanc";
+        
+    fin= new JLabel("Les "+couleur+" l'emportent !");
     rejouer= new JButton("Rejouer");
     nouvellePartie= new JButton ("Nouvelle Partie");
     fermer= new JButton("Fermer");
     boutons= new JPanel(new BorderLayout());
     
-    Font f = new Font("Arial Black", Font.PLAIN, 40); // augmente et change la police 
+    Font f = new Font("Arial", Font.PLAIN, 30); // augmente et change la police 
     fin.setFont(f); 
     fin.setHorizontalAlignment(JLabel.CENTER);
     fin.setVerticalAlignment(JLabel.CENTER);

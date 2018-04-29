@@ -110,8 +110,12 @@ public class Plateau {
   }
 
   public void supprPiece(int x, int y){
-    pieceSuppr.add(this.cases[x][y].piece);
-    cases[x][y].piece=null;
+    Piece p = this.cases[x][y].piece;
+    
+    if(!(p instanceof Roi) ){
+        pieceSuppr.add(this.cases[x][y].piece);
+        cases[x][y].piece=null;
+    }  
   }
 
   // dx dy coordonnees case de d'arrivée
@@ -180,6 +184,9 @@ public class Plateau {
     } else if( casePionPassant.piece != null && casePionPassant.piece.pion_en_passant && p instanceof Pion ) { // si le pion peut être pris en passant
         pl.remplacerPiece(arrivee.x, arrivee.y, p);
         pl.supprPiece(arrivee.x, depart.y);
+    } else if(arrivee.piece!=null && arrivee.piece.couleur != p.couleur ){
+        pl.supprPiece(arrivee.x, arrivee.y);
+        pl.remplacerPiece(arrivee.x, arrivee.y, p);
     } else {
          pl.remplacerPiece(arrivee.x, arrivee.y, p);
 

@@ -402,7 +402,6 @@ public void remplirListDepl(Case c, ArrayList<Case> list){
 
 			if(!p.trouverPiece("Roi", echiquier.couleurCourante).isEmpty()){
 				Case r = p.trouverPiece("Roi", echiquier.couleurCourante).get(0);
-
 				Deplacement d = new Deplacement(p, a);
 
 				if(!d.misEnEchec()){
@@ -585,8 +584,9 @@ public void simulerProtection (Case cD , ArrayList <Case> list ) {
 //Roi pouvant etre mis en échec par l'adversaire
 public boolean misEnEchec(){
     toutDeplacementsEchec();
+    ArrayList<Case> t = echiquier.trouverPiece("Roi", echiquier.couleurCourante);
 
- 	if( getDeplEchec().contains(echiquier.trouverPiece("Roi", echiquier.couleurCourante).get(0)) )
+ 	if( !t.isEmpty() && getDeplEchec().contains(t.get(0)) )
 		return true;
  	else
 		return false;
