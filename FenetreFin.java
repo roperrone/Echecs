@@ -31,7 +31,7 @@ public class FenetreFin extends JFrame {
     
     String couleur = ( j.plateau.couleurCourante == "blanc" ) ? "noir" : "blanc";
         
-    fin= new JLabel("Les "+couleur+" l'emportent !");
+    fin= new JLabel("Les "+couleur+"s l'emportent !");
     rejouer= new JButton("Rejouer");
     nouvellePartie= new JButton ("Nouvelle Partie");
     fermer= new JButton("Fermer");
@@ -41,8 +41,14 @@ public class FenetreFin extends JFrame {
     fin.setFont(f); 
     fin.setHorizontalAlignment(JLabel.CENTER);
     fin.setVerticalAlignment(JLabel.CENTER);
-    fin.setForeground(Color.white);
-    fin.setBackground(Color.black);
+
+    if (couleur=="blanc"){
+        fin.setForeground(Color.black);
+        fin.setBackground(Color.white);
+    }else{
+        fin.setForeground(Color.white);
+        fin.setBackground(Color.black);
+    }
     fin.setOpaque(true);
     
     rejouer.addActionListener(new EcouteurFin(this));
