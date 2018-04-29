@@ -7,7 +7,7 @@ public class Jeu {
     public boolean ai_active;
     public FenetrePlateau fen;
 
-    public Jeu( Joueur j1, Joueur j2) {       
+    public Jeu( Joueur j1, Joueur j2) {
       tabJoueur = new Joueur[2];
       plateau = new Plateau();
 
@@ -22,9 +22,9 @@ public class Jeu {
       tabJoueur[1] = j2;
 
     }
-    
+
     public void setFenetre( FenetrePlateau f ) {
-      fen = f; 
+      fen = f;
     }
 
     public void tourSuivant(){
@@ -50,7 +50,7 @@ public class Jeu {
 
             do {
                 JoueurIA j = (JoueurIA) tabJoueur[1];
-                Deplacement dep = j.execute(plateau, 1);
+                Deplacement dep = j.execute(plateau, 3);
 
                 if ( dep != null ) {
                     Case caseArrivee = dep.cF;
@@ -71,7 +71,7 @@ public class Jeu {
                     } else if(caseArrivee.piece!=null && caseArrivee.piece.couleur != p.couleur ){
                         plateau.supprPiece(caseArrivee.x, caseArrivee.y);
                         plateau.remplacerPiece(caseArrivee.x, caseArrivee.y, p);
-                
+
                     }else {
                          plateau.remplacerPiece(caseArrivee.x, caseArrivee.y, p);
 
@@ -95,11 +95,11 @@ public class Jeu {
                 }
             } while( !stop );
         }
-        
+
         fen.repaint();
         fen.maj_fenetre();
     }
-    
+
     public boolean partieTerminee() {
 		    boolean b = false;
 

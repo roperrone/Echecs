@@ -18,7 +18,7 @@ public class JoueurIA extends Joueur {
         int lowestSeenValue = Integer.MAX_VALUE;
         int currentValue;
 
-        System.out.println(plateau.couleurCourante + " THINKING with depth = " +profondeur);
+        System.out.println("L'IA "plateau.couleurCourante + " joue");
 
         int nbDep = plateau.deplacementsPossibles().size();
 
