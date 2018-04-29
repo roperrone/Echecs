@@ -50,7 +50,7 @@ public class Jeu {
 
             do {
                 JoueurIA j = (JoueurIA) tabJoueur[1];
-                Deplacement dep = j.execute(plateau, 2);
+                Deplacement dep = j.execute(plateau, 1);
 
                 if ( dep != null ) {
                     Case caseArrivee = dep.cF;
