@@ -1,6 +1,7 @@
 import java.util.*;
 
 public class Jeu {
+    
     public Joueur[] tabJoueur;
     public Plateau plateau;
     public int currentPlayer;
@@ -50,7 +51,7 @@ public class Jeu {
 
             do {
                 JoueurIA j = (JoueurIA) tabJoueur[1];
-                Deplacement dep = j.execute(plateau, 1);
+                Deplacement dep = j.execute(plateau);
 
                 if ( dep != null ) {
                     Case caseArrivee = dep.cF;
