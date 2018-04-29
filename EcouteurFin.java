@@ -19,11 +19,18 @@ public class EcouteurFin implements ActionListener {
              FenetreBienvenue fenetre= new FenetreBienvenue();
          
         }else if(s==fe.rejouer){
-             Jeu jeu=fe.jeu;
-             Joueur[] tableauJoueur=jeu.tabJoueur;
-             fe.dispose();
-             FenetrePlateau fen= new FenetrePlateau(new Jeu(tableauJoueur[0],tableauJoueur[1]));
-		 
+            Jeu jeu=fe.jeu;
+            Joueur[] tableauJoueur=jeu.tabJoueur;
+            fe.dispose();
+            
+            if(tableauJoueur[1] instanceof JoueurIA){
+                tableauJoueur[1] = null;
+            } 
+            
+            Jeu j=new Jeu(tableauJoueur[0],tableauJoueur[1]);
+            FenetrePlateau fen= new FenetrePlateau(j);
+            j.setFenetre(fen);
+            
          }else if(s==fe.fermer){
              fe.dispose();
          }

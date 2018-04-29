@@ -30,7 +30,7 @@ public class FenetrePlateau extends JFrame {
   public JLabel nbReineN;
   public JLabel titreB;
   public JLabel titreN;
-  public Timer t;
+  //public Timer t;
   
   public ClickListener clickListen;
   public MoveListener moveListen;
@@ -147,9 +147,8 @@ public class FenetrePlateau extends JFrame {
     plateau.addMouseListener(clickListen);
     plateau.addMouseMotionListener(moveListen);
 
-   
-    //t= new Timer();
-  //  t.start();
+    this.maj_fenetre();
+    this.repaint();
     
     setContentPane(content);
     setVisible(true);
@@ -164,10 +163,9 @@ public class FenetrePlateau extends JFrame {
                     @Override
                     public void run() {
                             FenetreFin f= new FenetreFin(jeu);
-                            //t.stop();
                             jeu.fen.dispose();
                     }
-                }, 
+                },
                 2000 
         );
      }
