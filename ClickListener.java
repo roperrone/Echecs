@@ -121,11 +121,11 @@ public class ClickListener implements MouseListener {
                selectionne = true;
 
                if( depPossible.size() >= 1 ){
-                   for (Case a : depPossible){
-                       a.setActif();
-                       
+                   for (Case a : depPossible){                       
                         if(!( caseDepart.piece instanceof Roi))
                             a.roque_possible = false;
+                            
+                        a.setActif();
                    }
                    fenetre.repaint();
                 }
