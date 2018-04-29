@@ -5,7 +5,7 @@ import javax.swing.*;
 
 public class ClickListener implements MouseListener {
     private FenetrePlateau fenetre;
-    private LinkedList<Case> depPossible;
+    private ArrayList<Case> depPossible;
 
     public boolean selectionne;
     private Case caseDepart;
