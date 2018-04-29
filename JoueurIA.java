@@ -5,17 +5,17 @@ public class JoueurIA extends Joueur {
   Plateau echiquier;
   Plateau echiquierSimulate;
   int profondeur;
-  
-  
+
+
   public JoueurIA(Plateau p){
     super("IA");
     echiquier = p;
   }
-  
+
   public void setProfondeur (int p){
-	  profondeur= p; 
+	  profondeur= p;
   }
-	  
+
   public Deplacement execute(Plateau plateau) {
 
         final long startTime = System.currentTimeMillis();
@@ -24,7 +24,7 @@ public class JoueurIA extends Joueur {
         int lowestSeenValue = Integer.MAX_VALUE;
         int currentValue;
 
-        System.out.println("L'IA "plateau.couleurCourante + " joue");
+        System.out.println("L'IA "+plateau.couleurCourante+" joue");
 
         int nbDep = plateau.deplacementsPossibles().size();
 
