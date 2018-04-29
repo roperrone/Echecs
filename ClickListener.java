@@ -107,7 +107,7 @@ public class ClickListener implements MouseListener {
 
        Point caseJeu = positionCase(X,Y);
 
-       if( !selectionne ) {
+       if( !selectionne && (!fenetre.getJeu().ai_active || (fenetre.getJeu().ai_active && fenetre.getJeu().plateau.couleurCourante == "blanc"))) {
 		   Plateau p = fenetre.getJeu().plateau;
 
 		   caseDepart = p.cases[(int)caseJeu.getX()][(int)(caseJeu.getY())];

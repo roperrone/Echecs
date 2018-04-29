@@ -56,6 +56,8 @@ public class Jeu {
                     Case caseArrivee = dep.cF;
                     Case aJouer = dep.cI;
 
+                    roi.misEnEchec(false);
+
                     Case casePionPassant = plateau.cases[caseArrivee.x][aJouer.y];
                     Piece p = aJouer.piece;
 
@@ -90,9 +92,10 @@ public class Jeu {
                     stop = false;
                 }
             } while( !stop );
-
-            fen.repaint();
         }
+        
+        fen.repaint();
+        fen.maj_fenetre();
     }
 
     public void start() {

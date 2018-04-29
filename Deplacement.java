@@ -403,7 +403,7 @@ public void remplirListDepl(Case c, ArrayList<Case> list){
 			if(!p.trouverPiece("Roi", echiquier.couleurCourante).isEmpty()){
 				Case r = p.trouverPiece("Roi", echiquier.couleurCourante).get(0);
 
-				Deplacement d = new Deplacement(p, r);
+				Deplacement d = new Deplacement(p, a);
 
 				if(!d.misEnEchec()){
 					tmp.add(a);

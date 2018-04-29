@@ -4,7 +4,7 @@ import java.util.*;
 import java.awt.event.*;
 import javax.swing.Timer;
 
-public class FenetrePlateau extends JFrame implements ActionListener {
+public class FenetrePlateau extends JFrame {
   public JPanel content;
   public JPanel plateau;
   public JPanel options;
@@ -53,7 +53,7 @@ public class FenetrePlateau extends JFrame implements ActionListener {
     boutons = new JPanel(new GridLayout(2,2,10,10));
 	abandonne=new JButton("Abandonner");
 	rejouer=new JButton("Rejouer");
-	text=new JLabel("<html> Partie d'échec <br>"+jeu.tabJoueur[0].getNom()+" contre "+jeu.tabJoueur[1].getNom()+"</html>");
+	text=new JLabel("<html> Partie d'&eacute;chec <br>"+jeu.tabJoueur[0].getNom()+" contre "+jeu.tabJoueur[1].getNom()+"</html>");
    
     nbPieceBlanc=new JPanel(new GridLayout(7,0));
     nbPieceNoir=new JPanel(new GridLayout(7,0));
@@ -148,21 +148,21 @@ public class FenetrePlateau extends JFrame implements ActionListener {
     plateau.addMouseMotionListener(moveListen);
 
    
-    t= new Timer(100,this);
-    t.start();
+    //t= new Timer();
+  //  t.start();
     
     setContentPane(content);
     setVisible(true);
   }
     
-  public void actionPerformed( ActionEvent e){
+  public void maj_fenetre(){
       this.actualiser();
         if(jeu.plateau.gameOver()){
             FenetreFin f= new FenetreFin(jeu);
-            t.stop();
+            //t.stop();
             this.dispose();
             
-    }
+        }
   }
 
   
