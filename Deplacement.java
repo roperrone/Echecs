@@ -567,6 +567,7 @@ public void simuler(Deplacement d){
 
 //permet de simuler un deplacemet et de vérifier si ce dernier ne met pas le roi en echec
 public void simulerProtection (Case cD , ArrayList <Case> list ) {
+	if (!misEnEchec()){
 	for(Case c : list){
 
 		Plateau eq = echiquier.simulateMove(cD, c);
@@ -577,6 +578,7 @@ public void simulerProtection (Case cD , ArrayList <Case> list ) {
 			break;
 		}
 	}
+}
 }
 
 

@@ -90,7 +90,7 @@ public class ClickListener implements MouseListener {
 
                                 //Se ferme si la partie est gagnée
                                 if(fenetre.getJeu().partieTerminee()){
-                                  String couleur = ( fenetre.getJeu().plateau.couleurCourante == "blanc" ) ? "noir" : "blanc";
+                                  String couleur = ( fenetre.getJeu().plateau.couleurCourante == "blanc" ) ? "noirs" : "blancs";
                                   System.out.println("BRAVO ! Les "+couleur+" l'emportent !");
                                 }
                             }
