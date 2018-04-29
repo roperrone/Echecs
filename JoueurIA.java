@@ -4,13 +4,19 @@ public class JoueurIA extends Joueur {
 
   Plateau echiquier;
   Plateau echiquierSimulate;
-
+  int profondeur;
+  
+  
   public JoueurIA(Plateau p){
     super("IA");
-    echiquier = p;;
+    echiquier = p;
   }
-
-  public Deplacement execute(Plateau plateau, int profondeur) {
+  
+  public void setProfondeur (int p){
+	  profondeur= p; 
+  }
+	  
+  public Deplacement execute(Plateau plateau) {
 
         final long startTime = System.currentTimeMillis();
         Deplacement best = null;

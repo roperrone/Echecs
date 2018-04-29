@@ -38,7 +38,7 @@ public class ClickListener implements MouseListener {
 			// si le déplacement est possible, on déplace la pièce et on passe au joueur suivant
            if ( depPossible.contains(caseArrivee) ){
                 Piece p = caseDepart.piece;
-
+                
                 Case roi = fenetre.getJeu().plateau.trouverPiece("Roi", p.couleur).get(0);
                 roi.misEnEchec(false);
 
@@ -121,10 +121,12 @@ public class ClickListener implements MouseListener {
                selectionne = true;
 
                if( depPossible.size() >= 1 ){
-                   for (Case a : depPossible){
-                       a.setActif();
+                   for (Case a : depPossible){                       
+                        if(!( caseDepart.piece instanceof Roi))
+                            a.roque_possible = false;
+                            
+                        a.setActif();
                    }
-
                    fenetre.repaint();
                 }
           }
