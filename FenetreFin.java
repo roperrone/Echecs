@@ -35,7 +35,7 @@ public class FenetreFin extends JFrame {
     fermer= new JButton("Fermer");
     boutons= new JPanel(new BorderLayout());
     
-    Font f = new Font("Arial Black", Font.PLAIN, 30); // augmente et change la police 
+    Font f = new Font("Arial", Font.PLAIN, 30); // augmente et change la police 
     fin.setFont(f); 
     fin.setHorizontalAlignment(JLabel.CENTER);
     fin.setVerticalAlignment(JLabel.CENTER);

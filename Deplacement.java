@@ -584,7 +584,7 @@ public boolean misEnEchec(){
     toutDeplacementsEchec();
     ArrayList<Case> t = echiquier.trouverPiece("Roi", echiquier.couleurCourante);
 
- 	if( getDeplEchec().contains(t.get(0)) )
+ 	if( !t.isEmpty() && getDeplEchec().contains(t.get(0)) )
 		return true;
  	else
 		return false;
