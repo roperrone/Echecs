@@ -158,12 +158,20 @@ public class FenetrePlateau extends JFrame {
   public void maj_fenetre(){
       this.actualiser();
       if(jeu.plateau.gameOver()){
-            FenetreFin f= new FenetreFin(jeu);
-            //t.stop();
-            this.dispose();
-            
-      }
-  }
+          
+        new java.util.Timer().schedule( 
+                new java.util.TimerTask() {
+                    @Override
+                    public void run() {
+                            FenetreFin f= new FenetreFin(jeu);
+                            //t.stop();
+                            jeu.fen.dispose();
+                    }
+                }, 
+                2000 
+        );
+     }
+   }
 
   
   public void actualiser(){

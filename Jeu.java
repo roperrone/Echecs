@@ -5,7 +5,7 @@ public class Jeu {
     public Plateau plateau;
     public int currentPlayer;
     public boolean ai_active;
-    private FenetrePlateau fen;
+    public FenetrePlateau fen;
 
     public Jeu( Joueur j1, Joueur j2) {       
       tabJoueur = new Joueur[2];
