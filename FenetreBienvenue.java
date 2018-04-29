@@ -28,7 +28,7 @@ public class FenetreBienvenue extends JFrame {
   public  JButton deux;
  
   int nbJoueurs;
-  int profondeur; 
+  int profondeur=1; 
   
   public JSlider slide;
   
@@ -88,7 +88,7 @@ public class FenetreBienvenue extends JFrame {
     
     slide.addChangeListener(new ChangeListener(){public void stateChanged (ChangeEvent event ){
 	  JSlider source = (JSlider)event.getSource(); 
-	  if (source.equals(slide))
+	  if (source.equals(slide) && !source.getValueIsAdjusting())
 	  profondeur = source.getValue(); 
 	}
 	}); 
