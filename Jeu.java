@@ -68,9 +68,9 @@ public class Jeu {
                     } else if( casePionPassant.piece != null && casePionPassant.piece.pion_en_passant && p instanceof Pion ) { // si le pion peut être pris en passant
                         plateau.remplacerPiece(caseArrivee.x, caseArrivee.y, p);
                         plateau.supprPiece(caseArrivee.x, aJouer.y);
-                    }else if(caseArrivee.piece!=null){
-                    plateau.supprPiece(caseArrivee.x, caseArrivee.y);
-                    plateau.remplacerPiece(caseArrivee.x, caseArrivee.y, p);
+                    } else if(caseArrivee.piece!=null && caseArrivee.piece.couleur != p.couleurCourante ){
+                        plateau.supprPiece(caseArrivee.x, caseArrivee.y);
+                        plateau.remplacerPiece(caseArrivee.x, caseArrivee.y, p);
                 
                     }else {
                          plateau.remplacerPiece(caseArrivee.x, caseArrivee.y, p);
@@ -88,6 +88,8 @@ public class Jeu {
                     tourSuivant();
 
                     stop = true;
+                } else if( fen.getJeu().partieTerminee() ){
+                    stop = true;
                 } else {
                     stop = false;
                 }
@@ -97,15 +99,7 @@ public class Jeu {
         fen.repaint();
         fen.maj_fenetre();
     }
-
-    public void start() {
-          Joueur JoueurBlanc = tabJoueur[0];
-          Joueur JoueurNoir = tabJoueur[1];
-
-          JoueurBlanc.definirCouleur("blanc");
-          JoueurNoir.definirCouleur("noir");
-    }
-
+    
     public boolean partieTerminee() {
 		    boolean b = false;
 

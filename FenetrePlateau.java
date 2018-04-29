@@ -157,12 +157,12 @@ public class FenetrePlateau extends JFrame {
     
   public void maj_fenetre(){
       this.actualiser();
-        if(jeu.plateau.gameOver()){
+      if(jeu.plateau.gameOver()){
             FenetreFin f= new FenetreFin(jeu);
             //t.stop();
             this.dispose();
             
-        }
+      }
   }
 
   
