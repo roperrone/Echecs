@@ -4,13 +4,18 @@ import java.util.*;
 import javax.swing.*;
 
 public class Ecouteur implements ActionListener {
+  
   private FenetreBienvenue f;
   
-
+  /** constructeur de la classe 
+   * */
   public Ecouteur(FenetreBienvenue fe){
     this.f = fe;
   }
 
+  /** méthode précisant les actions à réliser suite aux diférents évenements possibles 
+   * @param e l'action enegndrée par l'utilisateur
+   * */
   public void actionPerformed(ActionEvent e){
 
     Object s = e.getSource();

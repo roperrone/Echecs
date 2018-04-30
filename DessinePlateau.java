@@ -5,11 +5,15 @@ public class DessinePlateau extends JPanel {
 	private FenetrePlateau fen;
 	private Jeu jeu;
 	
+	/** constructeur de la classe 
+	 * */
 	public DessinePlateau( FenetrePlateau f, Jeu j ){
 		fen = f;
 		jeu = j;
 	}
-	
+	/** méthode de dessin 
+	 * @param g le graphique 
+	 * */
 	public void paintComponent(Graphics g){
 		Plateau p = jeu.plateau;
 		Case[][] c = p.getCases();

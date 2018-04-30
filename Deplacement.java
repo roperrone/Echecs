@@ -9,8 +9,8 @@ public class Deplacement {
  	public ArrayList<Case> toutDepl = new ArrayList<Case>(); //tous les deplacement du joueur courant
 	public ArrayList<Case> depParer = new ArrayList<Case>();
 	
-	Case cI; // @ param case initiale: contient tous les attributs de la case de déplacement
-	Case cF; //
+	public Case cI; // @ param case initiale: contient tous les attributs de la case de déplacement
+	public Case cF; //
 	
 	int score;
 
@@ -359,7 +359,12 @@ public void depRoi( ArrayList <Case> list ){
 
 }
 
-//Rempli le tableau de deplacements possibles
+
+/** Méthode remplissant les déplacements possibles de chaque pièce 
+ *  Les déplacements sont ceux de la pièce se trouvant dans la case sélectionnée
+ *  @param list: Liste de déplacements à remplir 
+ *  @param c : la case initiale sélectionnée pour effectuer un déplacement */
+ 
 public void remplirListDepl(Case c, ArrayList<Case> list){
 
 	if (c.piece instanceof Pion) {
@@ -418,6 +423,10 @@ public void remplirListDepl(Case c, ArrayList<Case> list){
 
 }
 
+
+/** Méthode remplissant les déplacements permettant la mise en echec du roi
+ *  @param list: Liste de déplacements à remplir 
+ *  @param c : la case initiale sélectionnée pour effectuer un déplacement */
 public void remplirListDeplEchec(Case c, ArrayList<Case> list){
     this.cI = c;
 
@@ -438,6 +447,8 @@ public void remplirListDeplEchec(Case c, ArrayList<Case> list){
 
 // ---------- REGLES PARTICULIERES DES ECHECS ----------
 
+/** Méthode peremettant de vérifier la possibilité d'effectuer un petit roque
+ *  @return un boolean de valeur true si possibilité d'effectuer un petit roque */
 public boolean verifier_petitRoque() {
 	int x = cI.x;
 	int y = cI.y;
@@ -467,6 +478,8 @@ public boolean verifier_petitRoque() {
                 echiquier.cases[x+2][y].piece == null );
 }
 
+/** Méthode peremettant de vérifier la possibilité d'effectuer un grand roque
+ *  @return un boolean de valeur true si possibilité d'effectuer un grand roque */
 public boolean verifier_grandRoque() {
 	int x = cI.x;
 	int y = cI.y;
@@ -503,7 +516,7 @@ public boolean verifier_grandRoque() {
 
 
 
-//Rempli tous les deplacements possibles de l'adversaire
+/** méthode remplissant tous les deplacements possibles de l'adversaire*/
 public void tousDeplacementsAdv(){
 	for(Case[] cases : echiquier.cases){
 		for(Case c : cases){
@@ -514,7 +527,7 @@ public void tousDeplacementsAdv(){
 	}
 }
 
-//Rempli tous les mises en échec possible
+/** méthode remplissant  tous les mises en échec possible*/
 public void toutDeplacementsEchec(){
     for(Case[] cases : echiquier.cases){
 		for(Case c : cases){
@@ -525,7 +538,7 @@ public void toutDeplacementsEchec(){
 	}
 }
 
-//Remplir tous les deplacements possibles du joueur
+/** méthode remplissant  tous les deplacements possibles du joueur*/
 public void tousDeplacements(){
 	for(Case[] cases : echiquier.cases){
 		for(Case c : cases){
@@ -537,7 +550,9 @@ public void tousDeplacements(){
 }
 
 
-// Calcule et retourne la liste de tous les deplacements possible pour parer l'echec pârmis toutes les pieces du joueur
+/** méthode Calculant et retournant la liste de tous les deplacements possible pour parer l'echec parmis toutes les pieces du joueur
+ * @return boolean de valeur true si la liste des déplacements qui permettent de parer l'echec est vide
+ * */
 public boolean parerEchec(){
 	for (int i=0;i<echiquier.cases.length;i++) {
 		for (int j=0;j<echiquier.cases[0].length;j++) {
@@ -551,7 +566,9 @@ public boolean parerEchec(){
 	return depParer.isEmpty();
 }
 
-//permet de simuler le deplacement d'une piece et d'evaluer l'état du jeu suite au deplacement
+/** méthode qui permet de simuler le deplacement d'une piece et d'evaluer l'état du jeu suite au deplacement
+ * @ param d le déplacement à simuler 
+ * */
 public void simuler(Deplacement d){
 	for(Case c : d.getDeplPoss()){
 
@@ -564,7 +581,10 @@ public void simuler(Deplacement d){
 	}
 }
 
-//permet de simuler un deplacemet et de vérifier si ce dernier ne met pas le roi en echec
+/** méthode qui permet de simuler un deplacemet et de vérifier si ce dernier ne met pas le roi en echec
+ * @param cD la case contenant la pièce dont nous souhaitons simuler la protection du roi
+ * @param list la liste contenant les déplacements possibles de la piece 
+ * */
 public void simulerProtection (Case cD , ArrayList <Case> list ) {
 	if (!misEnEchec()){
 	for(Case c : list){
@@ -581,7 +601,9 @@ public void simulerProtection (Case cD , ArrayList <Case> list ) {
 }
 
 
-//Roi pouvant etre mis en échec par l'adversaire
+/**méthode vérifiant la mise en echec du roi 
+ * @return boolean de valeur true si le roi est bien en echec
+ * */
 public boolean misEnEchec(){
     toutDeplacementsEchec();
     ArrayList<Case> t = echiquier.trouverPiece("Roi", echiquier.couleurCourante);
@@ -592,8 +614,9 @@ public boolean misEnEchec(){
 		return false;
 }
 
-
-// Est en Echec et mate
+/**méthode vérifiant la mise en echec et mate du roi 
+ * @return boolean de valeur true si le roi est bien en echec et mate
+ * */
 public boolean enEchecEtMate(){
 	if(misEnEchec() && echiquier.deplacementsPossibles().isEmpty()){
 		return true;
@@ -601,7 +624,9 @@ public boolean enEchecEtMate(){
 		return false;
 	}
 }
-
+/**méthode permettant d'estimer l'éqchiquier
+ * @return int la valeur de l'échiquier 
+ * */
 public int estimer(){
 	return echiquier.estimer();
 }
@@ -610,16 +635,24 @@ public int estimer(){
 //
 
 
-//return deplacements possibles
+/**méthode retournant les déplaements possibles 
+ * @return la liste des dep poss 
+ * */
 public ArrayList<Case> getDeplPoss(){
  	return depPoss;
 }
 
+
+/**méthode retournant les déplaements d'echec
+ * @return la liste des deplEchec 
+ * */
 public ArrayList<Case> getDeplEchec(){
  	return toutDeplEchec;
 }
 
-
+/**méthode toString
+ * @return uen description du déplacement
+ * */
 public String toString(){
 	String s ="* ";
 	s += (cI == null) ? " - " : cI.toString();
