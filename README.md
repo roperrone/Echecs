@@ -3,7 +3,7 @@ Jeu d'échec (projet)
 
 Ce jeu d'échec comprend quasiment toutes les règles du jeu d'echec. Il contient les coups petit roque, grand roque, 
 manger en passant ainsi que les déplacement standards. Lorsque que l'on clique sur une pièce, les cases de déplacements possibles de cette pièce
-s'affichent en vert.
+s'affichent en vert. Lorsque qu'un roque est possible la case sur laquelle il faut se déplacer devient vert clair.
 Lorsque le Roi est en Echec ou en Echec et Mate la case sur laquelle il se trouve devient rouge. Si il est en echec le joueur peut seulement
 parrer l'échec. Tout autre déplacement ne sera pas valide.
 A droite du plateau figure le compte des pièces. Lorsqu'une pièce est "mangée" le compteurs de la pièce concernée s'incrémente.
