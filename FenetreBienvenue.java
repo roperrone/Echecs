@@ -5,7 +5,9 @@ import javax.swing.*;
 import javax.swing.event.*;
 
 public class FenetreBienvenue extends JFrame {
-  
+	
+ // ---------- Attributs de la classe ----------
+ 
   public JLabel joueur;
   public JLabel jBlanc; 
   public JLabel jNoir; 
@@ -35,13 +37,18 @@ public class FenetreBienvenue extends JFrame {
   static final int S_MIN = 1;
   static final int S_MAX = 3;
   static final int S_INIT =1;    
-
+  
+  /** Constructeur de la classe 
+   * */
   public FenetreBienvenue(){
+    // appel à super 
     super("Parametres de la partie");
+    // définition de la taille de la fenetre, son emplacement et sa commande fermeture 
     this.setSize(400,100);
     this.setLocationRelativeTo(null);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+	// initialisation des attributs de la classe 
 
     joueur = new JLabel("Nombre de joueurs : ");
     jBlanc = new JLabel("Nom du joueur blanc:"); 
@@ -66,12 +73,13 @@ public class FenetreBienvenue extends JFrame {
     p6 = new JPanel (new GridLayout (3,1,0,10));
     content = new JPanel(new BorderLayout());
     
+    // commandes relatives au slider 
 	slide.setMinorTickSpacing(0);
     slide.setMajorTickSpacing(1);
     slide.setPaintTicks(true);
     slide.setPaintLabels(true);
   
-   
+   // ajour des widgets dans les pannels 
     p1.add(joueur);
     p1.add(un);
     p1.add(deux);
@@ -86,15 +94,18 @@ public class FenetreBienvenue extends JFrame {
     p7.add(slide);
     content.add(p1, BorderLayout.NORTH);
     
+    //défintion du changeListener relatif au silder 
     slide.addChangeListener(new ChangeListener(){public void stateChanged (ChangeEvent event ){
 	  JSlider source = (JSlider)event.getSource(); 
 	  if (source.equals(slide) && !source.getValueIsAdjusting())
 	  profondeur = source.getValue(); 
 	}
 	}); 
+	//ajout des ecouteurs 
     un.addActionListener(new Ecouteur(this));
     deux.addActionListener(new Ecouteur(this)); 
     lancer.addActionListener(new Ecouteur(this));
+    
     setContentPane(content);
     setVisible(true);
   }

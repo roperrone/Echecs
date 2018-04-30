@@ -4,6 +4,9 @@ import java.util.*;
 import java.awt.event.*;
 import javax.swing.Timer;
 
+/** Fenêtre principale contenant le plateau de jeu et  
+ *  le résumé des échanges de pièces
+ * */
 public class FenetrePlateau extends JFrame {
   public JPanel content;
   public JPanel plateau;
@@ -28,15 +31,17 @@ public class FenetrePlateau extends JFrame {
   public JLabel nbTourN;
   public JLabel nbReineB;
   public JLabel nbReineN;
-  public JLabel titreB;
-  public JLabel titreN;
-  //public Timer t;
   
+  // Listener pour les interractions du joueur
   public ClickListener clickListen;
   public MoveListener moveListen;
 
   private Jeu jeu;
 
+  /**
+   * Fenêtre principale 
+   * @param j: instance de jeu
+   **/
   public FenetrePlateau(Jeu j){
     super("Echecs");
     jeu = j;
@@ -45,7 +50,8 @@ public class FenetrePlateau extends JFrame {
     setResizable(false);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     
-    setUIFont (new javax.swing.plaf.FontUIResource("Roboto",Font.PLAIN,15));
+    // AJOUT DES DIFFERENTS ELEMENTS
+    setUIFont (new javax.swing.plaf.FontUIResource("Roboto",Font.PLAIN,15)); // définit la police de caractère par défault
         
     content = new JPanel(new BorderLayout());
     plateau = new DessinePlateau(this, jeu);
@@ -70,7 +76,6 @@ public class FenetrePlateau extends JFrame {
     panelPieceNoir.setBackground(Color.gray);
     
     //affichage du nombre de pièces mangées 
-
     nbPionB=new JLabel();
     nbPionN=new JLabel();
     nbCavB=new JLabel();
@@ -82,9 +87,7 @@ public class FenetrePlateau extends JFrame {
     nbReineB=new JLabel();
     nbReineN=new JLabel();
     
-    titreB= new JLabel("");
-    titreN= new JLabel("");
-    
+    // ajustement du positionnement des JLabel
     nbPionB.setHorizontalAlignment(JLabel.CENTER);
     nbPionB.setVerticalAlignment(JLabel.CENTER);
     nbPionN.setHorizontalAlignment(JLabel.CENTER);
@@ -106,54 +109,64 @@ public class FenetrePlateau extends JFrame {
     nbReineN.setHorizontalAlignment(JLabel.CENTER);  
     nbReineN.setVerticalAlignment(JLabel.CENTER);  
        
-    // pour les pieces blanches 
-    nbPieceBlanc.add(titreB);
+    // ajout des éléments relatifs aux pièces blanches 
+    nbPieceBlanc.add(new JLabel(""));
     nbPieceBlanc.add(nbPionB);
     nbPieceBlanc.add(nbCavB);
     nbPieceBlanc.add(nbFouB);
     nbPieceBlanc.add(nbTourB);
     nbPieceBlanc.add(nbReineB);
 
-    // pour les pieces noires
-    nbPieceNoir.add(titreN);
+    // ajout des éléments relatifs aux pièces noires 
+    nbPieceNoir.add(new JLabel(""));
     nbPieceNoir.add(nbPionN);
     nbPieceNoir.add(nbCavN);
     nbPieceNoir.add(nbFouN);
 	nbPieceNoir.add(nbTourN);
     nbPieceNoir.add(nbReineN);
     
+    // ajout des boutons
 	boutons.add(rejouer);
 	boutons.add(abandonne);
+    
+    // ajouts des éléments au panel
     panelPiece.add(panelPieceBlanc);
     panelPiece.add(nbPieceBlanc);
     panelPiece.add(panelPieceNoir);
     panelPiece.add(nbPieceNoir);
 	
+    // Ecouteurs boutons latéraux
 	abandonne.addActionListener(new EcouteurJeu(this));
 	rejouer.addActionListener(new EcouteurJeu(this));
-	
+
     options.setBackground(new Color(247,247,247));
     options.setPreferredSize(new Dimension(400, 820));
 	options.add(boutons, BorderLayout.SOUTH);
 	options.add(text, BorderLayout.NORTH);
     options.add(panelPiece, BorderLayout.CENTER);
     
+    // Mise en forme du panel principal
     content.add(plateau, BorderLayout.CENTER);
     content.add(options, BorderLayout.EAST);
 
+    // Ecouteurs des interractions du joueur avec le jeu (clic, déplacement de la souris, ...)
 	clickListen = new ClickListener(this);
 	moveListen = new MoveListener(this);
 	
     plateau.addMouseListener(clickListen);
     plateau.addMouseMotionListener(moveListen);
 
-    this.maj_fenetre();
-    this.repaint();
+    // Actualisation de la fenêtre & affichage
+    maj_fenetre();
+    repaint();
     
     setContentPane(content);
     setVisible(true);
   }
-    
+
+  /** Actualise le nombre de pièces mangées.  
+   * Si le jeu est terminé: ferme la fenêtre et affiche le message de fin de partie
+   * */
   public void maj_fenetre(){
       this.actualiser();
       if(jeu.plateau.gameOver()){
@@ -171,7 +184,7 @@ public class FenetrePlateau extends JFrame {
      }
    }
 
-  
+  /** Actualise le nombre de pièce mangées */
   public void actualiser(){
     nbPionB.setText(""+jeu.plateau.getNbPieceMangees("blanc")[0]);
     nbPionN.setText(""+jeu.plateau.getNbPieceMangees("noir")[0]);
@@ -185,10 +198,12 @@ public class FenetrePlateau extends JFrame {
     nbReineN.setText(""+jeu.plateau.getNbPieceMangees("noir")[4]);
 
   }
-  
+/** Méthode retournant le jeu en cours*/
   public Jeu getJeu(){ return jeu; }
-  
-  // Source: https://stackoverflow.com/questions/7434845/setting-the-default-font-of-swing-program
+
+  /** Définit la police de caractère par défaut:
+    @author : https://stackoverflow.com/questions/7434845/setting-the-default-font-of-swing-program
+  */
   public static void setUIFont (javax.swing.plaf.FontUIResource f){
     java.util.Enumeration keys = UIManager.getDefaults().keys();
     while (keys.hasMoreElements()) {
